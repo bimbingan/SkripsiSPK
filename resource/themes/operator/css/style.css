@@ -27,7 +27,6 @@
 	font-size:smaller;
 	font-weight:bold;
 	padding-top:5px;
-
 }
 
 .image {
@@ -36,4 +35,13 @@
 
 .action-right{
 	text-align: right;
+}
+/* modal warning*/
+.modal .warning i{
+	color: #F39C12;
+}
+/* @override : img-responsive*/
+.img > .img-responsive{
+	margin: 0 auto;
+	margin-bottom: 10px;
 }

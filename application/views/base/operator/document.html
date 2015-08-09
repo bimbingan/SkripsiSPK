@@ -103,13 +103,13 @@
 
     <!-- Confirmation Modal -->
     <div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-sm warning">
             <div class="modal-content">
                 <div class="modal-header">
-                    ...
+                    <h4><i class="fa fa-exclamation-triangle"></i> Perhatian</h4>
                 </div>
                 <div class="modal-body">
-                    ...
+                    Apakah anda yakin?
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
@@ -118,7 +118,13 @@
             </div>
         </div>
     </div>
-    
+    <script type="text/javascript">
+    jQuery(document).ready(function($) {
+        $('#confirm-delete').on('show.bs.modal', function(e) {
+            $(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
+        });
+    });
+    </script>
 </body>
 <!-- end body -->
 </html>

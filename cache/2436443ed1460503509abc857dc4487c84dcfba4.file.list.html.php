@@ -1,30 +1,22 @@
-<?php /* Smarty version Smarty-3.0.7, created on 2015-08-09 13:35:06
+<?php /* Smarty version Smarty-3.0.7, created on 2015-08-09 15:12:54
          compiled from "application/views\pengaturan/operator/list.html" */ ?>
-<?php /*%%SmartyHeaderCode:592455c73aea293b67-81992764%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:1511355c751d67f26f9-93960952%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     '2436443ed1460503509abc857dc4487c84dcfba4' => 
     array (
       0 => 'application/views\\pengaturan/operator/list.html',
-      1 => 1439120099,
+      1 => 1439125410,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '592455c73aea293b67-81992764',
+  'nocache_hash' => '1511355c751d67f26f9-93960952',
   'function' => 
   array (
   ),
   'has_nocache_code' => false,
 )); /*/%%SmartyHeaderCode%%*/?>
-<script type="text/javascript">
-    jQuery(document).ready(function($) {
-        $('.btn-delete').click(function(event) {
-
-        });
-    });
-</script>
-
 <section class="content-header">
     <h1>Pengaturan Operator</h1>
     <ol class="breadcrumb">
@@ -35,7 +27,7 @@ $_smarty_tpl->decodeProperties(array (
 <section class="content">
     <div class="box box-primary">
         <div class="box-header with-border">
-            <h3 class="box-title">Horizontal Form</h3>
+            <h3 class="box-title">Data Operator</h3>
         </div><!-- /.box-header -->
         <!-- form start -->
         <div class="box-body">

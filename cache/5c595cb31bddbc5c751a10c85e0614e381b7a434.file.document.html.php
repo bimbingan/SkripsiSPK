@@ -1,17 +1,17 @@
-<?php /* Smarty version Smarty-3.0.7, created on 2015-08-09 13:35:06
+<?php /* Smarty version Smarty-3.0.7, created on 2015-08-09 15:01:24
          compiled from "application/views\base/operator/document.html" */ ?>
-<?php /*%%SmartyHeaderCode:2143155c73aea176fb4-19793181%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:170055c74f24739574-28778597%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     '5c595cb31bddbc5c751a10c85e0614e381b7a434' => 
     array (
       0 => 'application/views\\base/operator/document.html',
-      1 => 1439119927,
+      1 => 1439124619,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '2143155c73aea176fb4-19793181',
+  'nocache_hash' => '170055c74f24739574-28778597',
   'function' => 
   array (
   ),
@@ -139,13 +139,13 @@ $_smarty_tpl->decodeProperties(array (
 
     <!-- Confirmation Modal -->
     <div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-sm warning">
             <div class="modal-content">
                 <div class="modal-header">
-                    ...
+                    <h4><i class="fa fa-exclamation-triangle"></i> Perhatian</h4>
                 </div>
                 <div class="modal-body">
-                    ...
+                    Apakah anda yakin?
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
@@ -154,7 +154,13 @@ $_smarty_tpl->decodeProperties(array (
             </div>
         </div>
     </div>
-    
+    <script type="text/javascript">
+    jQuery(document).ready(function($) {
+        $('#confirm-delete').on('show.bs.modal', function(e) {
+            $(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
+        });
+    });
+    </script>
 </body>
 <!-- end body -->
 </html>
