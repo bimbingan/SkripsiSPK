@@ -1,0 +1,90 @@
+<script type="text/javascript">
+    $(document).ready(function() {
+        $(".tgl_start").datepicker({
+            yearRange: '1940:2100',
+            changeMonth: true,
+            changeYear: true,
+            showOn: 'both',
+            buttonImage: '{$BASEURL}resource/doc/images/icon/calendar.gif',
+            buttonImageOnly: true,
+            dateFormat: 'yy-mm-dd'
+        });
+        $(".tgl_end").datepicker({
+            yearRange: '1940:2100',
+            changeMonth: true,
+            changeYear: true,
+            showOn: 'both',
+            buttonImage: '{$BASEURL}resource/doc/images/icon/calendar.gif',
+            buttonImageOnly: true,
+            dateFormat: 'yy-mm-dd'
+        });
+    });
+</script>
+<div class="breadcrum">
+    <p>
+        <a href="#">Akademik</a><span></span>
+        <a href="{$config->site_url('akademik/kalender')}">Kalender Akademik</a><span></span>
+        <small>Ubah Data</small>
+    </p>
+    <div class="clear"></div>
+</div>
+<div class="navigation">
+    <div class="navigation-button">
+        <ul>
+            <li><a href="{$config->site_url('akademik/kalender/')}" ><img src="{$BASEURL}resource/doc/images/icon/back-icon.png" alt="" />Back</a></li>
+        </ul>
+    </div>
+    <div class="clear"></div>
+</div>
+<!-- notification template -->
+{include file="base/templates/notification.html"}
+<!-- end of notification template-->
+<form action="{$config->site_url('akademik/kalender/process_edit')}" method="post">
+    <input type="hidden" name="kalender_id" value="{$result.kalender_id}">
+    <input type="hidden" name="old_keterangan" value="{$result.kalender_keterangan}">
+    <table class="table-input" width="100%">
+        <tr>
+            <th colspan="2">Ubah Data Kalender Akademik</th>
+        </tr>
+        <tr>
+            <td width="25%">Dari tanggal </td>
+            <td width="75%">
+                <input type="text" size="10" class="tgl_start" name="tgl_start" value="{$result.tgl_start}" placeholder="">
+            </td>    
+        </tr>
+        <tr>
+            <td width="10%">Sampai tanggal </td>
+            <td width="18%">
+                <input type="text" size="10" class="tgl_end" name="tgl_end" value="{$result.tgl_end}" placeholder="">
+            </td>
+        </tr>
+        <tr>
+            <td>Keterangan</td>
+            <td>
+                <textarea cols="40" rows="5" name="kalender_keterangan">{$result.kalender_keterangan}</textarea>
+            </td>
+        </tr>
+        <tr>
+            <td width="10%">Jenis Kalender </td>
+            <td width="18%">
+                <select name="kalender_type" >
+
+                    <option {if $result.kalender_type eq 'nasional'}selected{/if} value="nasional">Nasional</option>
+                    <option {if $result.kalender_type eq 'akademik'}selected{/if} value="akademik">Akademik</option>
+                    <option {if $result.kalender_type eq 'other'}selected{/if} value="other">Lainnya</option>
+                </select>
+            </td>
+        </tr>
+        <tr class="submit-box">
+            <td colspan="2">
+                <input type="submit" tabindex="4" name="save" value="Simpan" class="submit-button">
+                <input type="reset" tabindex="5" name="save" value="Reset" class="reset-button">
+            </td>
+        </tr>
+    </table>
+</form>                
+</div>
+<div class="clear"></div>
+</div>
+<br />
+</div>

@@ -1,0 +1,98 @@
+<script type="text/javascript">
+    $(document).ready(function() {
+        // select box pengurus
+        $(".guru_id").select2({
+            allowClear: true
+        });
+    });
+</script>
+<div class="breadcrum">
+    <p>
+        <a href="#">Kepegawaian</a><span></span>
+        <small>Cuti</small>
+    </p>
+    <div class="clear"></div>
+</div>
+<div class="search-box">
+    <h3><a href="#">Search</a></h3>
+    <form action="{$config->site_url('laporan/cuti/search_process')}" method="post">
+        <table class="table-search" width="100%">
+            <tr>
+                <td width="15%">Nama Pengurus</td>
+                <td width="30%">
+                    <input type="text" size="40" name="guru_nama" value="{$search.guru_nama|default:''}">
+                </td>
+                <td width="10%">Tahun</td>
+                <td width="20%">
+                    <select name="tahun">
+                        {foreach $rs_tahun as $tahun}
+                        <option {if $search.tahun eq $tahun}selected{/if} value="{$tahun}">{$tahun}</option>
+                        {/foreach}
+                    </select>
+                </td>
+                <td  align="right">
+                    <input class="submit" name="save" type="submit" value="Cari" />
+                    <input class="submit" name="save" type="submit" value="Reset" />
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+<div class="navigation">
+    <div class="pageRow">
+        <div class="pageNav">
+            <ul>
+                <li class="info">Data Rekapitulasi Cuti Tahun <b>{$cur_tahun}</b></li>
+            </ul>
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div class="navigation-button">
+        <ul>
+            <li><a href="{$config->site_url('laporan/cuti/export_excel_list')}"><img src="{$BASEURL}resource/doc/images/icon/print-icon.png" alt="" />Cetak Laporan</a></li>
+        </ul>
+    </div>
+    <div class="clear"></div>
+</div>
+<!-- notification template -->
+{include file="base/templates/notification.html"}
+<!-- end of notification template-->
+<table class="table-view" width="100%">
+    <tr>
+        <th width="2%" rowspan="2">No</th>
+        <th width="10%" rowspan="2">Nama Pengurus</th>
+        <th width="20%" colspan="12">Pengambilan Cuti per Bulan</th>
+        <th width="3%" rowspan="2">Total Cuti</th>
+        <th width="3%" rowspan="2">Sisa Hak Cuti</th>
+        <th width="2%" rowspan="2"></th>
+    </tr>
+    <tr>
+        {section name=foo start=1 loop=13 step=1}
+        <th width="1%">{$smarty.section.foo.index}</th>
+        {/section}
+
+    </tr>
+    {foreach $rs_id as $result}
+    <tr>
+        <td align="center">{$no++}.</td>
+        <td align="center">{$result.guru_nama}</td>
+        {section name=month start=1 loop=13 step=1}
+        <td align="center">{$result.{$smarty.section.month.index}}</td>
+        {/section}
+        <td align="center">{$result.total_cuti}</td>
+        <td align="center">{$result.sisa}</td>
+        <td align="center">
+            <a href="{$config->site_url('laporan/cuti/detail')}/{$result.guru_id|default:''}" class="button-edit">Detail</a>
+        </td>
+    </tr>
+    {foreachelse}
+    <tr>
+        <td colspan="17">Tidak ada data cuti untuk pegawai dengan pencarian <b>nama</b> dan <b>tahun</b> tersebut !</td>
+    </tr>
+    {/foreach}
+</table>                
+</div>
+<div class="clear"></div>
+</div>
+<br />
+</div>

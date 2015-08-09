@@ -1,0 +1,58 @@
+<div class="breadcrum">
+    <p>
+        <a href="#">Data Master</a><span></span>
+        <a href="{$config->site_url('master/instansi')}">Instansi</a><span></span>
+        <small>Ubah Data</small>
+    </p>
+    <div class="clear"></div>
+</div>
+<div class="navigation">
+    <div class="navigation-button">
+        <ul>
+            <li><a href="{$config->site_url('master/instansi/')}" ><img src="{$BASEURL}resource/doc/images/icon/back-icon.png" alt="" />Back</a></li>
+        </ul>
+    </div>
+    <div class="clear"></div>
+</div>
+<!-- notification template -->
+{include file="base/templates/notification.html"}
+<!-- end of notification template-->
+<form action="{$config->site_url('master/instansi/process_edit')}" method="post">
+    <input type="hidden" name="instansi_id" value="{$result.instansi_id}">
+    <table class="table-input" width="100%">
+        <tr>
+            <th colspan="2">Ubah Instansi</th>
+        </tr>
+        <tr>
+            <td width="25%">Nama Instansi</td>
+            <td width="75%">
+                <input type="text" id="instansi_nm" size="50" name="instansi_nm" value="{$result.instansi_nm|default:''}">
+                <em>* wajib diisi</em>
+            </td>
+        </tr>
+        <tr>
+            <td width="25%">Alamat Instansi</td>
+            <td width="75%">
+                <textarea name="instansi_alamat" cols="50" rows="5">{$result.instansi_alamat}</textarea>
+            </td>
+        </tr>
+        <tr>
+            <td width="25%">Keterangan</td>
+            <td width="75%">
+                <textarea name="instansi_keterangan" cols="50" rows="5">{$result.instansi_keterangan}</textarea>
+            </td>
+        </tr>
+
+        <tr class="submit-box">
+            <td colspan="2">
+                <input type="submit" tabindex="4" name="save" value="Simpan" class="submit-button">
+                <input type="reset" tabindex="5" name="save" value="Reset" class="reset-button">
+            </td>
+        </tr>
+    </table>
+</form>                
+</div>
+<div class="clear"></div>
+</div>
+<br />
+</div>

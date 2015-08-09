@@ -1,0 +1,69 @@
+<div class="breadcrum">
+    <p>
+        <a href="#">Data Master</a><span></span>
+        <small>Provinsi</small>
+    </p>
+    <div class="clear"></div>
+</div>
+<div class="search-box">
+    <h3><a href="#">Search</a></h3>
+    <form action="{$config->site_url('master/provinsi/search_process')}" method="post">
+        <table class="table-search" width="100%">
+            <tr>
+                <td>Nama Provinsi</td>
+                <td>
+                    <input type="text" name="provinsi_nm" placeholder="-- semua --" value="{$search.provinsi_nm|default:''}">
+                </td>
+                <td  align="right">
+                    <input class="submit" name="save" type="submit" value="Cari" />
+                    <input class="submit" name="save" type="submit" value="Reset" />
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+<div class="navigation">
+    <div class="pageRow">
+        <div class="pageNav">
+            <ul>
+                <li class="info"><strong>{$pagination.total|default:0}</strong> Data Provinsi&nbsp;</li>{$pagination.data|default:''}
+            </ul>
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div class="navigation-button">
+        <ul>
+            <li><a href="{$config->site_url('master/provinsi/add')}"><img src="{$BASEURL}resource/doc/images/icon/add-icon.png" alt="" />Tambah Data</a></li>
+        </ul>
+    </div>
+    <div class="clear"></div>
+</div>
+<!-- notification template -->
+{include file="base/templates/notification.html"}
+<!-- end of notification template-->
+<table class="table-view" width="100%">
+    <tr>
+        <th width="5%">No</th>
+        <th width="50%">Nama Provinsi</th>
+        <th width="10%"></th>
+    </tr>
+    {foreach $rs_id as $result}
+    <tr>
+        <td align="center">{$no++}.</td>
+        <td>{$result.provinsi_nm}</td>
+        <td align="center">
+            <a href="{$config->site_url('master/provinsi/edit')}/{$result.provinsi_id|default:''}" class="button-edit">Edit</a>
+            <a href="{$config->site_url('master/provinsi/delete')}/{$result.provinsi_id|default:''}" class="button-hapus">Hapus</a>
+        </td>
+    </tr>
+    {foreachelse}
+    <tr>
+        <td colspan="5">Data tidak ditemukan!</td>
+    </tr>
+    {/foreach}
+</table>                
+</div>
+<div class="clear"></div>
+</div>
+<br />
+</div>

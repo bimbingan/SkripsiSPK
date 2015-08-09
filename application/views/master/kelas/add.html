@@ -1,0 +1,113 @@
+<script type="text/javascript">
+    $(document).ready(function() {
+        $(".wali_kelas").select2({
+            allowClear: true
+        });
+    });
+</script>
+<style type="text/css">
+    input[type="number"]{
+        width: 50px;
+    }
+</style>
+<div class="breadcrum">
+    <p>
+        <a href="#">Data Master</a><span></span>
+        <a href="{$config->site_url('master/kelas')}">Kelas</a><span></span>
+        <small>Tambah Data</small>
+    </p>
+    <div class="clear"></div>
+</div>
+<div class="navigation">
+    <div class="navigation-button">
+        <ul>
+            <li><a href="{$config->site_url('master/kelas/')}" ><img src="{$BASEURL}resource/doc/images/icon/back-icon.png" alt="" />Back</a></li>
+        </ul>
+    </div>
+    <div class="clear"></div>
+</div>
+<!-- notification template -->
+{include file="base/templates/notification.html"}
+<!-- end of notification template-->
+<form action="{$config->site_url('master/kelas/process_add')}" method="post">   
+    <table class="table-input" width="100%">
+        <tr>
+            <th colspan="2">Tambah Kelas</th>
+        </tr>
+        <tr>
+            <td width="25%">Nama Kelas</td>
+            <td width="75%">
+                <input type="text" name="kelas_nm">
+                <em>* wajib diisi</em>
+            </td>
+        </tr>
+        <tr>
+            <td width="25%">Tingkat Kelas</td>
+            <td width="75%">
+                <select name="grade_id">
+                    {foreach $rs_grade as $grade}
+                    <option value="{$grade.grade_id}">{$grade.grade_nm}</option>
+                    {/foreach}
+                </select>
+                <em>* wajib diisi</em>
+            </td>
+        </tr>
+        <tr>
+            <td>Jurusan</td>
+            <td>
+                <select name="jurusan_id">
+                    <option value="">-- Tidak Memiliki Jurusan --</option>
+                    {foreach $rs_jurusan as $jurusan}
+                    <option value="{$jurusan.jurusan_id}">{$jurusan.jurusan_nm}</option>
+                    {/foreach}
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td width="25%">Kuota Kelas</td>
+            <td width="75%">
+                <input type="number" name="kuota" min="1">
+                <em>* wajib diisi</em>
+            </td>
+        </tr>
+        <tr>
+            <td>Status</td>
+            <td>
+                <select name="kelas_st">
+                    <option value="AKTIF">AKTIF</option>
+                    <option value="STOP">NON-AKTIF</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>Jenis Kelas</td>
+            <td>
+                <select name="kelas_jenis">
+                    <option value="TEORI">TEORI</option>
+                    <option value="PRAKTIKUM">PRAKTIKUM</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>Wali Kelas</td>
+            <td>
+                <select name="wali_kelas" class="wali_kelas">
+                    {foreach $rs_guru as $guru}
+                    <option value="{$guru.guru_id}">{$guru.guru_nama}</option>
+                    {/foreach}
+                </select>
+            </td>
+        </tr>
+        <tr class="submit-box">
+            <td colspan="2">
+                <input type="submit" tabindex="4" name="save" value="Simpan" class="submit-button">
+                <input type="reset" tabindex="5" name="save" value="Reset" class="reset-button">
+            </td>
+        </tr>
+    </table>
+</form>
+</div>
+<div class="clear"></div>
+</div>
+<br />
+</div>

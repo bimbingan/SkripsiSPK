@@ -1,0 +1,161 @@
+<script type="text/javascript">
+    $(document).ready(function() {
+        $(".check_all_left").click(function() {
+            if ($(this).is(":checked")) {
+                $(".check_item_left").prop("checked", true);
+            } else {
+                $(".check_item_left").prop("checked", false);
+            }
+        });
+        $(".check_all_right").click(function() {
+            if ($(this).is(":checked")) {
+                $(".check_item_right").prop("checked", true);
+            } else {
+                $(".check_item_right").prop("checked", false);
+            }
+        });
+
+        $(".close_psb").click(function(e) {
+
+            if (confirm("Apakah Anda Yakin?")) {
+                return true;
+            } else {
+                e.preventDefault();
+            }
+        });
+    });
+</script> 
+<div class="breadcrum">
+    <p>
+        <a href="#">PSB</a><span></span>
+        <a href="{$config->site_url('psb/seleksi/')}">Seleksi Siswa Baru</a><span></span>
+        <small>Proses</small>
+    </p>
+    <div class="clear"></div>
+</div>
+<div class="search-box">
+    <h3><a href="#">Search</a></h3>
+    <form action="{$config->site_url('psb/seleksi/search_process')}" method="post">
+        <input type="hidden" value="{$psb_id}" name="psb_id_search">
+        <table class="table-search" width="100%">
+            <tr>
+                <th width="15%">Cari siswa dengan NEM</th>
+                <td width="10%">
+                    <select name="operator">
+                        <option>-- Operator</option>
+                        <option {if $search.operator eq '>'}selected{/if} value=">">></option>
+                        <option {if $search.operator eq '>='}selected{/if} value=">=">>=</option>
+                        <option {if $search.operator eq '<'}selected{/if} value="<"><</option>
+                        <option {if $search.operator eq '<='}selected{/if} value="<="><=</option>
+                    </select>
+                </td>
+                <td>
+                    <input style="width: 10%" type="number" step="0.01" size="5" name="cs_nilai_un" value="{$search.cs_nilai_un|default:''}" />
+                </td>
+                <td  align="right">
+                    <input class="submit" name="save" type="submit" value="Cari" />
+                    <input class="submit" name="save" type="submit" value="Reset" />
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+<!-- notification template -->
+{include file="base/templates/notification.html"}
+<!-- end of notification template-->
+<form method="post" action="{$config->site_url('psb/seleksi/siswa_process')}">
+    <input type="hidden" value="{$psb_id}" name="psb_id">
+    <div style="margin: 0 auto">
+        <div class="navigation">
+            <div class="pageRow">
+                <div class="pageNav">
+                    <ul>
+                        <li class="info"><strong>{$pagination.total|default:0}</strong> Data Siswa yang belum di proses</li>{$pagination.data|default:''}
+                    </ul>
+                </div>
+                <div class="clear"></div>
+            </div>
+            <div class="navigation-button">
+                <ul>
+                    <li><a href="{$config->site_url('psb/seleksi/export_excel/')}/{$psb_id}"><img src="{$BASEURL}resource/doc/images/icon/icon.excel.png"  alt="" />Cetak Pengumuman</a></li>
+                    <li><a class="button reset-button close_psb" href="{$config->site_url('psb/seleksi/close_psb/')}/{$psb_id}"><img src="{$BASEURL}resource/doc/images/icon/icon.delete.png" alt="" /> Tutup PSB</a></li>
+                </ul>
+            </div>
+            <div class="clear"></div>
+        </div>
+        <div style="display: inline; float: left; width: 48%">
+            <table class="table-view">
+                <tr>
+                    <th width="3%"><input type="checkbox" class="check_all_left" /></th>
+                    <th width="8%">NIS</th>
+                    <th width="15%">Nama</th>
+                    <th width="10%">NEM</th>
+                </tr>
+                {foreach $rs_id as $result}
+                {if $result.cs_st == 'PROSES'}
+                {$jml_proses=1}
+                <tr>
+                    <td align="center"><input type="checkbox" class="check_item_left" name="cs_id_left[]" value="{$result.cs_id}" /></td>
+                    <td align="center">{$result.cs_nis}</td>
+                    <td align="center">{$result.cs_nama}</td>
+                    <td align="center">{$result.cs_nilai_un}</td>
+                </tr>    
+                {/if}
+                {/foreach}
+                {if $jml_proses eq 0}
+                <tr>
+                    <td colspan="6">Data tidak ditemukan!</td>
+                </tr>  
+                {/if}
+            </table>
+            <div style="float: right; margin-top: 20px">
+                <input class="button submit-button" name="process" type="submit" value="Diterima"/> &nbsp;  <input class="button submit-button" name="process" type="submit" value="Dicadangkan"/> &nbsp; <input class="button reset-button" name="process" type="submit" value="Ditolak"/>
+            </div>
+        </div>
+        <div style="display: inline; float: right; width: 48%" >
+
+            <table class="table-view">
+                <thead>
+                    <tr>
+                        <th width="3%"><input type="checkbox" class="check_all_right" /></th>
+                        <th width="8%">NIS</th>
+                        <th width="15%">Nama</th>
+                        <th width="10%">Status</th>
+                    </tr>  
+                </thead>
+                <tbody>
+                    {foreach $cs_processed as $result}
+                    {if $result.cs_st != 'PROSES'}
+                    {$jml_right = 1}
+                    <tr>
+                        <td align="center"><input type="checkbox" class="check_item_right" name="cs_id_right[]" value="{$result.cs_id}" /></td>
+                        <td align="center">{$result.cs_nis}</td>
+                        <td align="center">{$result.cs_nama}</td>
+                        <td align="center">{$result.cs_st}</td>
+                    </tr>
+                    {/if}
+                    {/foreach}
+                    {if $jml_right eq 0}
+                    <tr>
+                        <td colspan="6">Data tidak ditemukan!</td>
+                    </tr> 
+                    {/if}  
+                </tbody>
+            </table>  
+            <div class="navigation">
+                <div class="navigation-button">
+                    <ul>
+
+                        <li><button type="submit" class="button black-button" value="Reset"><img src="{$BASEURL}resource/doc/images/icon/back-icon.png" alt=""/>Reset</button></li>
+                    </ul>
+                </div>
+                <div class="clear"></div>
+            </div>
+        </div>
+    </div>
+</form>
+</div>
+<div class="clear"></div>
+</div>
+<br />
+</div>

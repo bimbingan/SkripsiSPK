@@ -1,0 +1,46 @@
+<div class="breadcrum">
+    <p>
+        <a href="#">Data Master</a><span></span>
+        <a href="{$config->site_url('master/jalurpsb')}">Jalur PSB</a><span></span>
+        <small>Ubah Data</small>
+    </p>
+    <div class="clear"></div>
+</div>
+<div class="navigation">
+    <div class="navigation-button">
+        <ul>
+            <li><a href="{$config->site_url('master/jalurpsb/')}" ><img src="{$BASEURL}resource/doc/images/icon/back-icon.png" alt="" />Back</a></li>
+        </ul>
+    </div>
+    <div class="clear"></div>
+</div>
+<!-- notification template -->
+{include file="base/templates/notification.html"}
+<!-- end of notification template-->
+<form action="{$config->site_url('master/jalurpsb/process_edit')}" method="post">
+    <input type="hidden" name="jalurpsb_id" value="{$result.jalurpsb_id}">
+    <table class="table-input" width="100%">
+        <tr>
+            <th colspan="2">Ubah Jalur PSB</th>
+        </tr>
+        <tr>
+            <td width="25%">Nama Jalur PSB</td>
+            <td width="75%">
+                <input type="text" id="jalurpsb_nama" size="50" name="jalurpsb_nama" value="{$result.jalurpsb_nama|default:''}">
+                <em>* wajib diisi</em>
+            </td>
+        </tr>
+
+        <tr class="submit-box">
+            <td colspan="2">
+                <input type="submit" tabindex="4" name="save" value="Simpan" class="submit-button">
+                <input type="reset" tabindex="5" name="save" value="Reset" class="reset-button">
+            </td>
+        </tr>
+    </table>
+</form>                
+</div>
+<div class="clear"></div>
+</div>
+<br />
+</div>

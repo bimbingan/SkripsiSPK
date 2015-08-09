@@ -1,0 +1,111 @@
+<script type="text/javascript">
+    $(document).ready(function() {
+        // select box perusahaan
+        $(".guru_id").select2({
+            allowClear: true
+        });
+        // date picker
+        $(".tanggal_mulai").datepicker({
+            yearRange: '1940:2100',
+            changeMonth: true,
+            changeYear: true,
+            showOn: 'both',
+            buttonImage: '{$BASEURL}resource/doc/images/icon/calendar.gif',
+            buttonImageOnly: true,
+            dateFormat: 'yy-mm-dd'
+        });
+        $(".tanggal_selesai").datepicker({
+            yearRange: '1940:2100',
+            changeMonth: true,
+            changeYear: true,
+            showOn: 'both',
+            buttonImage: '{$BASEURL}resource/doc/images/icon/calendar.gif',
+            buttonImageOnly: true,
+            dateFormat: 'yy-mm-dd'
+        });
+    });
+</script>
+<div class="breadcrum">
+    <p>
+        <a href="#">Data Master</a><span></span>
+        <a href="{$config->site_url('group/kepengurusan')}">Kepengurusan</a><span></span>
+        <a href="{$config->site_url('master/fungsional_pengurus')}">Pengurus Fungsional</a><span></span>
+        <small>Tambah Data</small>
+    </p>
+    <div class="clear"></div>
+</div>
+<div class="navigation">
+    <div class="navigation-button">
+        <ul>
+            <li><a href="{$config->site_url('master/fungsional_pengurus/')}" ><img src="{$BASEURL}resource/doc/images/icon/back-icon.png" alt="" />Back</a></li>
+        </ul>
+    </div>
+    <div class="clear"></div>
+</div>
+<!-- notification template -->
+{include file="base/templates/notification.html"}
+<!-- end of notification template-->
+<form action="{$config->site_url('master/fungsional_pengurus/process_add')}" method="post">   
+    <table class="table-input" width="100%">
+        <tr>
+            <th colspan="2">Tambah Fungsional Pengurus</th>
+        </tr>
+
+        <tr>
+            <td width="25%">Pengurus</td>
+            <td width="75%">
+                <select name="guru_id" class="guru_id">
+                    {foreach $rs_pengurus as $pengurus}
+                    <option value="{$pengurus.guru_id}">{$pengurus.guru_nama}</option>					
+                    {/foreach}
+                </select> &nbsp;
+                <em>* wajib diisi</em>
+
+            </td>
+        </tr>
+        <tr>
+            <td width="25%">Jabatan Fungsional</td>
+            <td width="75%">
+                <select name="fungsional_id">
+                    <option value="">-- Jabatan Fungsional</option>
+                    {foreach $rs_fungsional as $fungsional}
+                    <option value="{$fungsional.fungsional_id}">{$fungsional.fungsional_tingkat} - {$fungsional.fungsional_nama}</option>
+                    {/foreach}
+                </select>
+                <em>* wajib diisi</em>
+            </td>
+        </tr>
+
+        <tr>
+            <td width="25%">Tanggal Mulai</td>
+            <td width="75%">
+                <input type="text" class="tanggal_mulai" name="tanggal_mulai" />
+            </td>
+        </tr>
+        <tr>
+            <td width="25%">Tanggal Selesai</td>
+            <td width="75%">
+                <input type="text" class="tanggal_selesai" name="tanggal_selesai" />
+            </td>
+        </tr>
+        <tr>
+            <td width="25%">Status</td>
+            <td width="75%">
+                <input type="radio" value="1" checked="" name="fp_st">Aktif &nbsp;
+                <input type="radio" value="0" name="fp_st">Non Aktif
+            </td>
+        </tr>
+
+        <tr class="submit-box">
+            <td colspan="2">
+                <input type="submit" tabindex="4" name="save" value="Simpan" class="submit-button">
+                <input type="reset" tabindex="5" name="save" value="Reset" class="reset-button">
+            </td>
+        </tr>
+    </table>
+</form>
+</div>
+<div class="clear"></div>
+</div>
+<br />
+</div>

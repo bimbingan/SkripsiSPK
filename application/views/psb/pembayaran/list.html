@@ -1,0 +1,105 @@
+<script type="text/javascript">
+    $(document).ready(function() {
+        // date picker
+        $(".trx_date").datepicker({
+            yearRange: '1940:2050',
+            changeMonth: true,
+            changeYear: true,
+            showOn: 'both',
+            buttonImage: '{$BASEURL}resource/doc/images/icon/calendar.gif',
+            buttonImageOnly: true,
+            dateFormat: 'yy-mm-dd'
+        });
+
+    });
+</script>
+<div class="breadcrum">
+    <p>
+        <a href="#">PSB</a><span></span>
+        <small>Pembayaran Pendaftaran</small>
+    </p>
+    <div class="clear"></div>
+</div>
+<div class="search-box">
+    <h3><a href="#">Search</a></h3>
+    <form action="{$config->site_url('psb/pembayaran/search_process')}" method="post">
+        <table class="table-search" width="100%">
+            <tr>
+                <th>Calon Siswa</th>
+                <td>
+                    <input type="text" name="cs_nama" size="40" value="{$search.cs_nama}" placeholder="-- semua">
+                </td>
+                <th>Tanggal Transaksi</th>
+                <td>
+                    <input type="text" name="trx_date" class="trx_date" size="15" value="{$search.trx_date}" placeholder="-- semua">
+                </td>
+                <th>Status Transaksi</th>
+                <td>
+                    <select name="trx_st">
+                        <option {if $search.trx_st eq 'wait'}selected{/if} value="wait">WAIT</option>
+                        <option {if $search.trx_st eq 'lunas'}selected{/if} value="lunas">LUNAS</option>
+                    </select>
+                </td>
+                <td  align="right">
+                    <input class="submit" name="save" type="submit" value="Cari" />
+                    <input class="submit" name="save" type="submit" value="Reset" />
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+<div class="navigation">
+    <div class="pageRow">
+        <div class="pageNav">
+            <ul>
+                <li class="info"><strong>{$pagination.total|default:0}</strong> Data Kas Pendaftaran&nbsp;</li>{$pagination.data|default:''}
+            </ul>
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div class="navigation-button">
+        <ul>
+            <li><a href="{$config->site_url('psb/pembayaran/add')}"><img src="{$BASEURL}resource/doc/images/icon/add-icon.png" alt="" />Tambah Data</a></li>
+        </ul>
+    </div>
+    <div class="clear"></div>
+</div>
+<!-- notification template -->
+{include file="base/templates/notification.html"}
+<!-- end of notification template-->
+<table class="table-view" width="100%">
+    <tr>
+        <th width="3%">No</th>
+        <th width="10%">No. Kas</th>
+        <th width="20%">Nama Calon Siswa</th>
+        <th width="10%">Tanggal</th>
+        <th width="10%">Debit</th>
+        <th width="10%">Kredit</th>
+        <th width="10%">Status</th>
+        <th width="10%"></th>
+    </tr>
+    {foreach $rs_id as $result}
+    <tr class="data">
+        <td align="center">{$no++}.</td>
+        <td align="center">{$result.kas_no}</td>
+        <td>{$result.cs_nama}</td>
+        <td align="center">{$result.trx_date}</td>
+        <td align="right">{$result.debit|number_format:2:",":"."}</td>
+        <td align="right">{$result.kredit|number_format:2:",":"."}</td>
+        <td align="center">{$result.trx_st|upper}</td>
+        <td align="center">
+            <a href="{$config->site_url('psb/pembayaran/edit')}/{$result.kas_id|default:''}" class="button-edit">Edit</a>
+            <a href="{$config->site_url('psb/pembayaran/delete')}/{$result.kas_id|default:''}" class="button-hapus">Hapus</a>
+        </td>
+    </tr>
+    {foreachelse}
+    <tr>
+        <td colspan="8">Data tidak ditemukan!</td>
+    </tr>
+    {/foreach}
+</table>                
+</div>
+<div class="clear"></div>
+</div>
+<br />
+</div>

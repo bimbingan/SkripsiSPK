@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- head -->
+<head>
+    <meta http-equiv='Content-Type' content='text/html; charset=iso-8859-1' />
+    <meta name='description' content="{$site.meta_desc|default:''}" />
+    <meta name='keywords' content="{$site.meta_key|default:''}" />
+    <meta name='robots' content='index,follow' />
+    <title>{$page.nav_title|default:'Home'} - {$site.site_title|default:''}</title>
+    <link href="{$BASEURL}/resource/doc/images/icon/logo.png" rel="SHORTCUT ICON" />
+    <!-- themes style -->
+    <link rel="stylesheet" type="text/css" href="{$THEMESPATH}" media="screen" />
+    <!-- other style -->
+    {$LOAD_STYLE}
+</head>
+<!-- body -->
+<body  class="skin-green-light sidebar-mini">
+    <!-- load javascript -->
+    {$LOAD_JAVASCRIPT}
+    <!-- end of javascript	-->
+    <!-- layout -->
+    <div class="wrapper">
+        <header class="main-header">
+            <!-- Logo -->
+            <a href="http://localhost/skripsiSPK/index.php/home" class="logo">
+                <!-- mini logo for sidebar mini 50x50 pixels -->
+                <span class="logo-mini"><b>SPK</b></span>
+                <!-- logo for regular state and mobile devices -->
+                <span class="logo-lg"><b>SPK</b>&nbsp; Peminatan</span>
+            </a>
+            <!-- Header Navbar: style can be found in header.less -->
+            <nav class="navbar navbar-static-top" role="navigation">
+                <!-- Sidebar toggle button-->
+                <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+                    <span class="sr-only">Toggle navigation</span>
+                </a>
+                <div class="navbar-custom-menu">
+                    <ul class="nav navbar-nav">
+                        <li class="dropdown user user-menu">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+                                <img src="{$com_user.operator_photo}" class="user-image" alt="User Image">
+                                <span class="hidden-xs">{$com_user.operator_name}</span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <!-- User image -->
+                                <li class="user-header">
+                                    <img src="{$com_user.operator_photo}" class="img-circle" alt="User Image">
+                                    <p>
+                                        {$com_user.operator_name}
+                                    </p>
+                                    <p>
+                                        {$com_user.role_nm|capitalize}
+                                    </p>
+                                </li>
+                                <!-- Menu Footer-->
+                                <li class="user-footer">
+                                    <div class="pull-left">
+                                        <a href="#" class="btn btn-default btn-flat">Profile</a>
+                                    </div>
+                                    <div class="pull-right">
+                                        <a href="#" class="btn btn-default btn-flat">Sign out</a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </header>
+        <!-- Left side column. contains the logo and sidebar -->
+        <aside class="main-sidebar">
+            <!-- sidebar: style can be found in sidebar.less -->
+            <section class="sidebar">
+                <!-- Sidebar user panel -->
+                <div class="user-panel">
+                    <div class="image">
+                        <img width="500px" src="{$BASEURL}/resource/img/icon/logo.png" alt="Logo">
+                    </div>
+                </div>
+                <!-- search form -->
+                <form action="#" method="get" class="sidebar-form">
+                    <div class="input-group">
+                        <input type="text" name="q" class="form-control" placeholder="Search...">
+                        <span class="input-group-btn">
+                            <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i></button>
+                        </span>
+                    </div>
+                </form>
+                <!-- /.search form -->
+                <!-- sidebar menu: : style can be found in sidebar.less -->
+                {include file="$template_sidebar"}
+            </section>
+            <!-- /.sidebar -->
+        </aside>
+        <div class="content-wrapper">
+            {include file="$template_content"}
+        </div>
+        <footer class="main-footer">
+            Copyright &copy;2015 SMA Negeri 1 Bojong <br/>
+            sma_bojong@yahoo.com
+        </footer>
+    </div>
+
+    <!-- Confirmation Modal -->
+    <div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    ...
+                </div>
+                <div class="modal-body">
+                    ...
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <a class="btn btn-danger btn-ok">Delete</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</body>
+<!-- end body -->
+</html>

@@ -1,0 +1,57 @@
+<div class="breadcrum">
+    <p>
+        <a href="#">Data Master</a><span></span>
+        <a href="{$config->site_url('master/jurusan')}">Jurusan </a><span></span>
+        <small>Ubah Data</small>
+    </p>
+    <div class="clear"></div>
+</div>
+<div class="navigation">
+    <div class="navigation-button">
+        <ul>
+            <li><a href="{$config->site_url('master/jurusan/')}" ><img src="{$BASEURL}resource/doc/images/icon/back-icon.png" alt="" />Back</a></li>
+        </ul>
+    </div>
+    <div class="clear"></div>
+</div>
+<!-- notification template -->
+{include file="base/templates/notification.html"}
+<!-- end of notification template-->
+<form action="{$config->site_url('master/jurusan/process_edit')}" method="post">
+    <input type="hidden" name="jurusan_id" value="{$result.jurusan_id}">
+    <table class="table-input" width="100%">
+        <tr>
+            <th colspan="2">Ubah Jurusan </th>
+        </tr>
+        <tr>
+            <td width="25%">Nama Jurusan </td>
+            <td width="75%">
+                <input type="text" id="jurusan_nm" size="50" name="jurusan_nm" value="{$result.jurusan_nm|default:''}">
+                <em>* wajib diisi</em>
+            </td>
+        </tr>
+        <tr>
+            <td width="25%">Kode Mapel</td>
+            <td width="75%">
+                <input type="text" maxlength="3" size="5" name="kode_mapel" value="{$result.kode_mapel|default:''}" style="text-transform:uppercase">
+            </td>
+        </tr>
+        <tr>
+            <td width="25%">Kode Kelas</td>
+            <td width="75%">
+                <input type="text" maxlength="4" size="5" name="kode_kelas" value="{$result.kode_kelas|default:''}" style="text-transform:uppercase">
+            </td>
+        </tr>
+        <tr class="submit-box">
+            <td colspan="2">
+                <input type="submit" tabindex="4" name="save" value="Simpan" class="submit-button">
+                <input type="reset" tabindex="5" name="save" value="Reset" class="reset-button">
+            </td>
+        </tr>
+    </table>
+</form>                
+</div>
+<div class="clear"></div>
+</div>
+<br />
+</div>

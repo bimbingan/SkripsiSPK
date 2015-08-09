@@ -1,0 +1,98 @@
+<script type="text/javascript">
+    jQuery(document).ready(function($) {
+        $('.btn-delete').click(function(event) {
+
+        });
+    });
+</script>
+
+<section class="content-header">
+    <h1>Pengaturan Operator</h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-gear"></i> Settings</a></li>
+        <li><a href="#">Operator</a></li>
+    </ol>
+</section>
+<section class="content">
+    <div class="box box-primary">
+        <div class="box-header with-border">
+            <h3 class="box-title">Horizontal Form</h3>
+        </div><!-- /.box-header -->
+        <!-- form start -->
+        <div class="box-body">
+            <form class="form-horizontal" action="{$config->site_url('pengaturan/operator/proses_cari')}" method="post">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label for="nama" class="col-sm-2 control-label">Nama</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="col-sm-10 form-control" id="nama" name="operator_name" value="{$search.operator_name}" placeholder="-- semua --">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 pull-right action-right">
+                        <input class="btn btn-primary " name="save" type="submit" value="Cari">
+                        <input class="btn btn-danger" name="save" type="submit" value="Reset">
+                    </div>
+                </div>
+            </form>
+        </div><!-- /.box-body -->
+    </div>
+    <!-- notification template -->
+    {include file="base/templates/notification.html"}
+    <!-- end of notification template-->
+    <div class="box">
+        <div class="box-header with-border">
+            <h5 class="box-title">Data Operator<small></small></h5>
+            <div class="box-tools">
+                <a href="{$config->site_url('pengaturan/operator/add')}" class="btn btn-success btn-sm"><i class="fa fa-plus"></i>&nbsp; Tambah</a>
+            </div>
+        </div>
+        <div class="box-body">
+            <table id="example2" class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th width="2%">No</th>
+                        <th width="25%">Nama</th>
+                        <th width="20%">Jabatan</th>
+                        <th width="20%">E-mail</th>
+                        <th width="15%">Phone Number</th>
+                        <th width="12%">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {$no = 1}
+                    {foreach from=$rs_id item=result}
+                    <tr {if ($no % 2) <> 1}class="blink-row"{/if}>
+                        <td align="center">{$no++}.</td>
+                        <td>{$result.operator_name|upper}</td>
+                        <td>{$result.operator_jabatan|upper}</td>
+                        <td>{$result.user_mail}</td>
+                        <td align="center">{$result.operator_phone}</td>
+                        <td align="center">
+                            <a class="btn bg-olive btn-flat btn-sm" href="{$config->site_url('pengaturan/operator/edit/'|cat:$result.user_id|default:'')}" class="button-edit">Edit</a>
+                            <a
+                            class="btn btn-danger btn-flat btn-sm btn-delete"
+                            href="#"
+                            class="button-hapus" data-href="{$config->site_url('pengaturan/operator/delete/'|cat:$result.user_id|default:'')}"
+                            data-toggle="modal" data-target="#confirm-delete">Hapus</a>
+                        </td>
+                    </tr>
+                    {foreachelse}
+                    <tr>
+                        <td colspan="6">Data tidak ditemukan</td>
+                    </tr>
+                    {/foreach}
+                </tbody>
+            </table>
+        </div>
+        <div class="box-footer clearfix">
+            <div class="col-sm-6">
+                Menampilkan <b>{$pagination.start|default:0}</b> sampai <b>{$pagination.end|default:0}</b> dari <b>{$pagination.total|default:0}</b></strong> Data Operator
+            </div>
+            <ul class="pagination pagination-sm no-margin pull-right">
+                {$pagination.data|default:''}
+            </ul>
+        </div>
+    </div>
+</section>

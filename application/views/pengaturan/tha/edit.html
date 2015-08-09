@@ -1,0 +1,86 @@
+<div class="breadcrum">
+    <p>
+        <a href="#">Settings</a><span></span>
+        <a href="{$config->site_url('pengaturan/tha')}">Tahun Ajaran</a><span></span>
+        <small>Ubah Data</small>
+    </p>
+    <div class="clear"></div>
+</div>
+<div class="navigation">
+    <div class="navigation-button">
+        <ul>
+            <li><a href="{$config->site_url('pengaturan/tha/')}" ><img src="{$BASEURL}resource/doc/images/icon/back-icon.png" alt="" />Back</a></li>
+        </ul>
+    </div>
+    <div class="clear"></div>
+</div>
+<!-- notification template -->
+{include file="base/templates/notification.html"}
+<!-- end of notification template-->
+<form action="{$config->site_url('pengaturan/tha/process_edit')}" method="post" id="edit-tahun-ajaran">
+    <input type="hidden" name="tha_id" value="{$result.tha_id}">
+    <table class="table-input" width="100%">
+        <tr>
+            <th colspan="2">Ubah Tahun Ajaran</th>
+        </tr>
+        <tr>
+            <td width="25%">Tahun Ajaran</td>
+            <td width="75%">
+                <input type="text" id="first_year" value="{$tahun[0]}" name="first_year"> - 
+                <input type="text" id="second_year" value="{$tahun[1]}" name="second_year">
+                <em>* wajib diisi</em>
+            </td>
+        </tr>
+        <tr>
+            <td width="25%">Status Tahun Ajaran</td>
+            <td width="75%">
+                <input type="radio" name="tha_aktif" {if $result.tha_aktif eq 1} checked="" {/if} id="tha_aktif" value="1" /> Aktif
+                       <input type="radio" name="tha_aktif" {if $result.tha_aktif eq 0} checked="" {/if} id="tha_non_aktif" value="0" /> Tidak Aktif
+            </td>
+        </tr>
+        <tr>
+            <td  width="25%">Semester</td>
+            <td width="75%">
+                <select name="tha_semester">
+                    <option {if $result.tha_semester eq 1} selected="" {/if} value="1">Ganjil</option>
+                    <option {if $result.tha_semester eq 2} selected="" {/if} value="2">Genap</option>
+                </select>
+            </td>
+        </tr>
+
+        <tr class="submit-box">
+            <td colspan="2">
+                <input type="submit" tabindex="4" name="save" value="Simpan" class="submit-button">
+                <input type="reset" tabindex="5" name="save" value="Reset" class="reset-button">
+            </td>
+        </tr>
+    </table>
+</form>                
+</div>
+<div class="clear"></div>
+</div>
+<br />
+</div>
+
+<!-- script -->
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("#first_year").change(function() {
+            var year = parseInt($(this).val());
+            $("#second_year").val(year + 1);
+        });
+        $("#second_year").change(function() {
+            var year = parseInt($(this).val());
+            $("#first_year").val(year - 1);
+        });
+        $("#edit-tahun-ajaran").submit(function(e) {
+            if ($('input[name="tha_aktif"]:checked').val() == 1) {
+                if (!confirm("Hanya 1 tahun ajaran yang bisa aktif, tahun ajaran yang lain akan non-aktif. Apakah anda yakin?")) {
+                    e.preventDefault();
+                }
+            }
+        })
+    });
+
+</script>
+<!-- end of script -->

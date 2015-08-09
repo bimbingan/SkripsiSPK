@@ -1,0 +1,65 @@
+<script type="text/javascript">
+    $(document).ready(function() {
+
+        $('#calendar').fullCalendar({
+            header: {
+                left: 'prev,next today',
+                center: 'title',
+            },
+            defaultDate: '2015-07-12',
+            editable: true,
+            eventLimit: true, // allow "more" link when too many events
+            events: {
+                url: "{$config->site_url('kepegawaian/cuti/get_json_data')}",
+                error: function() {
+                    $('#script-warning').show();
+                }
+            },
+            loading: function(bool) {
+                $('#loading').toggle(bool);
+            }
+        });
+        $('#datepicker').datepicker({
+            inline: true,
+            onSelect: function(dateText, inst) {
+                var d = new Date(dateText);
+                $('#calendar').fullCalendar('gotoDate', d);
+            }
+        });
+    });
+</script>
+<style type="text/css">
+    #calendar {
+        max-width: 900px;
+        margin : 20px auto;
+        padding: 0 10px;
+        font-size: 12px;
+    }
+    .content #calendar a{
+        color: #FFF;
+    }
+</style>
+<div class="breadcrum">
+    <p>
+        <a href="#">Kepegawaian</a><span></span>
+        <small>Kalender Cuti</small>
+    </p>
+    <div class="clear"></div>
+</div>
+<div class="sub-nav-content">
+    <ul>
+        <li><a href="{$config->site_url('kepegawaian/cuti')}" >Data Cuti</a></li>
+        <li><a href="{$config->site_url('master/cuti/kalender')}" class="active">Kalender Cuti</a></li>
+    </ul>
+    <div class="clear"></div>
+</div>
+<div class="main-menu">
+    <div id='calendar'></div>
+    <!-- <input id='datepicker' type="text" /> -->
+
+</div>
+</div>
+<div class="clear"></div>
+</div>
+<br />
+</div>

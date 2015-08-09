@@ -1,0 +1,41 @@
+<div class="sub-nav-content">
+    <ul>
+        <li><a href="{$config->site_url('operator/account_settings/data_pribadi/')}">Data Pribadi</a></li>
+        <li><a href="{$config->site_url('operator/account_settings/user_account/')}">User Account</a></li>
+        <li><a href="{$config->site_url('operator/account_settings/change_role/')}" class="active">Change Roles</a></li>
+    </ul>
+    <div class="clear"></div>
+    <div class="sub-content">
+
+        <!-- notification template -->
+        {include file="base/templates/notification.html"}
+        <!-- end of notification template-->
+        <form action="{$config->site_url('operator/account_settings/process_update_role')}" method="post" onsubmit="return confirm('Apakah anda yakin akan merubah hak akses anda sekarang?');">
+            <table class="table-input" width="100%">
+                <tr>
+                    <th colspan="2">Change Role</th>
+                </tr>
+                <tr>
+                    <td width='15%'>Active Role</td>
+                    <td width='85%'><b>{$com_user.role_nm|upper|default:''}</b></td>
+                </tr>
+                <tr>
+                    <td>Change To</td>
+                    <td>
+                        <select name="role_id">
+                            <option value=""></option>
+                            {foreach from=$rs_roles item=data}
+                            <option value="{$data.role_id}">{$data.role_nm|upper}</option>
+                            {/foreach}
+                        </select>
+                    </td>
+                </tr>
+                <tr class="submit-box">
+                    <td colspan="2">
+                        <input name="save" value="Change" class="submit-button" type="submit"/>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</div>

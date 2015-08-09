@@ -1,0 +1,88 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <!-- head -->
+    <head>
+        <meta http-equiv='Content-Type' content='text/html; charset=iso-8859-1' />
+        <meta name='description' content="{$site.meta_desc|default:''}" />
+        <meta name='keywords' content="{$site.meta_key|default:''}" />
+        <meta name='robots' content='index,follow' />
+        <title>{$page.nav_title|default:'Home'} - {$site.site_title|default:''}</title>
+        <link href="{$BASEURL}/resource/doc/images/icon/logo.png" rel="SHORTCUT ICON" />
+        <!-- themes style -->
+        <link rel="stylesheet" type="text/css" href="{$THEMESPATH}" media="screen" />
+        <!-- other style -->
+        {$LOAD_STYLE}
+    </head>
+    <!-- body -->
+    <body class="common">
+        <!-- load javascript -->
+        {$LOAD_JAVASCRIPT}
+        <!-- end of javascript	-->
+        <script type="text/javascript">
+            $(document).ready(function() {
+                // dropdown menu
+                $(".parent").click(function() {
+                    $(this).toggleClass('down');
+                    $(this).siblings().slideToggle(100);
+                    return false;
+                });
+            });
+        </script>
+        <!-- layout -->
+        <div class="page">
+            <div class="header">
+                <div class="header-title">
+                    <img src="{$BASEURL}/resource/doc/images/icon/logo.png" alt="" />
+                    <br>
+                    <h1>&nbsp; Sistem Informasi Akademik</h1>
+                </div>
+                <div class="clear"></div>
+                <div class="header-info">
+                    <div class="header-info-date">
+                        <p style="text-align: center;">{$tanggal}</p>
+                    </div>
+                    <div class="header-info-shortcut">
+                        <ul>    
+                            <li>
+                                <a href="{$config->site_url('guest/psb')}">
+                                    Pendaftaran Siswa Baru
+                                    <br />
+                                </a> 
+                            </li>
+                            <li>
+                                <a href="{$config->site_url('guest/psb/cetak_bukti')}">
+                                    Cetak Bukti Pendaftaran
+                                    <br />
+                                </a> 
+                            </li>
+                            <li>
+                                <a href="{$config->site_url('guest/psb/pengumuman')}">
+                                    Pengumuman PSB
+                                    <br />
+                                </a> 
+                            </li>
+                            <li>
+                                <a href="{$config->site_url('guest/psb/pengumuman')}">
+                                    Kalender PSB
+                                    <br />
+                                </a> 
+                            </li>
+                            
+                        </ul>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+            </div>
+            <div class="main-content">
+               
+                <div class="content">
+                    {include file="$template_content"}
+                </div>
+                <div class="clear"></div>
+            </div>
+            <br />
+        </div>
+        <!-- end of layout	-->
+    </body>
+    <!-- end body -->
+</html>

@@ -1,0 +1,88 @@
+<script type="text/javascript">
+    $(document).ready(function() {
+        // select box perusahaan
+        $(".psb_tha").select2({
+            allowClear: true
+        });
+    });
+</script> 
+<div class="breadcrum">
+    <p>
+        <a href="#">PSB</a><span></span>
+        <small>Seleksi Siswa Baru</small>
+    </p>
+    <div class="clear"></div>
+</div>
+<div class="search-box">
+    <h3><a href="#">Search</a></h3>
+    <form action="{$config->site_url('psb/seleksi/search_psb_process')}" method="post">
+        <table class="table-search" width="100%">
+            <tr>
+                <th>Jalur</th>
+                <td>
+                    <select name="jalurpsb_id">
+                        <option value="">-- semua --</option>
+                        {foreach $rs_jalur as $jalur}
+                        <option {if $search.jalurpsb_id eq $jalur.jalurpsb_id}selected{/if} value="{$jalur.jalurpsb_id}">{$jalur.jalurpsb_nama}</option>
+                        {/foreach}
+                    </select>
+                </td>
+                <th>Tahun Aktif</th>
+                <td>
+                    <input type="text" name="psb_tha" placeholder="-- semua --" value="{$search.psb_tha|default:''}">
+                </td>
+                <td  align="right">
+                    <input class="submit" name="save" type="submit" value="Cari" />
+                    <input class="submit" name="save" type="submit" value="Reset" />
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+<div class="navigation">
+    <div class="pageRow">
+        <div class="pageNav">
+            <ul>
+                <li class="info"><strong>{$pagination.total|default:0}</strong> Data Seleksi&nbsp;</li>{$pagination.data|default:''}
+            </ul>
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div class="clear"></div>
+</div>
+<!-- notification template -->
+{include file="base/templates/notification.html"}
+<!-- end of notification template-->
+<table class="table-view" width="100%">
+    <tr>
+        <th width="3%">No</th>
+        <th width="15%">Jalur</th>
+        <th width="15%">Tahun Aktif</th>
+        <th width="10%">Jumlah Terdaftar</th>
+        <th width="10%">Jumlah Diterima</th>
+        <th width="10%">Jumlah Ditolak</th>
+        <th width="10%"></th>
+    </tr>
+    {foreach $rs_id as $result}
+    <tr>
+        <td align="center">{$no++}.</td>
+        <td align="center">{$result.jalurpsb_nama}</td>
+        <td align="center">{$result.psb_tha}</td>
+        <td align="center">{$result.jml_terdaftar}</td>
+        <td align="center">{$result.diterima}</td>
+        <td align="center">{$result.ditolak}</td>
+        <td align="center">
+            <a href="{$config->site_url('psb/seleksi/process')}/{$result.psb_id|default:''}" class="button-edit">Proses</a>
+        </td>
+    </tr>
+    {foreachelse}
+    <tr>
+        <td colspan="7">Data tidak ditemukan!</td>
+    </tr>
+    {/foreach}
+</table>                
+</div>
+<div class="clear"></div>
+</div>
+<br />
+</div>

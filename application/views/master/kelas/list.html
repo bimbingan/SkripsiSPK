@@ -1,0 +1,107 @@
+<div class="breadcrum">
+    <p>
+        <a href="#">Data Master</a><span></span>
+        <small>Kelas</small>
+    </p>
+    <div class="clear"></div>
+</div>
+<div class="search-box">
+    <h3><a href="#">Search</a></h3>
+    <form action="{$config->site_url('master/kelas/search_process')}" method="post">
+        <table class="table-search" width="100%">
+            <tr>
+                <td>Nama Kelas</td>
+                <td>
+                    <input type="text" size="28" name="kelas_nm" placeholder="-- semua --" value="{$search.kelas_nm|default:''}">
+                </td>
+                <td>Tingkat</td>
+                <td>
+                    <select name="grade_id">
+                        <option value="">-- semua --</option>
+                        {foreach $rs_grade as $grade}
+                        <option {if $search.grade_id eq $grade.grade_id}selected{/if} value="{$grade.grade_id}">{$grade.grade_nm}</option>
+                        {/foreach}
+                    </select>
+                </td>
+                <td  align="right">
+                    <input class="submit" name="save" type="submit" value="Cari" />
+                    <input class="submit" name="save" type="submit" value="Reset" />
+                </td>
+            </tr>
+            <tr>
+                <td>Jurusan</td>
+                <td>
+                    <select name="jurusan_id">
+                        <option value="">-- semua --</option>
+                        {foreach $rs_jurusan as $jurusan}
+                        <option {if $search.jurusan_id eq $jurusan.jurusan_id}selected{/if} value="{$jurusan.jurusan_id}">{$jurusan.jurusan_nm}</option>
+                        {/foreach}
+                    </select>
+                </td>
+                <td>Status</td>
+                <td>
+                    <select name="kelas_st">
+                        <option value="">-- semua --</option>
+                        <option {if $search.kelas_st eq 'AKTIF'}selected{/if} value="AKTIF">AKTIF</option>
+                        <option {if $search.kelas_st eq 'STOP'}selected{/if} value="STOP">NON-AKTIF</option>
+                    </select>
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+<div class="navigation">
+    <div class="pageRow">
+        <div class="pageNav">
+            <ul>
+                <li class="info"><strong>{$pagination.total|default:0}</strong> Data Tingkat Kelas&nbsp;</li>{$pagination.data|default:''}
+            </ul>
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div class="navigation-button">
+        <ul>
+            <li><a href="{$config->site_url('master/kelas/add')}"><img src="{$BASEURL}resource/doc/images/icon/add-icon.png" alt="" />Tambah Data</a></li>
+        </ul>
+    </div>
+    <div class="clear"></div>
+</div>
+<!-- notification template -->
+{include file="base/templates/notification.html"}
+<!-- end of notification template-->
+<table class="table-view" width="100%">
+    <tr>
+        <th width="5%">No</th>
+        <th width="10%">Nama Kelas</th>
+        <th width="5%">Tingkat</th>
+        <th width="15%">Jurusan</th>
+        <th width="5%">Kuota</th>
+        <th width="8%">Status</th>
+        <th width="15%">Wali Kelas</th>
+        <th width="10%"></th>
+    </tr>
+    {foreach $rs_id as $result}
+    <tr>
+        <td align="center">{$no++}.</td>
+        <td>{$result.kelas_nm}</td>
+        <td align="center">{$result.grade_nm}</td>
+        <td>{$result.jurusan_nm}</td>
+        <td align="center">{$result.kuota}</td>
+        <td>{$result.kelas_st}</td>
+        <td>{$result.guru_nama}</td>
+        <td align="center">
+            <a href="{$config->site_url('master/kelas/edit')}/{$result.kelas_id|default:''}" class="button-edit">Edit</a>
+            <a href="{$config->site_url('master/kelas/delete')}/{$result.kelas_id|default:''}" class="button-hapus">Hapus</a>
+        </td>
+    </tr>
+    {foreachelse}
+    <tr>
+        <td colspan="8">Data tidak ditemukan!</td>
+    </tr>
+    {/foreach}
+</table>                
+</div>
+<div class="clear"></div>
+</div>
+<br />
+</div>

@@ -1,0 +1,120 @@
+<script type="text/javascript">
+    $(document).ready(function() {
+        // select box perusahaan
+        $(".psb_tha").select2({
+            allowClear: true
+        });
+        // date picker
+        $(".psb_tglmulai").datepicker({
+            yearRange: '1940:2050',
+            changeMonth: true,
+            changeYear: true,
+            showOn: 'both',
+            buttonImage: '{$BASEURL}resource/doc/images/icon/calendar.gif',
+            buttonImageOnly: true,
+            dateFormat: 'yy-mm-dd'
+        });
+        $(".psb_tglakhir").datepicker({
+            yearRange: '1940:2050',
+            changeMonth: true,
+            changeYear: true,
+            showOn: 'both',
+            buttonImage: '{$BASEURL}resource/doc/images/icon/calendar.gif',
+            buttonImageOnly: true,
+            dateFormat: 'yy-mm-dd'
+        });
+    });
+</script> 
+<div class="breadcrum">
+    <p>
+        <a href="#">Data Master</a><span></span>
+        <a href="{$config->site_url('master/psb')}">PSB</a><span></span>
+        <small>Ubah Data</small>
+    </p>
+    <div class="clear"></div>
+</div>
+<div class="navigation">
+    <div class="navigation-button">
+        <ul>
+            <li><a href="{$config->site_url('master/psb/')}" ><img src="{$BASEURL}resource/doc/images/icon/back-icon.png" alt="" />Back</a></li>
+        </ul>
+    </div>
+    <div class="clear"></div>
+</div>
+<!-- notification template -->
+{include file="base/templates/notification.html"}
+<!-- end of notification template-->
+<form action="{$config->site_url('master/psb/process_edit')}" method="post" id="edit-tahun-ajaran">
+    <input type="hidden" name="psb_id" value="{$result.psb_id}">
+    <table class="table-input" width="100%">
+        <tr>
+            <th colspan="2">Ubah PSB</th>
+        </tr>
+        <tr>
+            <td width="25%">Tahun Ajaran</td>
+            <td width="75%">
+                <select name="psb_tha" class="psb_tha">
+                    <option value="" selected="">-- Pilih Tahun Ajaran</option>
+                    {foreach $rs_tha as $tha}
+                    <option {if $result.psb_tha eq $tha.tha_tahun_ajaran}selected{/if} value="{$tha.tha_tahun_ajaran}">
+                        {$tha.tha_tahun_ajaran}
+                </option>
+                {/foreach}
+            </select>
+            <em>* wajib diisi</em>
+        </td>
+    </tr>
+    <tr>
+        <td width="25%">Jalur PSB</td>
+        <td width="75%">
+            <select name="jalurpsb_id" class="jalurpsb_id">
+                <option value="" selected="">-- Pilih Jalur PSB</option>
+                {foreach $rs_jalur as $jalur}
+                <option {if $result.jalurpsb_id eq $jalur.jalurpsb_id}selected{/if} value="{$jalur.jalurpsb_id}">
+                    {$jalur.jalurpsb_nama}
+            </option>
+            {/foreach}
+        </select> &nbsp;
+    </td>
+</tr>
+<tr>
+    <td width="25%">Nilai Minimal</td>
+    <td width="75%">
+        <input type="text" size="5" name="min_nilai" value="{$result.min_nilai}">
+    </td>
+</tr>
+<tr>
+    <td>Status</td>
+    <td>
+        <input type="radio" name="psb_st" {if $result.psb_st eq 'stop'}checked{/if}  value="stop">Stop
+               <input type="radio" name="psb_st" {if $result.psb_st eq 'start'}checked{/if} value="start">Start
+               <input type="radio" name="psb_st" {if $result.psb_st eq 'wait'}checked{/if} value="wait">Wait
+    </td>
+</tr>
+
+<tr>
+    <td>Tanggal Mulai</td>
+    <td>
+        <input type="text" name="psb_tglmulai" class="psb_tglmulai" value="{$result.psb_tglmulai}">
+    </td>
+</tr>
+<tr>
+    <td>Tanggal Berakhir</td>
+    <td>
+        <input type="text" name="psb_tglakhir" class="psb_tglakhir" value="{$result.psb_tglakhir}">
+    </td>
+</tr>
+
+<tr class="submit-box">
+    <td colspan="2">
+        <input type="submit" tabindex="4" name="save" value="Simpan" class="submit-button">
+        <input type="reset" tabindex="5" name="save" value="Reset" class="reset-button">
+    </td>
+</tr>
+</table>
+</form>                
+</div>
+<div class="clear"></div>
+</div>
+<br />
+</div>

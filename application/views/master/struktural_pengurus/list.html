@@ -1,0 +1,124 @@
+<div class="breadcrum">
+    <p>
+        <a href="#">Data Master</a><span></span>
+        <a href="{$config->site_url('group/kepengurusan')}">Kepengurusan</a><span></span>
+        <small>Pengurus Struktural</small>
+    </p>
+    <div class="clear"></div>
+</div>
+<div class="sub-nav-content">
+    <ul>
+        <li><a href="{$config->site_url('master/pengurussekolah')}">Profil Pengurus</a></li>
+        <li><a href="{$config->site_url('master/struktural_pengurus')}" class="active">Pengurus Struktural</a></li>
+        <li><a href="{$config->site_url('master/fungsional_pengurus')}">Pengurus Fungsional</a></li>
+        <li><a href="{$config->site_url('')}">Struktur Organisasi Sekolah</a></li>
+    </ul>
+    <div class="clear"></div>
+</div>
+<div class="search-box">
+    <h3><a href="#">Search</a></h3>
+    <form action="{$config->site_url('master/struktural_pengurus/search_process')}" method="post">
+        <table class="table-search" width="100%">
+            <tr>
+                <td>Jabatan Struktural</td>
+                <td>
+                    <select name="struktural_id">
+                        <option value="">-- Jabatan Struktural</option>
+                        {foreach $rs_struktural as $struktural}
+                        <option {if $search.struktural_id eq $struktural.struktural_id}selected{/if} value="{$struktural.struktural_id}">{$struktural.struktural_nm}</option>						
+                        {/foreach}s
+                    </select>
+                </td>
+                <td>Pengurus</td>
+                <td>
+                    <input type="text" size="25" placeholder="-- semua --" value="{$search.guru_nama}" name="guru_nama" />
+                </td>
+                <td  align="right">
+                    <input class="submit" name="save" type="submit" value="Cari" />
+                    <input class="submit" name="save" type="submit" value="Reset" />
+                </td>
+            </tr>
+            <tr>
+                <td>Jabatan Pengurus </td>
+                <td>
+                    <select name="jabatan_id">
+                        <option value="">-- Induk</option>
+
+                        {foreach $rs_jabatan as $jabatan}
+                        <option {if $search.jabatan_id eq $jabatan.jabatan_id}selected{/if} value="{$jabatan.jabatan_id}">{$jabatan.jabatan_nama}</option>						
+                        {/foreach}
+                    </select>
+                </td>
+                <td>Status </td>
+                <td>
+                    <select name="sp_st">
+                        <option {if $search.sp_st === "%"}selected{/if} value="%" >-- Status</option>
+                        <option {if $search.sp_st eq "1"}selected{/if} value="1">Aktif</option>
+                        <option {if $search.sp_st == "0"}selected{/if} value="0">Non Aktif</option>
+                    </select>
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+<div class="navigation">
+    <div class="pageRow">
+        <div class="pageNav">
+            <ul>
+                <li class="info"><strong>{$pagination.total|default:0}</strong> Data Struktural Pengurus&nbsp;</li>{$pagination.data|default:''}
+            </ul>
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div class="navigation-button">
+        <ul>
+            <li><a href="{$config->site_url('master/struktural_pengurus/add')}"><img src="{$BASEURL}resource/doc/images/icon/add-icon.png" alt="" />Tambah Data</a></li>
+        </ul>
+    </div>
+    <div class="clear"></div>
+</div>
+<!-- notification template -->
+{include file="base/templates/notification.html"}
+<!-- end of notification template-->
+<table class="table-view" width="100%">
+    <tr>
+        <th width="3%">No</th>
+        <th width="20%">Nama Pengurus</th>
+        <th width="15%">Jabatan Struktural</th>
+        <th width="15%">Jabatan Pengurus</th>
+        <th width="10%">Tanggal Mulai</th>
+        <th width="10%">Tanggal Selesai</th>
+        <th width="5%">Status</th>
+        <th width="12%"></th>
+    </tr>
+    {foreach $rs_id as $result}
+    <tr>
+        <td align="center">{$no++}.</td>
+        <td>{$result.guru_nama}</td>
+        <td>{$result.struktural_nm}</td>
+        <td>{$result.jabatan_nama}</td>
+        <td align="center">{$result.tanggal_mulai|date_format:"%e %B %Y"}</td>
+        <td align="center">{$result.tanggal_selesai|date_format:"%e %B %Y"}</td>
+        <td align="center">
+            {if $result.sp_st eq  1}
+            AKTIF
+            {else}
+            NON AKTIF
+            {/if}
+        </td>
+        <td align="center">
+            <a href="{$config->site_url('master/struktural_pengurus/edit')}/{$result.sp_id|default:''}" class="button-edit">Edit</a>
+            <a href="{$config->site_url('master/struktural_pengurus/delete')}/{$result.sp_id|default:''}" class="button-hapus">Hapus</a>
+        </td>
+    </tr>
+    {foreachelse}
+    <tr>
+        <td colspan="8">Data tidak ditemukan!</td>
+    </tr>
+    {/foreach}
+</table>                
+</div>
+<div class="clear"></div>
+</div>
+<br />
+</div>

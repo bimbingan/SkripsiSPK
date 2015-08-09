@@ -1,0 +1,58 @@
+<div class="breadcrum">
+    <p>
+        <a href="#">Data Master</a><span></span>
+        <a href="{$config->site_url('master/mapelpsb')}">Mata Pelajaran PSB</a><span></span>
+        <small>Tambah Data</small>
+    </p>
+    <div class="clear"></div>
+</div>
+<div class="navigation">
+    <div class="navigation-button">
+        <ul>
+            <li><a href="{$config->site_url('master/mapelpsb/')}" ><img src="{$BASEURL}resource/doc/images/icon/back-icon.png" alt="" />Back</a></li>
+        </ul>
+    </div>
+    <div class="clear"></div>
+</div>
+<!-- notification template -->
+{include file="base/templates/notification.html"}
+<!-- end of notification template-->
+<form action="{$config->site_url('master/mapelpsb/process_add')}" method="post">   
+    <table class="table-input" width="100%">
+        <tr>
+            <th colspan="2">Tambah Mata Pelajaran PSB</th>
+        </tr>
+        <tr>
+            <td width="25%">Kode Mata Pelajaran PSB</td>
+            <td width="75%">
+                {$new_id}
+                <input type="hidden" id="mapel_cd" value="{$new_id}" maxlength="5" size="5" name="mapel_cd">
+            </td>
+        </tr>
+        <tr>
+            <td width="25%">Nama Mata Pelajaran PSB</td>
+            <td width="75%">
+                <input type="text" id="mapel_nama" size="40" name="mapel_nama">
+                <em>* wajib diisi</em>
+            </td>
+        </tr>
+        <tr>
+            <td width="25%">Keterangan</td>
+            <td width="75%">
+                <textarea name="mapel_keterangan" rows="5" cols="50"></textarea>
+            </td>
+        </tr>
+
+        <tr class="submit-box">
+            <td colspan="2">
+                <input type="submit" tabindex="4" name="save" value="Simpan" class="submit-button">
+                <input type="reset" tabindex="5" name="save" value="Reset" class="reset-button">
+            </td>
+        </tr>
+    </table>
+</form>
+</div>
+<div class="clear"></div>
+</div>
+<br />
+</div>

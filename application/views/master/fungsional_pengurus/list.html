@@ -1,0 +1,124 @@
+<script type="text/javascript">
+    $(document).ready(function() {
+        // select box perusahaan
+        $(".guru_id").select2({
+            allowClear: true
+        });
+    });
+</script>
+
+<div class="breadcrum">
+    <p>
+        <a href="#">Data Master</a><span></span>
+        <a href="{$config->site_url('group/kepengurusan')}">Kepengurusan</a><span></span>
+        <small>Pengurus Fungsional</small>
+    </p>
+    <div class="clear"></div>
+</div>
+<div class="sub-nav-content">
+    <ul>
+        <li><a href="{$config->site_url('master/pengurussekolah')}">Profil Pengurus</a></li>
+        <li><a href="{$config->site_url('master/struktural_pengurus')}">Pengurus Struktural</a></li>
+        <li><a href="{$config->site_url('master/fungsional_pengurus')}" class="active">Pengurus Fungsional </a></li>
+        <li><a href="{$config->site_url('')}">Struktur Organisasi Sekolah</a></li>
+    </ul>
+    <div class="clear"></div>
+</div>
+<div class="search-box">
+    <h3><a href="#">Search</a></h3>
+    <form action="{$config->site_url('master/fungsional_pengurus/search_process')}" method="post">
+        <table class="table-search" width="100%">
+            <tr>
+                <td>Jabatan Fungsional </td>
+                <td>
+                    <select name="fungsional_id">
+                        <option value="">-- Jabatan Fungsional</option>
+                        {foreach $rs_fungsional as $fungsional}
+                        <option {if $search.fungsional_id eq $fungsional.fungsional_id}selected{/if} value="{$fungsional.fungsional_id}">{$fungsional.fungsional_tingkat} - {$fungsional.fungsional_nama}</option>
+                        {/foreach}
+                    </select>
+                </td>
+                <td>Pengurus </td>
+                <td>
+                    <select name="guru_id" class="guru_id">
+                        <option value="">-- Pengurus</option>
+                        {foreach $rs_pengurus as $pengurus}
+                        <option {if $search.guru_id eq $pengurus.guru_id}selected{/if} value="{$pengurus.guru_id}">{$pengurus.guru_nama}</option>
+                        {/foreach}
+                    </select>
+                </td>
+                <td>Status </td>
+                <td>
+                    <select name="fp_st">
+                        <option {if $search.fp_st === "%"}selected{/if} value="%" >-- Status</option>
+                        <option {if $search.fp_st eq 1}selected{/if} value="1">Aktif</option>
+                        <option {if $search.fp_st === "0"}selected{/if} value="0">Non Aktif</option>
+                    </select>
+                </td>
+                <td  align="right">
+                    <input class="submit" name="save" type="submit" value="Cari" />
+                    <input class="submit" name="save" type="submit" value="Reset" />
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+<div class="navigation">
+    <div class="pageRow">
+        <div class="pageNav">
+            <ul>
+                <li class="info"><strong>{$pagination.total|default:0}</strong> Data Fungsional Pengurus&nbsp;</li>{$pagination.data|default:''}
+            </ul>
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div class="navigation-button">
+        <ul>
+            <li><a href="{$config->site_url('master/fungsional_pengurus/add')}"><img src="{$BASEURL}resource/doc/images/icon/add-icon.png" alt="" />Tambah Data</a></li>
+        </ul>
+    </div>
+    <div class="clear"></div>
+</div>
+<!-- notification template -->
+{include file="base/templates/notification.html"}
+<!-- end of notification template-->
+<table class="table-view" width="100%">
+    <tr>
+        <th width="3%">No</th>
+        <th width="20%">Nama Pengurus</th>
+        <th width="15%">Jabatan Fungsional</th>
+        <th width="10%">Tanggal Mulai</th>
+        <th width="10%">Tanggal Selesai</th>
+        <th width="5%">Status</th>
+        <th width="12%"></th>
+    </tr>
+    {foreach $rs_id as $result}
+    <tr>
+        <td align="center">{$no++}.</td>
+        <td>{$result.guru_nama}</td>
+        <td>{$result.fungsional_tingkat} - {$result.fungsional_nama}</td>
+        <td align="center">{$result.tanggal_mulai|date_format:"%e %B %Y"}</td>
+        <td align="center">{$result.tanggal_selesai|date_format:"%e %B %Y"}</td>
+        <td align="center">
+            {if $result.fp_st eq  1}
+            AKTIF
+            {else}
+            NON AKTIF
+            {/if}
+        </td>
+        <td align="center">
+            <a href="{$config->site_url('master/fungsional_pengurus/edit')}/{$result.fp_id|default:''}" class="button-edit">Edit</a>
+            <a href="{$config->site_url('master/fungsional_pengurus/delete')}/{$result.fp_id|default:''}" class="button-hapus">Hapus</a>
+        </td>
+    </tr>
+    {foreachelse}
+    <tr>
+        <td colspan="8">Data tidak ditemukan!</td>
+    </tr>
+    {/foreach}
+</table>                
+</div>
+<div class="clear"></div>
+</div>
+<br />
+</div>

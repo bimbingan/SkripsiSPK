@@ -1,0 +1,94 @@
+<div class="breadcrum">
+    <p>
+        <a href="#">Data Master</a><span></span>
+        <a href="{$config->site_url('master/mapel')}">Mata Pelajaran</a><span></span>
+        <small>Ubah Data</small>
+    </p>
+    <div class="clear"></div>
+</div>
+<div class="navigation">
+    <div class="navigation-button">
+        <ul>
+            <li><a href="{$config->site_url('master/mapel/')}" ><img src="{$BASEURL}resource/doc/images/icon/back-icon.png" alt="" />Back</a></li>
+        </ul>
+    </div>
+    <div class="clear"></div>
+</div>
+<!-- notification template -->
+{include file="base/templates/notification.html"}
+<!-- end of notification template-->
+<form action="{$config->site_url('master/mapel/process_edit')}" method="post">
+    <input type="hidden" name="mapel_id" value="{$result.mapel_id}">
+    <table class="table-input" width="100%">
+        <tr>
+            <th colspan="2">Ubah Mata Pelajaran</th>
+        </tr>
+        <tr>
+            <td width="25%">Kode Mata Pelajaran</td>
+            <td width="75%">
+                {$result.mapel_id}
+            </td>
+        </tr>
+        <tr>
+            <td width="25%">Nama Mata Pelajaran</td>
+            <td width="75%">
+                <input type="text" id="mapel_nama" value="{$result.mapel_nama}" name="mapel_nama">
+                <em>* wajib diisi</em>
+            </td>
+        </tr>
+
+        <tr>
+            <td width="25%">Tingkat Kelas</td>
+            <td width="75%">
+                <select name="grade_id">
+                    {foreach $rs_grade as $grade}
+                    <option {if $result.grade_id eq $grade.grade_id}selected{/if} value="{$grade.grade_id}">{$grade.grade_nm}</option>                    
+                    {/foreach}
+                </select>
+                <em>* wajib diisi</em>
+            </td>
+        </tr>
+        <tr>
+            <td>Semester</td>
+            <td>
+                <input type="radio" {if $result.mapel_sem eq '1'}checked{/if} name="mapel_sem" value="1" placeholder=""> Ganjil &nbsp;
+                       <input type="radio" {if $result.mapel_sem eq '2'}checked{/if} name="mapel_sem" value="2" placeholder=""> Genap
+            </td>
+        </tr>
+        <tr>
+            <td width="25%">Kelompok Mapel</td>
+            <td width="75%">
+                <select name="mapelgroup_id">
+                    {foreach $rs_mapelgroup as $mapelgroup}
+                    <option {if $result.mapelgroup_id eq $mapelgroup.mapelgroup_id}selected{/if} value="{$mapelgroup.mapelgroup_id}">{$mapelgroup.mapelgroup_nm}</option>                    
+                    {/foreach}
+                </select>
+                <em>* wajib diisi</em>
+            </td>
+        </tr>
+        <tr>
+            <td width="25%">Status</td>
+            <td width="75%">
+                <input type="radio" name="mapel_st" {if $result.mapel_st eq 'aktif'}checked{/if} value="aktif"> Aktif		
+                       <input type="radio" name="mapel_st" {if $result.mapel_st eq 'stop'}checked{/if} value="stop"> Stop			
+            </td>
+        </tr>
+        <tr>
+            <td width="25%">Keterangan</td>
+            <td width="75%">
+                <textarea name="mapel_keterangan" cols="50" rows="5">{$result.mapel_keterangan}</textarea>
+            </td>
+        </tr>
+        <tr class="submit-box">
+            <td colspan="2">
+                <input type="submit" tabindex="4" name="save" value="Simpan" class="submit-button">
+                <input type="reset" tabindex="5" name="save" value="Reset" class="reset-button">
+            </td>
+        </tr>
+    </table>
+</form>                
+</div>
+<div class="clear"></div>
+</div>
+<br />
+</div>

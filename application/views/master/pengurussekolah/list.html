@@ -1,0 +1,124 @@
+<div class="breadcrum">
+    <p>
+        <a href="#">Data Master</a><span></span>
+        <a href="{$config->site_url('group/kepengurusan')}">Kepengurusan</a><span></span>
+        <small>Profil Pengurus</small>
+
+    </p>
+    <div class="clear"></div>
+</div>
+<div class="sub-nav-content">
+    <ul>
+        <li><a href="{$config->site_url('master/pengurussekolah')}" class="active">Profil Pengurus</a></li>
+        <li><a href="{$config->site_url('master/struktural_pengurus')}">Pengurus Struktural</a></li>
+        <li><a href="{$config->site_url('master/fungsional_pengurus')}">Pengurus Fungsional</a></li>
+        <li><a href="{$config->site_url('')}">Struktur Organisasi Sekolah</a></li>
+    </ul>
+    <div class="clear"></div>
+</div>
+<div class="search-box">
+    <h3><a href="#">Search</a></h3>
+    <form action="{$config->site_url('master/pengurussekolah/search_process')}" method="post">
+        <table class="table-search" width="100%">
+            <tr>
+                <th>NIK</th>
+                <td>
+                    <input type="text" name="guru_nik" placeholder="-- semua --" value="{$search.guru_nik|default:''}">
+                </td>
+                <th>Nama</th>
+                <td>
+                    <input type="text" name="guru_nama" placeholder="-- semua --" value="{$search.guru_nama|default:''}">
+                </td>
+                <td  align="right">
+                    <input class="submit" name="save" type="submit" value="Cari" />
+                    <input class="submit" name="save" type="submit" value="Reset" />
+                </td>
+            </tr>
+            <tr>
+                <th>Jabatan</th>
+                <td>
+                    <select name="jabatan_id">
+                        <option value="">-- Jabatan</option>
+                        {foreach $rs_jabatan as $jabatan}
+                        <option {if $search.jabatan_id eq $jabatan.jabatan_id}selected{/if} value="{$jabatan.jabatan_id}">{$jabatan.jabatan_nama}</option>
+                        {/foreach}
+                    </select>
+                </td>
+                <th>Status</th>
+                <td>
+                    <select name="guru_st">
+                        <option {if $search.guru_st eq 'aktif'}selected{/if} value="aktif">AKTIF</option>
+                        <option {if $search.guru_st eq 'non aktif'}selected{/if} value="non aktif">NON AKTIF</option>
+
+                    </select>
+                </td>
+
+            </tr>
+        </table>
+    </form>
+</div>
+<div class="navigation">
+    <div class="pageRow">
+        <div class="pageNav">
+            <ul>
+                <li class="info"><strong>{$pagination.total|default:0}</strong> Data Pengurus Sekolah&nbsp;</li>{$pagination.data|default:''}
+            </ul>
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div class="navigation-button">
+        <ul>
+            <li><a href="{$config->site_url('master/pengurussekolah/add')}"><img src="{$BASEURL}resource/doc/images/icon/add-icon.png" alt="" />Tambah Data</a></li>
+        </ul>
+    </div>
+    <div class="clear"></div>
+</div>
+<!-- notification template -->
+{include file="base/templates/notification.html"}
+<!-- end of notification template-->
+<table class="table-view" width="100%">
+    <tr>
+        <th width="3%">No</th>
+        <th width="5%">NIK</th>
+        <th width="20%">Nama</th>
+        <th width="5%">Status</th>
+        <th width="10%">Jabatan</th>
+        <th width="5%">Jenis</th>
+        <th width="8%"></th>
+    </tr>
+    {foreach $rs_id as $result}
+    <tr>
+        <td align="center">{$no++}.</td>
+        <td align="center">{$result.guru_nik}</td>
+        <td>{$result.guru_nama}</td>
+        <td align="center">{$result.guru_st|upper}</td>
+        <td align="center">
+            {foreach $rs_jabatan as $jabatan}
+            {if $result.jabatan_id eq $jabatan.jabatan_id}
+            {$jabatan.jabatan_nama}
+            {/if}
+            {/foreach}
+        </td>
+        <td align="center">
+            {foreach $rs_jenis as $jenis}
+            {if $result.jenis_id eq $jenis.jenis_id}
+            {$jenis.jenis_nama}
+            {/if}
+            {/foreach}
+        </td>
+        <td align="center">
+            <a href="{$config->site_url('master/pengurussekolah/edit')}/{$result.guru_nik|default:''}" class="button-edit">Edit</a>
+            <a href="{$config->site_url('master/pengurussekolah/delete')}/{$result.guru_nik|default:''}" class="button-hapus">Hapus</a>
+        </td>
+    </tr>
+    {foreachelse}
+    <tr>
+        <td colspan="7">Data tidak ditemukan!</td>
+    </tr>
+    {/foreach}
+</table>                
+</div>
+<div class="clear"></div>
+</div>
+<br />
+</div>

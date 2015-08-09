@@ -1,0 +1,76 @@
+<script type="text/javascript">
+    $(document).ready(function() {
+        $(".tingkat-select").change(function() {
+            if ($(this).val() == '') {
+                $(".tingkat-input").show();
+            }
+        });
+    });
+</script> 
+<div class="breadcrum">
+    <p>
+        <a href="{$config->site_url('pengaturan/preference')}">Settings</a><span></span>
+        <a href="{$config->site_url('pengaturan/preference')}">Preference</a><span></span>
+        <small>Kelas</small>
+
+    </p>
+    <div class="clear"></div>
+</div>
+<div class="sub-nav-content">
+    <ul>
+        <li><a href="{$config->site_url('pengaturan/preference/profil_sekolah')}">Profil Sekolah</a></li>
+        <li><a href="{$config->site_url('pengaturan/preference/kelas')}" >Kelas</a></li>
+        <li><a href="{$config->site_url('pengaturan/preference/tingkat')}" class="active">Tingkat Pendidikan</a></li>
+        <li><a href="{$config->site_url('pengaturan/preference/agama')}">Agama</a></li>
+    </ul>
+    <div class="clear"></div>
+</div>
+<div class="navigation">
+
+    <div class="navigation-button">
+        <ul>
+            <li><a href="{$config->site_url('pengaturan/preference/tingkat')}" ><img src="{$BASEURL}resource/doc/images/icon/back-icon.png" alt="" />Back</a></li>
+        </ul>
+    </div>
+    <div class="clear"></div>
+</div>
+<!-- notification template -->
+{include file="base/templates/notification.html"}
+<!-- end of notification template-->
+<form action="{$config->site_url('pengaturan/preference/process_edit_tingkat')}" method="post">  
+    <input type="hidden" name="pref_id" value="{$result.pref_id}"> 
+    <table class="table-input" width="100%">
+        <tr>
+            <th colspan="2">Ubah Kelas</th>
+        </tr>
+        <tr>
+            <td width="25%">Jenis Tingkat</td>
+            <td width="75%">
+                <select name="jenis_tingkat_select" class="tingkat-select">
+                    {foreach $rs_tingkat as $tingkat}
+                    <option {if $result.pref_nm eq $tingkat.pref_nm} selected="" {/if} value="{$tingkat.pref_nm}">{$tingkat.pref_nm|capitalize}</option>
+                    {/foreach}
+                    <option value="">-- Tambah baru --</option>
+                </select>
+                <input type="text" placeholder="Jenis Tingkat Baru" style="display: none;" class="tingkat-input" name="jenis_tingkat_text" />
+            </td>
+        </tr>
+        <tr>
+            <td width="25%">Nama Tingkat</td>
+            <td width="75%">
+                <input type="text" name="nama_tingkat" value="{$result.pref_value}">
+            </td>
+        </tr>
+        <tr class="submit-box">
+            <td colspan="2">
+                <input type="submit" tabindex="4" name="save" value="Simpan" class="submit-button">
+                <input type="reset" tabindex="5" name="save" value="Reset" class="reset-button">
+            </td>
+        </tr>
+    </table>
+</form>
+</div>
+<div class="clear"></div>
+</div>
+<br />
+</div>

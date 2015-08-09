@@ -1,0 +1,114 @@
+<div class="breadcrum">
+    <p>
+        <a href="#">Data Master</a><span></span>
+        <small>Mata Pelajaran</small>
+    </p>
+    <div class="clear"></div>
+</div>
+<div class="search-box">
+    <h3><a href="#">Search</a></h3>
+    <form action="{$config->site_url('master/mapel/search_process')}" method="post">
+        <table class="table-search" width="100%">
+            <tr>
+                <td>Nama Mata Pelajaran</td>
+                <td>
+                    <input type="text" name="mapel_nama" placeholder="-- semua --" value="{$search.mapel_nama|default:''}">
+                </td>
+                <td>Tingkat</td>
+                <td>
+                    <select name="grade_id">
+                        <option value="">-- semua</option>}
+                        {foreach $rs_grade as $grade}
+                        <option {if $search.grade_id eq $grade.grade_id}selected{/if} value="{$grade.grade_id}">{$grade.grade_nm}</option>
+                        {/foreach}
+                    </select>
+                </td>
+                <td  align="right">
+                    <input class="submit" name="save" type="submit" value="Cari" />
+                    <input class="submit" name="save" type="submit" value="Reset" />
+                </td>
+            </tr>
+            <tr>
+                <td>Semester</td>
+                <td>
+                    <input type="radio" {if $search.mapel_sem eq '1'}checked{/if} name="mapel_sem" value="1" placeholder=""> Ganjil &nbsp;
+                           <input type="radio" {if $search.mapel_sem eq '2'}checked{/if} name="mapel_sem" value="2" placeholder=""> Genap
+                </td>
+
+                <td>Status</td>
+                <td>
+                    <input type="radio" {if $search.mapel_st eq 'aktif'}checked{/if} name="mapel_st" value="aktif" placeholder=""> Aktif &nbsp;
+                           <input type="radio"{if $search.mapel_st eq 'stop'}checked{/if}  name="mapel_st" value="stop" placeholder=""> Non-Aktif
+                </td>
+            </tr>
+            <tr>
+                <td>Kelompok Mapel</td>
+                <td>
+                    <select name="mapelgroup_id">
+                        <option value="">-- semua</option>}
+                        {foreach $rs_mapelgroup as $mapelgroup}
+                        <option {if $search.mapelgroup_id eq $mapelgroup.mapelgroup_id}selected{/if} value="{$mapelgroup.mapelgroup_id}">{$mapelgroup.mapelgroup_nm}</option>
+                        {/foreach}
+                    </select>
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+<div class="navigation">
+    <div class="pageRow">
+        <div class="pageNav">
+            <ul>
+                <li class="info"><strong>{$pagination.total|default:0}</strong> Data Mata Pelajaran&nbsp;</li>{$pagination.data|default:''}
+            </ul>
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div class="navigation-button">
+        <ul>
+            <li><a href="{$config->site_url('master/mapel/add')}"><img src="{$BASEURL}resource/doc/images/icon/add-icon.png" alt="" />Tambah Data</a></li>
+        </ul>
+    </div>
+    <div class="clear"></div>
+</div>
+<!-- notification template -->
+{include file="base/templates/notification.html"}
+<!-- end of notification template-->
+<table class="table-view" width="100%">
+    <tr>
+        <th width="3%">No</th>
+        <th width="5%">Kode</th>
+        <th width="15%">Mata Pelajaran</th>
+        <th width="3%">Tingkat</th>
+        <th width="5%">Semester</th>
+        <th width="10%">Kelompok</th>
+        <th width="5%">Status</th>
+        <th width="8%"></th>
+    </tr>
+
+    {foreach $rs_id as $result}
+
+    <tr>
+        <td align="center">{$no++}.</td>
+        <td>{$result.mapel_id}</td>
+        <td>{$result.mapel_nama}</td>
+        <td align="center">{$result.grade_nm}</td>
+        <td align="center">{$result.mapel_sem}</td>
+        <td>{$result.mapelgroup_nm}</td>
+        <td align="center">{$result.mapel_st|upper}</td>
+        <td align="center">
+            <a href="{$config->site_url('master/mapel/edit')}/{$result.mapel_id|default:''}" class="button-edit">Edit</a>
+            <a href="{$config->site_url('master/mapel/delete')}/{$result.mapel_id|default:''}" class="button-hapus">Hapus</a>
+        </td>
+    </tr>
+    {foreachelse}
+    <tr>
+        <td colspan="7">Data tidak ditemukan!</td>
+    </tr>
+    {/foreach}
+</table>                
+</div>
+<div class="clear"></div>
+</div>
+<br />
+</div>

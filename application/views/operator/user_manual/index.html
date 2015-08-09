@@ -1,0 +1,24 @@
+<div class="breadcrum">
+    <p>
+        <a href="{$config->site_url('operator/welcome')}">Home</a><span></span>
+        <small>Petunjuk Penggunaan Sistem Pelayanan Pas Bandara</small>
+    </p>
+    <div class="clear"></div>
+</div>
+<!-- notification template -->
+{include file="base/templates/notification.html"}
+<!-- end of notification template-->
+<div class="guides">
+    {foreach from=$rs_id item=result}
+    <a href="{$config->site_url('operator/user_manual/download/'|cat:$result.role_id)}" class="border-right border-bottom">
+        <img src="{$BASEURL}resource/doc/images/icon/user-guides.png" alt="" />
+        <em>{$result.role_nm|default:''}</em> {$result.role_desc}
+        <br />
+        <br />
+        <small>Last Updates : April, 2014</small>
+    </a>
+    {foreachelse}
+    <p>Belum ada user manual yang di upload!</p>
+    {/foreach}
+    <div class="clear"></div>
+</div>

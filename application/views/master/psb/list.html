@@ -1,0 +1,112 @@
+<script type="text/javascript">
+    $(document).ready(function() {
+        // select box perusahaan
+        $(".psb_tha").select2({
+            allowClear: true
+        });
+    });
+</script> 
+<div class="breadcrum">
+    <p>
+        <a href="#">Data Master</a><span></span>
+        <a href="{$config->site_url('group/psb')}">Penerimaan Siswa Baru</a><span></span>
+
+        <small>Tahun PSB</small>
+    </p>
+    <div class="clear"></div>
+</div>
+<div class="search-box">
+    <h3><a href="#">Search</a></h3>
+    <form action="{$config->site_url('master/psb/search_process')}" method="post">
+        <table class="table-search" width="100%">
+            <tr>
+                <td>Tahun Ajaran PSB</td>
+                <td>
+                    <select name="psb_tha" class="psb_tha">
+                        <option value="" selected="">-- Pilih Tahun Ajaran</option>
+                        {foreach $rs_tha as $tha}
+                        <option {if $search.psb_tha eq $tha.tha_tahun_ajaran}selected{/if} value="{$tha.tha_tahun_ajaran}">
+                            {$tha.tha_tahun_ajaran}
+                    </option>					
+                    {/foreach}
+                </select>
+            </td>
+            <td>Jalur PSB</td>
+            <td>
+                <select name="jalurpsb_id" class="jalurpsb_id">
+                    <option value="" selected="">-- Pilih Jalur PSB</option>
+                    {foreach $rs_jalur as $jalur}
+                    <option {if $search.jalurpsb_id eq $jalur.jalurpsb_id}selected{/if} value="{$jalur.jalurpsb_id}">
+                        {$jalur.jalurpsb_nama}
+                </option>					
+                {/foreach}
+            </select>
+        </td>
+        <td>Status</td>
+        <td>
+            <select name="psb_st" class="psb_st">
+                <option value="" selected="">-- Status</option>
+                <option {if $search.psb_st eq 'wait'}selected{/if} value="wait">WAIT</option>					
+                <option {if $search.psb_st eq 'start'}selected{/if} value="start">START</option>					
+                <option {if $search.psb_st eq 'stop'}selected{/if} value="stop">STOP</option>					
+            </select>
+        </td>
+        <td  align="right">
+            <input class="submit" name="save" type="submit" value="Cari" />
+            <input class="submit" name="save" type="submit" value="Reset" />
+        </td>
+    </tr>
+</table>
+</form>
+</div>
+<div class="navigation">
+    <div class="pageRow">
+        <div class="pageNav">
+            <ul>
+                <li class="info"><strong>{$pagination.total|default:0}</strong> Data PSB&nbsp;</li>{$pagination.data|default:''}
+            </ul>
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div class="navigation-button">
+        <ul>
+            <li><a href="{$config->site_url('master/psb/add')}"><img src="{$BASEURL}resource/doc/images/icon/add-icon.png" alt="" />Tambah Data</a></li>
+        </ul>
+    </div>
+    <div class="clear"></div>
+</div>
+<!-- notification template -->
+{include file="base/templates/notification.html"}
+<!-- end of notification template-->
+<table class="table-view" width="100%">
+    <tr>
+        <th width="3%">No</th>
+        <th width="15%">Tahun Ajaran</th>
+        <th width="15%">Jalur PSB</th>
+        <th width="10%">Min Nilai</th>
+        <th width="10%">Status</th>
+        <th width="10%"></th>
+    </tr>
+    {foreach $rs_id as $result}
+    <tr>
+        <td align="center">{$no++}.</td>
+        <td align="center">{$result.psb_tha}</td>
+        <td align="center">{$result.jalurpsb_nama}</td>
+        <td align="center">{$result.min_nilai}</td>
+        <td align="center">{$result.psb_st|upper}</td>
+        <td align="center">
+            <a href="{$config->site_url('master/psb/edit')}/{$result.psb_id|default:''}" class="button-edit">Edit</a>
+            <a href="{$config->site_url('master/psb/delete')}/{$result.psb_id|default:''}" class="button-hapus">Hapus</a>
+        </td>
+    </tr>
+    {foreachelse}
+    <tr>
+        <td colspan="6">Data tidak ditemukan!</td>
+    </tr>
+    {/foreach}
+</table>                
+</div>
+<div class="clear"></div>
+</div>
+<br />
+</div>

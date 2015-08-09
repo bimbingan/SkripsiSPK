@@ -1,0 +1,9 @@
+<div class="side-info">
+    <p><b>{$com_user.operator_name|default:''}</b></p>
+    <p>{$com_user.role_nm|default:''}</p>
+    <div class="clear"></div>
+</div>
+{$list_sidebar_nav|default:''}
+<div class="side-menu">
+    <h3><a href="{$config->site_url('login/adminlogin/logout_process')}" class="logout">Logout</a></h3>
+</div>

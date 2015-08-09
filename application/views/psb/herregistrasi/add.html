@@ -1,0 +1,497 @@
+<script type="text/javascript">
+    $(document).ready(function() {
+        // select2 sekolah
+        $(".sekolah_id").select2({
+            allowClear: true,
+        });
+        $(".provinsi_id").select2({
+            allowClear: true,
+        });
+        $(".kab_id").select2({
+            allowClear: true,
+        });
+
+        // date picker
+        $(".cs_tgl_daftar").datepicker({
+            yearRange: '1940:2050',
+            changeMonth: true,
+            changeYear: true,
+            showOn: 'both',
+            buttonImage: '{$BASEURL}resource/doc/images/icon/calendar.gif',
+            buttonImageOnly: true,
+            dateFormat: 'yy-mm-dd'
+        });
+        $(".cs_tgl_daftar").datepicker("setDate", new Date());
+        $(".ayah_tgllahir").datepicker({
+            yearRange: '1940:2050',
+            changeMonth: true,
+            changeYear: true,
+            showOn: 'both',
+            buttonImage: '{$BASEURL}resource/doc/images/icon/calendar.gif',
+            buttonImageOnly: true,
+            dateFormat: 'yy-mm-dd'
+        });
+        $(".ibu_tgllahir").datepicker({
+            yearRange: '1940:2050',
+            changeMonth: true,
+            changeYear: true,
+            showOn: 'both',
+            buttonImage: '{$BASEURL}resource/doc/images/icon/calendar.gif',
+            buttonImageOnly: true,
+            dateFormat: 'yy-mm-dd'
+        });
+        $(".siswa_tgl_lulus").datepicker({
+            yearRange: '1940:2050',
+            changeMonth: true,
+            changeYear: true,
+            showOn: 'both',
+            buttonImage: '{$BASEURL}resource/doc/images/icon/calendar.gif',
+            buttonImageOnly: true,
+            dateFormat: 'yy-mm-dd'
+        });
+        $(".tgl_ijazah").datepicker({
+            yearRange: '1940:2050',
+            changeMonth: true,
+            changeYear: true,
+            showOn: 'both',
+            buttonImage: '{$BASEURL}resource/doc/images/icon/calendar.gif',
+            buttonImageOnly: true,
+            dateFormat: 'yy-mm-dd'
+        });
+        $(".siswa_tgl_herreg").datepicker({
+            yearRange: '1940:2050',
+            changeMonth: true,
+            changeYear: true,
+            showOn: 'both',
+            buttonImage: '{$BASEURL}resource/doc/images/icon/calendar.gif',
+            buttonImageOnly: true,
+            dateFormat: 'yy-mm-dd'
+        });
+        $(".siswa_tgl_herreg").datepicker("setDate", new Date());
+
+
+        $("input[name=siswa_kewarganegaraan]").click(function() {
+            if ($(this).val() == 'wna') {
+                $(".cs_negara").removeAttr('readonly');
+            } else {
+                $(".cs_negara").val("");
+                $(".cs_negara").attr('readonly', '');
+            }
+        });
+
+        var provinsi = $(".provinsi_id");
+        var kab = $("select[name=kab_id]");
+        provinsi.on("change", function(e) {
+            {
+                literal
+            }
+            $.get("{/literal}{$config->site_url('psb/herregistrasi/get_kab/')}{literal}",
+                    {prov: provinsi.select2("val")}).done(
+                    function(data) {
+                        console.log(data);
+                        kab.find('option').remove();
+                        $.each(data, function(index, value) {
+                            kab.append("<option value='" + value.kab_id + "'>" + value.kab_nm + "</option>")
+                        });
+                    });
+        });
+        {/literal}
+        });
+</script>
+<style type="text/css">
+    .cs_nilai_un, .cs_tahun_lulus, .siswa_tahun_masuk{
+        width: 50px;
+    }
+    .table-input td label{
+        display: inline;
+        padding-right: 10px;
+    }
+    input:read-only{
+        background-color: #F1F1F1 !important;
+    }
+</style>
+<div class="breadcrum">
+    <p>
+        <a href="#">PSB</a><span></span>
+        <small>Her-Registrasi</small>
+    </p>
+    <div class="clear"></div>
+</div>
+<div class="search-box">
+    <h3><a href="#">Search</a></h3>
+    <form action="{$config->site_url('psb/herregistrasi/')}" method="post">
+        <table class="table-search" width="100%">
+            <tr>
+                <th width="10%">No. Pendaftaran</th>
+                <td>
+                    <input type="text" size="40" name="cs_no_pendaftaran" value="{$result.cs_no_pendaftaran|default:''}">
+                </td>
+                <td  align="right">
+                    <input class="submit" name="save" type="submit" value="Cari" />
+                    <input class="submit" name="save" type="submit" value="Reset" />
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+<div class="navigation">
+    <div class="navigation-button">
+        <ul>
+            <li><a href="{$config->site_url('psb/calonsiswa/')}" ><img src="{$BASEURL}resource/doc/images/icon/back-icon.png" alt="" />Back</a></li>
+        </ul>
+    </div>
+    <div class="clear"></div>
+</div>
+<!-- notification template -->
+{include file="base/templates/notification.html"}
+<!-- end of notification template-->
+{if $result neq null}
+<form action="{$config->site_url('psb/herregistrasi/process_add')}" enctype="multipart/form-data" method="post">
+    <input type="hidden" name="siswa_id" value="{$result.cs_id}">
+
+    <table class="table-input" width="100%">
+        <tr>
+            <th colspan="4">Data Calon Siswa Her-Registrasi</th>
+        </tr>
+        <tr>
+            <td width="20%">Nomor Induk Siswa (NIS)</td>
+            <td width="35%">
+                <input type="text" size="20" id="cs_nis" name="siswa_nis" >
+                <em>* wajib diisi</em>
+            </td>
+        </tr>
+        <tr>
+            <td >Tahun Masuk PSB</td>
+            <td >
+                <strong>{$result.psb_tha}</strong>
+            </td>
+        </tr>
+        <tr>
+            <td >Jalur PSB</td>
+            <td >
+                <strong>{$result.jalurpsb_nama}</strong>       
+            </td>
+        </tr>
+
+        <tr class="headrow">
+            <th colspan="4">Data Siswa</th>
+        </tr>
+        <tr>
+
+            <td width="15%">Nama</td>
+            <td width="35%">
+                <input type="text" size="35" value="{$result.cs_nama|default:''}" id="cs_nama" name="siswa_nama" >
+                <em>* wajib diisi</em>
+            </td>
+            <td >Provinsi</td>
+            <td >
+                <select name="provinsi_id" class="provinsi_id">
+                    {foreach $rs_provinsi as $provinsi}
+                    <option  {if $result.provinsi_id eq $provinsi.provinsi_id}selected{/if} value="{$provinsi.provinsi_id}">{$provinsi.provinsi_nm}</option>					
+                    {/foreach}
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>Jenis Kelamin</td>
+            <td>
+                <label><input type="radio" {if $result.cs_jk eq 'L'}checked{/if} name="siswa_jk" value="L" checked="checked">LAKI - LAKI</label>
+                <label><input type="radio" {if $result.cs_jk eq 'P'}checked{/if} name="siswa_jk" value="P">PEREMPUAN</label>
+            </td>
+            <td >Kabupaten</td>
+            <td >
+                <select name="kab_id" class="kab_id">
+                    {foreach $rs_kab as $kab}
+                    <option {if $result.kab_id eq $kab.kab_id}selected{/if} value="{$kab.kab_id}">{$kab.kab_nm}</option>
+                    {/foreach}
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>Kewarganegaraan</td>
+            <td>
+                <label><input type="radio" {if $result.cs_kewarganegaraan eq 'wni'}checked{/if} name="siswa_kewarganegaraan" value="wni" checked="checked">WNI</label>
+                <label><input type="radio" {if $result.cs_kewarganegaraan eq 'wna'}checked{/if} name="siswa_kewarganegaraan" value="wna">WNA</label>
+            </td>
+            <td >Sekolah Asal</td>
+            <td >
+                <select name="sekolah_id" class="sekolah_id">
+                    {foreach $rs_sekolah as $sekolah}
+                    <option {if $result.sekolah_id eq $sekolah.sekolah_id}selected{/if} value="{$sekolah.sekolah_id}">{$sekolah.sekolah_nama}</option>
+                    {/foreach}
+                </select>
+
+            </td>
+        </tr>
+        <tr>
+            <td >Negara Asal</td>
+            <td >
+                <input type="text" readonly  value="{$result.cs_negara|default:''}" name="siswa_negara" class="cs_negara">
+            </td>
+            <td >No Telp.</td>
+            <td >
+                <input type="text" value="{$result.cs_notelp|default:''}" name="siswa_notelp" class="cs_notelp">
+            </td>
+        </tr>
+        <tr>
+            <td>Agama</td>
+            <td>
+                <select name="agama_cd" class="agama_cd">
+                    {foreach $rs_agama as $agama}
+                    <option  {if $result.agama_cd eq $agama.agama_cd}selected{/if} value="{$agama.agama_cd}">{$agama.agama_nm}</option>
+                    {/foreach}
+                </select>
+            </td>
+            <td >Email</td>
+            <td >
+                <input type="email" name="siswa_email" value="{$result.cs_email|default:''}" size="30" class="cs_email" value="{$result.cs_email}">
+            </td>
+        </tr>
+        <tr>
+            <td valign="top">Alamat</td>
+            <td >
+                <textarea name="siswa_alamat" cols="50" rows="5">{$result.cs_alamat|default:''}</textarea>
+            </td>
+            <td valign="top">Dokumen Siswa</td>
+            <td >
+                <input type="hidden" name="siswa_upload_string" value="{$result.cs_upload|default:''}">
+                <input type="file" name="siswa_upload"	>
+            </td>
+        </tr>
+        <tr class="headrow">
+            <th colspan="4">Pilihan Jurusan</th>
+        </tr>
+        <tr>
+            <td valign="top">Jurusan</td>
+            <td>
+                <select name="jurusan_id">
+                    {foreach $rs_jurusan as $jurusan}
+                    <option value="{$jurusan.jurusan_id}">{$jurusan.jurusan_nm}</option>
+                    {/foreach}
+                </select>
+            </td>
+        </tr>
+        <tr class="headrow">
+            <th colspan="4">Foto Siswa</th>
+        </tr>
+        <tr>
+            <td colspan="4" align="center">
+                {if $result.cs_foto eq ''}
+                <img src="http://placehold.it/125x160">
+                {else}
+                <img src="{$BASEURL}resource/psb/photo/{$result.cs_foto}">
+                {/if}
+                <br><br>
+                <input type="hidden" name="siswa_foto_string" value="{$result.cs_foto|default:''}">
+                <input type="file" name="siswa_foto" class="cs_foto">
+            </td>
+        </tr>
+        <tr class="headrow">
+            <th colspan="4">Data Persyaratan Her-Registrasi Siswa</th>
+        </tr>
+        <tr>
+            <td valign="top">Nomor Ijazah</td>
+            <td >
+                <input type="text" size="35" name="nomor_ijazah" value="{$result.nomor_ijazah|default:''}">
+            </td>
+            <td valign="top">Tanggal Ijazah</td>
+            <td >
+                <input type="text" size="10" name="tgl_ijazah" class="tgl_ijazah">
+            </td>
+        </tr>
+        <tr>
+            <td >Tahun Masuk</td>
+            <td >
+                <input type="number" size="4" name="siswa_tahun_masuk" class="siswa_tahun_masuk">
+                <em>* wajib diisi</em>
+            </td>
+            <td >Tanggal Her-Registrasi</td>
+            <td >
+                <input type="text" size="10" size="" name="siswa_tgl_herreg" class="siswa_tgl_herreg">
+            </td>
+        </tr>
+        <tr>
+            <td >Tanggal Lulus</td>
+            <td >
+                <input type="text" size="10" name="siswa_tgl_lulus" class="siswa_tgl_lulus">
+            </td>
+            <td width="15%">Nilai UN</td>
+            <td width="35%">
+                <input type="number" step="0.01" value="{$result.cs_nilai_un|default:''}" class="cs_nilai_un" name="siswa_nilai_un" >
+            </td>
+        </tr>
+        <tr class="headrow">
+            <th colspan="4">Data Ayah Kandung</th>
+        </tr>
+
+        <tr>
+            <td>Nama Ayah</td>
+            <td>
+                <input type="text" size="35" name="ayah_nm" value="{$result.ayah_nm|default:''}" />
+            </td>
+            <td>Pendidikan</td>
+            <td>
+                <input type="text" name="ayah_pendidikan" value="{$result.ayah_pendidikan|default:''}"/>
+            </td>
+        </tr>
+        <tr>
+            <td>Tempat Lahir</td>
+            <td>
+                <input type="text" name="ayah_tempatlahir" value="{$result.ayah_tempatlahir|default:''}"/>
+            </td>
+            <td>Pekerjaan</td>
+            <td>
+                <input type="text" name="ayah_pekerjaan"  value="{$result.ayah_pekerjaan|default:''}"/>
+            </td>
+        </tr>
+        <tr>
+            <td>Tanggal Lahir</td>
+            <td>
+                <input type="text" size="10" name="ayah_tgllahir" class="ayah_tgllahir" value="{$result.ayah_tgllahir|default:''}"/>
+            </td>
+            <td>Agama</td>
+            <td>
+                <select name="ayah_agama" class="ayah_agama">
+                    {foreach $rs_agama as $agama}
+                    <option  {if $result.ayah_agama eq $agama.agama_cd}selected{/if} value="{$agama.agama_cd}">{$agama.agama_nm}</option>
+                    {/foreach}
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>Kewarganegaraan</td>
+            <td>
+                <label><input type="radio" {if $result.ayah_kewarganegaraan eq 'wni'}checked{/if} name="ayah_kewarganegaraan" value="wni" checked="checked">WNI</label>
+                <label><input type="radio" {if $result.ayah_kewarganegaraan eq 'wna'}checked{/if} name="ayah_kewarganegaraan" value="wna">WNA</label>
+            </td>
+            <td valign="top">No. Telp</td>
+            <td >
+                <input type="text" name="ayah_notelp" value="{$result.ayah_notelp|default:''}"/>
+            </td>
+        </tr>
+
+        <tr>
+            <td valign="top">Alamat</td>
+            <td >
+                <textarea name="ayah_alamat" cols="50" rows="5">{$result.ayah_alamat|default:''}</textarea>
+            </td>
+            <td valign="top">Status</td>
+            <td >
+                <label><input type="radio" {if $result.ayah_st eq 1}checked{/if} name="ayah_st" value="1" checked="checked">Hidup</label>
+                <label><input type="radio" {if $result.ayah_st eq 0}checked{/if} name="ayah_st" value="0">Meninggal</label>
+            </td>
+        </tr>
+        <tr class="headrow">
+            <th colspan="4">Data Ibu Kandung</th>
+        </tr>
+        <tr>
+            <td>Nama Ibu</td>
+            <td>
+                <input type="text" size="35" name="ibu_nm" value="{$result.ibu_nm|default:''}" />
+            </td>
+            <td>Pendidikan</td>
+            <td>
+                <input type="text" name="ibu_pendidikan" value="{$result.ibu_pendidikan|default:''}" />
+            </td>
+        </tr>
+        <tr>
+            <td>Tempat Lahir</td>
+            <td>
+                <input type="text" name="ibu_tempatlahir" value="{$result.ibu_tempatlahir|default:''}" />
+            </td>
+            <td>Pekerjaan</td>
+            <td>
+                <input type="text" name="ibu_pekerjaan" value="{$result.ibu_pekerjaan|default:''}" />
+            </td>
+        </tr>
+        <tr>
+            <td>Tanggal Lahir</td>
+            <td>
+                <input type="text" size="10" name="ibu_tgllahir" class="ibu_tgllahir" value="{$result.ibu_tgllahir|default:''}"/>
+            </td>
+            <td>Agama</td>
+            <td>
+                <select name="ibu_agama" class="ibu_agama">
+                    {foreach $rs_agama as $agama}
+                    <option {if $result.ayah_agama eq $agama.agama_cd}selected{/if}  value="{$agama.agama_cd}">{$agama.agama_nm}</option>
+                    {/foreach}
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>Kewarganegaraan</td>
+            <td>
+                <label><input type="radio"  {if $result.ibu_kewarganegaraan eq 'wni'}checked{/if} name="ibu_kewarganegaraan" value="wni" checked="checked">WNI</label>
+                <label><input type="radio"  {if $result.ibu_kewarganegaraan eq 'wna'}checked{/if} name="ibu_kewarganegaraan" value="wna">WNA</label>
+            </td>
+            <td valign="top">No. Telp</td>
+            <td >
+                <input type="text" name="ibu_notelp" value="{$result.ibu_notelp}" value="{$result.ibu_notelp|default:''}" />
+            </td>
+        </tr>
+
+        <tr>
+            <td valign="top">Alamat</td>
+            <td >
+                <textarea name="ibu_alamat" cols="50" rows="5">{$result.ibu_alamat|default:''}</textarea>
+            </td>
+            <td valign="top">Status</td>
+            <td >
+                <label><input type="radio" {if $result.ibu_st eq 1}checked{/if} name="ibu_st" value="1" checked="checked">Hidup</label>
+                <label><input type="radio" {if $result.ibu_st eq 0}checked{/if}  name="ibu_st" value="0">Meninggal</label>
+            </td>
+        </tr>
+        <tr class="headrow">
+            <th colspan="4">Data Wali</th>
+        </tr>
+        <tr>
+            <td>Nama Wali</td>
+            <td>
+                <input type="text" size="35" name="wali_nm" value="{$result.wali_nm|default:''}" />
+            </td>
+        </tr>
+        <tr>
+            <td>Agama</td>
+            <td>
+                <select name="wali_agama" class="wali_agama">
+                    {foreach $rs_agama as $agama}
+                    <option {if $result.wali_agama eq $agama.agama_cd}selected{/if} value="{$agama.agama_cd}">{$agama.agama_nm}</option>
+                    {/foreach}
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>Pekerjaan</td>
+            <td>
+                <input type="text" name="wali_pekerjaan" value="{$result.wali_pekerjaan|default:''}" />
+            </td>
+
+        </tr>
+        <tr>
+            <td valign="top">No. Telp</td>
+            <td >
+                <input type="text" name="wali_notelp" value="{$result.wali_notelp|default:''}" />
+            </td>
+        </tr>
+
+        <tr>
+            <td valign="top">Alamat</td>
+            <td >
+                <textarea name="wali_alamat" cols="50" rows="5">{$result.wali_alamat|default:''}</textarea>
+            </td>
+
+        </tr>
+        <tr class="submit-box">
+            <td colspan="4">
+                <input type="submit" tabindex="4" name="save" value="Daftarkan Siswa" class="submit-button">
+                <input type="reset" tabindex="5" name="save" value="Reset" class="reset-button">
+            </td>
+        </tr>
+    </table>
+</form>
+{/if}                
+</div>
+<div class="clear"></div>
+</div>
+<br />
+</div>

@@ -1,0 +1,325 @@
+<script type="text/javascript">
+    $(document).ready(function() {
+        // date picker
+        $(".tanggal_lahir").datepicker({
+            yearRange: '1940:2050',
+            changeMonth: true,
+            changeYear: true,
+            showOn: 'both',
+            buttonImage: '{$BASEURL}resource/doc/images/icon/calendar.gif',
+            buttonImageOnly: true,
+            dateFormat: 'yy-mm-dd'
+        }); $(".tgl_sk_pns").datepicker({
+            yearRange: '1940:2050',
+            changeMonth: true,
+            changeYear: true,
+            showOn: 'both',
+            buttonImage: '{$BASEURL}resource/doc/images/icon/calendar.gif',
+            buttonImageOnly: true,
+            dateFormat: 'yy-mm-dd'
+        });
+        $(".tgl_pensiun").datepicker({
+            yearRange: '1940:2050',
+            changeMonth: true,
+            changeYear: true,
+            showOn: 'both',
+            buttonImage: '{$BASEURL}resource/doc/images/icon/calendar.gif',
+            buttonImageOnly: true,
+            dateFormat: 'yy-mm-dd'
+        });
+        $(".tmt_cpns").datepicker({
+            yearRange: '1940:2050',
+            changeMonth: true,
+            changeYear: true,
+            showOn: 'both',
+            buttonImage: '{$BASEURL}resource/doc/images/icon/calendar.gif',
+            buttonImageOnly: true,
+            dateFormat: 'yy-mm-dd'
+        });
+        $(".tmt_pns").datepicker({
+            yearRange: '1940:2050',
+            changeMonth: true,
+            changeYear: true,
+            showOn: 'both',
+            buttonImage: '{$BASEURL}resource/doc/images/icon/calendar.gif',
+            buttonImageOnly: true,
+            dateFormat: 'yy-mm-dd'
+        });
+        $(".kontrak_mulai").datepicker({
+            yearRange: '1940:2050',
+            changeMonth: true,
+            changeYear: true,
+            showOn: 'both',
+            buttonImage: '{$BASEURL}resource/doc/images/icon/calendar.gif',
+            buttonImageOnly: true,
+            dateFormat: 'yy-mm-dd'
+        });
+        $(".kontrak_berakhir").datepicker({
+            yearRange: '1940:2050',
+            changeMonth: true,
+            changeYear: true,
+            showOn: 'both',
+            buttonImage: '{$BASEURL}resource/doc/images/icon/calendar.gif',
+            buttonImageOnly: true,
+            dateFormat: 'yy-mm-dd'
+        });
+        $('tr.mapelgroup_id').hide();
+
+        $('.jenis_id').change(function() {
+            if($(this).val() == 1){
+                $('tr.mapelgroup_id').show();
+            }else{
+                $('tr.mapelgroup_id').hide();
+            }
+        });
+    });
+</script>
+<style type="text/css" media="screen">
+    input[type=number]{
+        width: 35px;
+    }
+</style>
+<div class="breadcrum">
+    <p>
+        <a href="#">Data Master</a><span></span>
+        <a href="{$config->site_url('group/kepengurusan')}">Kepengurusan</a><span></span>
+
+        <a href="{$config->site_url('master/pengurussekolah')}">Pengurus Sekolah</a><span></span>
+        <small>Ubah Data</small>
+    </p>
+    <div class="clear"></div>
+</div>
+<div class="navigation">
+    <div class="navigation-button">
+        <ul>
+            <li><a href="{$config->site_url('master/pengurussekolah/')}" ><img src="{$BASEURL}resource/doc/images/icon/back-icon.png" alt="" />Back</a></li>
+        </ul>
+    </div>
+    <div class="clear"></div>
+</div>
+<!-- notification template -->
+{include file="base/templates/notification.html"}
+<!-- end of notification template-->
+<form action="{$config->site_url('master/pengurussekolah/process_edit')}" method="post">
+    <input type="hidden" name="guru_nik" value="{$result.guru_nik}">
+    <table class="table-input" width="100%">
+        <tr>
+            <th colspan="4">Ubah Pengurus Sekolah</th>
+        </tr>
+        <tr>
+            <td width="20%">NIK</td>
+            <td width="30%">
+                <input type="text" size="30" value="{$result.guru_nik}" id="guru_nik" name="guru_nik">
+                <em>* wajib diisi</em>
+            </td>
+            <td width="20%">No Telp.</td>
+            <td width="30%">
+                <input type="text" id="guru_notelp" name="guru_notelp" value="{$result.guru_notelp}">
+            </td>
+        </tr>
+        <tr>
+            <td >Nama</td>
+            <td >
+                <input type="text" size="30" id="guru_nama" name="guru_nama" value="{$result.guru_nama}">
+                <em>* wajib diisi</em>
+            </td>
+            <td >Status</td>
+            <td >
+                <input type="radio" {if $result.guru_st eq 'aktif'}checked{/if} name="guru_st" value="aktif"> Aktif
+                <input type="radio" {if $result.guru_st eq 'non aktif'}checked{/if} name="guru_st" value="non aktif"> Non Aktif
+            </td>
+        </tr>
+        <tr>
+            <td >Tempat Lahir</td>
+            <td >
+                <input type="text" id="tempat_lahir" name="tempat_lahir" value="{$result.tempat_lahir}">
+            </td>
+            <td >Agama</td>
+            <td >
+                <select name="agama_cd">
+                    {foreach $rs_agama as $agama}
+                    <option {if $result.agama_cd eq $agama.agama_cd}selected{/if} value="{$agama.agama_cd}">{$agama.agama_nm}</option>
+                    {/foreach}
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td >Tanggal Lahir</td>
+            <td >
+                <input type="text" size="10" class="tanggal_lahir" name="tanggal_lahir"value="{$result.tanggal_lahir}">
+            </td>
+            <td >Status Pernikahan</td>
+            <td >
+                <select name="nikah_st">
+                    <option {if $result.nikah_st eq 'Belum Menikah'}selected{/if}>Belum Menikah</option>
+                    <option {if $result.nikah_st eq 'Menikah'}selected{/if}>Menikah</option>
+                    <option {if $result.nikah_st eq 'Duda'}selected{/if}>Duda</option>
+                    <option {if $result.nikah_st eq 'Janda'}selected{/if}>Janda</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td >Alamat Asal</td>
+            <td >
+                <textarea name="alamat_asal" cols="50" rows="5">{$result.alamat_asal}</textarea>
+            </td>
+            <td >Alamat Tinggal</td>
+            <td >
+                <textarea name="alamat_tinggal" cols="50" rows="5">{$result.alamat_asal}</textarea>
+            </td>
+        </tr>
+        <tr>
+            <td >Jenis</td>
+            <td >
+                <select name="jenis_id" class="jenis_id">
+                    <option value="">-- Jenis Pengurus --</option>
+                    {foreach $rs_jenis as $jenis}
+                    <option {if $result.jenis_id eq $jenis.jenis_id}selected{/if} value="{$jenis.jenis_id}">{$jenis.jenis_nama}</option>                  
+                    {/foreach}
+                </select>
+            </td>
+            <td >Jenis Kelamin</td>
+            <td >
+                <input type="radio" {if $result.gender eq 'L'}checked{/if} name="gender" value="L"> Laki-Laki
+                <input type="radio" {if $result.gender eq 'P'}checked{/if} name="gender" value="P"> Perempuan
+            </td>
+        </tr>
+        <tr class="mapelgroup_id">
+            <td>Mengajar Kelompok Mata Pelajaran</td>
+            <td >
+                <select name="mapelgroup_id">
+                    {foreach $rs_mapelgroup as $group}
+                    <option {if $result.mapelgroup_id eq $group.mapelgroup_id}selected{/if} value="{$group.mapelgroup_id}">{$group.mapelgroup_nm}</option>                  
+                    {/foreach}
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <th colspan="4">Administrasi Kepengurusan</th>
+        </tr>
+        <tr>
+            <td >No. SK PNS</td>
+            <td >
+                <input type="text" size="30" id="no_sk_pns" name="no_sk_pns" value="{$result.no_sk_pns}">
+            </td>
+            <td >Tingkat Pendidikan</td>
+            <td >
+                <select name="tingkat_pendidikan">
+                    {foreach $rs_tingkat as $tingkat}
+                    <option {if $result.tingkat_pendidikan eq $tingkat.pref_value}selected{/if} value="{$tingkat.pref_value}">{$tingkat.pref_value}</option>
+                    {/foreach}
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td >Tanggal SK PNS</td>
+            <td >
+                <input type="text" size="10" class="tgl_sk_pns" name="tgl_sk_pns" value="{$result.tgl_sk_pns}">
+            </td>
+            <td >Keterangan Pendidikan</td>
+            <td >
+                <textarea rows="2" cols="50" name="ket_pendidikan">{$result.ket_pendidikan}</textarea>
+            </td>
+        </tr>
+        <tr>
+            <td >Tanggal Pensiun</td>
+            <td >
+                <input type="text" size="10" class="tgl_pensiun" name="tgl_pensiun" value="{$result.tgl_pensiun}">
+            </td>
+            <td >Unit Kerja</td>
+            <td >
+                <select name="unit_id">
+                    {foreach $rs_unit as $unit}
+                    <option {if $result.unit_id eq $unit.unit_id}selected{/if} value="{$unit.unit_id}">{$unit.unit_nm}</option>          
+                    {/foreach}
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td >Umur Pensiun</td>
+            <td >
+                <input type="number" size="10" class="umur_pensiun" name="umur_pensiun"value="{$result.umur_pensiun}">
+            </td>
+            <td >Tanggal Mulai Kontrak</td>
+            <td >
+                <input type="text" size="10" class="kontrak_mulai" name="kontrak_mulai"value="{$result.kontrak_mulai}">
+            </td>
+        </tr>
+        <tr>
+            <td >No. Askes</td>
+            <td >
+                <input type="text" size="30" id="no_askes" name="nomor_askes" value="{$result.nomor_askes}">
+            </td>
+            <td >Tanggal Kontrak Berakhir</td>
+            <td >
+                <input type="text" size="10" class="kontrak_berakhir" name="kontrak_berakhir" value="{$result.kontrak_berakhir}">
+            </td>
+        </tr>
+        <tr>
+            <td >No. Taspen</td>
+            <td >
+                <input type="text" size="30" id="no_taspen" name="no_askes" value="{$result.nomor_askes}">
+            </td>
+            <td >Tanggal Tamat CPNS</td>
+            <td >
+                <input type="text" size="10" class="tmt_cpns" name="tmt_cpns" value="{$result.tmt_cpns}">
+            </td>
+        </tr>
+        <tr>
+            <td >Status Pengurus</td>
+            <td >
+                <select name="status_id">
+                    {foreach $rs_statuspengurus as $status}
+                    <option {if $result.status_id eq $status.status_id}selected{/if} value="{$status.status_id}">{$status.status_nm}</option>          
+                    {/foreach}
+                </select>
+            </td>
+
+            <td >Tanggal Tamat PNS</td>
+            <td >
+                <input type="text" size="10" class="tmt_pns" name="tmt_pns" value="{$result.tmt_pns}">
+            </td>
+        </tr>
+        <tr>
+
+            <td >Kartu Pegawai</td>
+            <td >
+                <input type="file" id="kartu_pegawai" name="kartu_pegawai">
+            </td>
+            <td>Foto</td>
+            <td>
+                <input type="file" name="foto">
+            </td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>
+                {if $result.kartu_pegawai neq ''}
+                <img src="{$BASEURL}resource/pengurus/kartu_pegawai/{$result.kartu_pegawai}">
+                {else}
+                Berkas belum ada
+                {/if}
+
+            </td>
+            <td></td>
+            <td>
+                {if $result.foto neq ''}
+                <img src="{$BASEURL}resource/pengurus/foto/{$result.foto}">
+                {else}
+                Berkas belum ada
+                {/if}
+            </td>
+        </tr>
+        <tr class="submit-box">
+            <td colspan="4">
+                <input type="submit" tabindex="4" name="save" value="Simpan" class="submit-button">
+                <input type="reset" tabindex="5" name="save" value="Reset" class="reset-button">
+            </td>
+        </tr>
+    </table>
+</form>                
+</div>
+<div class="clear"></div>
+</div>
+<br />
+</div>
