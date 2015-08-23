@@ -1,17 +1,17 @@
-<?php /* Smarty version Smarty-3.0.7, created on 2015-08-09 15:41:40
+<?php /* Smarty version Smarty-3.0.7, created on 2015-08-11 13:43:38
          compiled from "application/views\pengaturan/operator/delete.html" */ ?>
-<?php /*%%SmartyHeaderCode:3245355c758941ae405-50799675%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
+<?php /*%%SmartyHeaderCode:122455c9dfeaac5687-12077319%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
   array (
     '128c0676f7ce876d80feed95f90c7bed8e27c05c' => 
     array (
       0 => 'application/views\\pengaturan/operator/delete.html',
-      1 => 1439126964,
+      1 => 1439279759,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '3245355c758941ae405-50799675',
+  'nocache_hash' => '122455c9dfeaac5687-12077319',
   'function' => 
   array (
   ),
@@ -43,8 +43,8 @@ $_smarty_tpl->decodeProperties(array (
         <!-- form start -->
         <form action="<?php echo $_smarty_tpl->getVariable('config')->value->site_url('pengaturan/operator/delete_process');?>
 " method="post" onsubmit="return confirm('Apakah anda yakin akan menghapus data berikut ini?')">
-        <div class="box-body">
-            <div class="row">
+            <div class="box-body">
+                <div class="row">
                     <input name="user_id" type="hidden"  value="<?php echo (($tmp = @$_smarty_tpl->getVariable('result')->value['user_id'])===null||$tmp==='' ? '' : $tmp);?>
 " />
                     <div class="col-lg-6">
@@ -110,11 +110,11 @@ $_smarty_tpl->decodeProperties(array (
                         </div>
                     </div>
 
+                </div>
+            </div><!-- /.box-body -->
+            <div class="box-footer">
+                <input type="submit" name="save" value="Hapus" class="btn btn-danger pull-right" />
             </div>
-        </div><!-- /.box-body -->
-        <div class="box-footer">
-            <input type="submit" name="save" value="Hapus" class="btn btn-danger pull-right" />
-        </div>
         </form>
     </div>
 </section>

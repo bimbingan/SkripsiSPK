@@ -1,0 +1,18 @@
+[10260:12060:0811/140655:VERBOSE1:crash_service_main.cc(68)] Session start. cmdline is [--reporter-url=http://54.249.141.255:1127/post --application-name=Atom --v=1]
+[10260:12060:0811/140655:VERBOSE1:crash_service.cc(133)] window handle is 002F0408
+[10260:12060:0811/140655:VERBOSE1:crash_service.cc(279)] pipe name is \\.\pipe\Atom Crash Service
+dumps at 
+[10260:12060:0811/140655:VERBOSE1:crash_service.cc(283)] checkpoint is crash_checkpoint.txt
+server is http://54.249.141.255:1127/post
+maximum 128 reports/day
+reporter is atom-shell-crash-service
+[10260:12060:0811/140655:ERROR:crash_service.cc(290)] could not start dumper
+[9704:12028:0811/145543:VERBOSE1:crash_service_main.cc(68)] Session start. cmdline is [--reporter-url=http://54.249.141.255:1127/post --application-name=Atom --v=1]
+[9704:12028:0811/145543:VERBOSE1:crash_service.cc(133)] window handle is 0010058A
+[9704:12028:0811/145543:VERBOSE1:crash_service.cc(279)] pipe name is \\.\pipe\Atom Crash Service
+dumps at 
+[9704:12028:0811/145543:VERBOSE1:crash_service.cc(283)] checkpoint is crash_checkpoint.txt
+server is http://54.249.141.255:1127/post
+maximum 128 reports/day
+reporter is atom-shell-crash-service
+[9704:12028:0811/145543:ERROR:crash_service.cc(290)] could not start dumper

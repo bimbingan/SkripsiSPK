@@ -19,8 +19,8 @@
         </div><!-- /.box-header -->
         <!-- form start -->
         <form action="{$config->site_url('pengaturan/operator/delete_process')}" method="post" onsubmit="return confirm('Apakah anda yakin akan menghapus data berikut ini?')">
-        <div class="box-body">
-            <div class="row">
+            <div class="box-body">
+                <div class="row">
                     <input name="user_id" type="hidden"  value="{$result.user_id|default:''}" />
                     <div class="col-lg-6">
                         <div class="table-responsive">
@@ -77,11 +77,11 @@
                         </div>
                     </div>
 
+                </div>
+            </div><!-- /.box-body -->
+            <div class="box-footer">
+                <input type="submit" name="save" value="Hapus" class="btn btn-danger pull-right" />
             </div>
-        </div><!-- /.box-body -->
-        <div class="box-footer">
-            <input type="submit" name="save" value="Hapus" class="btn btn-danger pull-right" />
-        </div>
         </form>
     </div>
 </section>

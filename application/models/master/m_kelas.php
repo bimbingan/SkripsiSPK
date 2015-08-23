@@ -7,10 +7,10 @@ class m_kelas extends CI_Model {
     }
 
     function get_list_kelas($params) {
-        $sql = "SELECT k.*, g.`grade_nm`, j.`jurusan_nm`, ps.`guru_nama` FROM kelas k 
-		INNER JOIN grade g USING(grade_id) 
-		INNER JOIN jurusan j USING(jurusan_id) 
-		INNER JOIN pengurus_sekolah ps ON k.`wali_kelas`= ps.`guru_id`   
+        $sql = "SELECT k.*, g.`grade_nm`, j.`jurusan_nm`, ps.`guru_nama` FROM kelas k
+		INNER JOIN grade g USING(grade_id)
+		INNER JOIN jurusan j USING(jurusan_id)
+		INNER JOIN pengurus_sekolah ps ON k.`wali_kelas`= ps.`guru_id`
 		WHERE k.`kelas_nm` LIKE ? AND g.`grade_id` LIKE ? AND j.`jurusan_id` LIKE ? AND k.`kelas_st` LIKE ? LIMIT ?,?";
         $query = $this->db->query($sql, $params);
         if ($query->num_rows() > 0) {
@@ -35,9 +35,9 @@ class m_kelas extends CI_Model {
     }
 
     function get_all_kelas($params) {
-        $sql = "SELECT kelas_id, kelas_nm FROM kelas k 
-		INNER JOIN grade g USING(grade_id) 
-		INNER JOIN jurusan j USING(jurusan_id) 
+        $sql = "SELECT kelas_id, kelas_nm FROM kelas k
+		INNER JOIN grade g USING(grade_id)
+		INNER JOIN jurusan j USING(jurusan_id)
 		INNER JOIN pengurus_sekolah ps ON k.`wali_kelas`= ps.`guru_id`";
         $query = $this->db->query($sql, $params);
         if ($query->num_rows() > 0) {
@@ -50,10 +50,10 @@ class m_kelas extends CI_Model {
     }
 
     function get_kelas_teori_active_with_grade_and_jurusan($params){
-    	$sql = "SELECT kelas_id, kelas_nm FROM kelas k 
-		INNER JOIN grade g USING(grade_id) 
-		INNER JOIN jurusan j USING(jurusan_id) 
-		INNER JOIN pengurus_sekolah ps ON k.`wali_kelas`= ps.`guru_id` 
+    	$sql = "SELECT kelas_id, kelas_nm FROM kelas k
+		INNER JOIN grade g USING(grade_id)
+		INNER JOIN jurusan j USING(jurusan_id)
+		INNER JOIN pengurus_sekolah ps ON k.`wali_kelas`= ps.`guru_id`
 		WHERE k.`kelas_st` = 'AKTIF' AND k.`kelas_jenis` = 'TEORI' AND k.`grade_id` = ? AND k.`jurusan_id` = ?";
         $query = $this->db->query($sql, $params);
         if ($query->num_rows() > 0) {
