@@ -4,7 +4,6 @@ if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 // load base class if needed
 require_once( APPPATH . 'controllers/base/OperatorBase.php' );
-
 class operator extends ApplicationBase {
 
     //contructor
@@ -20,8 +19,10 @@ class operator extends ApplicationBase {
 
     // list view
     public function index() {
+
         //set rule
         $this->_set_page_rule("R");
+
         //set template content
         $this->smarty->assign("template_content", "pengaturan/operator/list.html");
         // get search parameter

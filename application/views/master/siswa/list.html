@@ -1,79 +1,95 @@
-<div class="breadcrum">
-    <p>
-        <a href="#">Data Master</a><span></span>
-        <small>Siswa</small>
-    </p>
-    <div class="clear"></div>
-</div>
-<div class="search-box">
-    <h3><a href="#">Search</a></h3>
-    <form action="{$config->site_url('master/siswa/search_process')}" method="post">
-        <table class="table-search" width="100%">
-            <tr>
-                <th>Nomor Induk Siswa</th>
-                <td>
-                    <input type="text" name="siswa_nis" placeholder="-- semua --" value="{$search.siswa_nis|default:''}">
-                </td>
-                <th>Nama Siswa</th>
-                <td>
-                    <input type="text" name="siswa_nama" placeholder="-- semua --" value="{$search.siswa_nama|default:''}">
-                </td>
-                <td  align="right">
-                    <input class="submit" name="save" type="submit" value="Cari" />
-                    <input class="submit" name="save" type="submit" value="Reset" />
-                </td>
-            </tr>
-        </table>
-    </form>
-</div>
-<div class="navigation">
-    <div class="pageRow">
-        <div class="pageNav">
-            <ul>
-                <li class="info"><strong>{$pagination.total|default:0}</strong> Data Siswa&nbsp;</li>{$pagination.data|default:''}
-            </ul>
+<section class="content-header">
+    <h1>Siswa</h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-gear"></i> Data Master</a></li>
+        <li><a href="#">Siswa</a></li>
+    </ol>
+</section>
+<section class="content">
+    <!-- <div class="box box-primary">
+        <div class="box-header with-border">
+            <h3 class="box-title">Data Siswa</h3>
+        </div>-->
+        <!-- /.box-header -->
+        <!-- form start -->
+        <!-- <div class="box-body">
+            <form class="form-horizontal" action="{$config->site_url('pengaturan/operator/proses_cari')}" method="post">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label for="nama" class="col-sm-2 control-label">Nama</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="col-sm-10 form-control" id="nama" name="operator_name" value="{$search.operator_name}" placeholder="-- semua --">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 pull-right action-right">
+                        <input class="btn btn-primary " name="save" type="submit" value="Cari">
+                        <input class="btn btn-danger" name="save" type="submit" value="Reset">
+                    </div>
+                </div>
+            </form>
+        </div> /.box-body
+    </div> -->
+    <!-- notification template -->
+    {include file="base/templates/notification.html"}
+    <!-- end of notification template-->
+    <div class="box">
+        <div class="box-header with-border">
+            <h5 class="box-title">Data Siswa<small></small></h5>
+            <div class="box-tools">
+                <a href="{$config->site_url('master/siswa/add')}" class="btn btn-success btn-sm"><i class="fa fa-plus"></i>&nbsp; Tambah</a>
+            </div>
         </div>
-        <div class="clear"></div>
+        <div class="box-body">
+            <table id="example2" class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th width="2%">NIS</th>
+                        <th width="25%">Nama</th>
+                        <th width="10%">JK</th>
+                        <th width="20%">Tempat, Tanggal Lahir</th>
+                        <th width="15%">Minat 1</th>
+                        <th width="15%">Minat 2</th>
+                        <th width="15%">Asal Sekolah</th>
+                        <th width="12%">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {$no = 1}
+                    {foreach $rs_id as $result}
+                    <tr>
+                        <td align="center">{$result.nis}</td>
+                        <td>{$result.nama|upper}</td>
+                        <td>{$result.jenis_kelamin|upper}</td>
+                        <td>{$result.tempat_lahir}, {$dtm->get_full_date($result.tgl_lahir)}</td>
+                        <td align="center">{$result.minat1}</td>
+                        <td align="center">{$result.minat2}</td>
+                        <td align="center">{$result.asal_sekolah}</td>
+                        <td align="center">
+                            <a class="btn bg-olive btn-flat btn-sm" href="{$config->site_url('pengaturan/operator/edit/'|cat:$result.user_id|default:'')}" class="button-edit">Edit</a>
+                            <a
+                            class="btn btn-danger btn-flat btn-sm btn-delete"
+                            href="#"
+                            class="button-hapus" data-href="{$config->site_url('pengaturan/operator/delete/'|cat:$result.user_id|default:'')}"
+                            data-toggle="modal" data-target="#confirm-delete">Hapus</a>
+                        </td>
+                    </tr>
+                    {foreachelse}
+                    <tr>
+                        <td colspan="8">Data tidak ditemukan</td>
+                    </tr>
+                    {/foreach}
+                </tbody>
+            </table>
+        </div>
+        <!-- <div class="box-footer clearfix">
+            <div class="col-sm-6">
+                Menampilkan <b>{$pagination.start|default:0}</b> sampai <b>{$pagination.end|default:0}</b> dari <b>{$pagination.total|default:0}</b></strong> Data Operator
+            </div>
+            <ul class="pagination pagination-sm no-margin pull-right">
+                {$pagination.data|default:''}
+            </ul>
+        </div> -->
     </div>
-    <div class="navigation-button">
-        <ul>
-
-        </ul>
-    </div>
-    <div class="clear"></div>
-</div>
-<!-- notification template -->
-{include file="base/templates/notification.html"}
-<!-- end of notification template-->
-<table class="table-view" width="100%">
-    <tr>
-        <th width="3%">No</th>
-        <th width="10%">NIS</th>
-        <th width="20%">Nama</th>
-        <th width="10%">Jenis Kelamin</th>
-        <th width="15%">Asal</th>
-        <th width="10%"></th>
-    </tr>
-    {foreach $rs_id as $result}
-    <tr>
-        <td align="center">{$no++}.</td>
-        <td align="center">{$result.siswa_nis}</td>
-        <td>{$result.siswa_nama}</td>
-        <td align="center">{$result.siswa_jk}</td>
-        <td align="center">{$result.provinsi_nm}, {$result.kab_nm}</td>
-        <td align="center">
-            <a href="{$config->site_url('master/siswa/edit')}/{$result.siswa_id|default:''}" class="button-edit">Edit</a>
-            <!-- <a href="{$config->site_url('psb/calonsiswa/delete')}/{$result.cs_id|default:''}" class="button-hapus">Hapus</a> -->
-        </td>
-    </tr>
-    {foreachelse}
-    <tr>
-        <td colspan="7">Data tidak ditemukan!</td>
-    </tr>
-    {/foreach}
-</table>                
-</div>
-<div class="clear"></div>
-</div>
-<br />
-</div>
+</section>

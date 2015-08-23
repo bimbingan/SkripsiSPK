@@ -17,14 +17,14 @@ $(document).ready(function() {
 {include file="base/templates/notification.html"}
 <!-- end of notification template-->
 <section class="content">
-    <div class="nav-tabs-custom">
-        <ul class="nav nav-tabs">
-            <li class="active"><a href="#">Data Pribadi</a></li>
-            <li class=""><a href="{$config->site_url('pengaturan/operator/account/'|cat:$result.user_id)}" >User Account</a></li>
-        </ul>
-        <div class="box-header ">
+    <div class="box">
+      <div class="box-header with-border">
+          <h5 class="box-title">Data Siswa<small></small></h5>
+          <div class="box-tools">
+              <a href="{$config->site_url('master/siswa/add')}" class="btn btn-success btn-sm"><i class="fa fa-plus"></i>&nbsp; Tambah</a>
+          </div>
+      </div>
 
-        </div><!-- /.box-header -->
         <!-- form start -->
         <form action="{$config->site_url('pengaturan/operator/edit_process')}" method="post">
             <div class="box-body">
