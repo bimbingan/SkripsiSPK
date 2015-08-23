@@ -1,2 +1,2 @@
-/application/config/database.php
-/cache/*
+application/config/database.php
+cache/

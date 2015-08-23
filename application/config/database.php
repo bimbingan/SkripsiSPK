@@ -1,7 +1,7 @@
 <?php
 
 if (!defined('BASEPATH'))
-    exit('No direct script access allowed');
+	exit('No direct script access allowed');
 /*
   | -------------------------------------------------------------------
   | DATABASE CONNECTIVITY SETTINGS
@@ -41,8 +41,8 @@ if (!defined('BASEPATH'))
   | the active record class
  */
 
-$active_group = 'default';
-$active_record = TRUE;
+  $active_group = 'default';
+  $active_record = TRUE;
 
 // apms online
 /*$db['default']['hostname'] = '202.91.14.3';
@@ -51,10 +51,10 @@ $db['default']['password'] = '4k4d3m1k';
 $db['default']['database'] = 'akademik_v1_db';
 */
 
-  $db['default']['hostname'] = 'localhost';
-  $db['default']['username'] = 'root';
-  $db['default']['password'] = '';
-  $db['default']['database'] = 'skripsispk_v1';
+$db['default']['hostname'] = 'localhost';
+$db['default']['username'] = 'root';
+$db['default']['password'] = '';
+$db['default']['database'] = 'skripsi_spk_v1_db';
 
 
 $db['default']['dbdriver'] = 'mysqli';
