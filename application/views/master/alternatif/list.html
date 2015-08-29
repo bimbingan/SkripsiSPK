@@ -1,8 +1,8 @@
 <section class="content-header">
-    <h1>Siswa</h1>
+    <h1>Alternatif</h1>
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-gear"></i> Data Master</a></li>
-        <li><a href="#">Siswa</a></li>
+        <li><a href="#">klternatif</a></li>
     </ol>
 </section>
 <section class="content">
@@ -36,22 +36,18 @@
     <!-- end of notification template-->
     <div class="box">
         <div class="box-header with-border">
-            <h5 class="box-title">Data Siswa<small></small></h5>
+            <h5 class="box-title">Kriteria<small></small></h5>
             <div class="box-tools">
-                <a href="{$config->site_url('master/siswa/add')}" class="btn btn-success btn-sm"><i class="fa fa-plus"></i>&nbsp; Tambah</a>
+                <a href="{$config->site_url('master/alternatif/add')}" class="btn btn-success btn-sm"><i class="fa fa-plus"></i>&nbsp; Tambah</a>
             </div>
         </div>
         <div class="box-body">
             <table id="example2" class="table table-bordered table-hover">
                 <thead>
                     <tr>
-                        <th width="2%">NIS</th>
-                        <th width="25%">Nama</th>
-                        <th width="10%">JK</th>
-                        <th width="18%">Tempat, Tanggal Lahir</th>
-                        <th width="7%">Minat 1</th>
-                        <th width="7%">Minat 2</th>
-                        <th width="19%">Asal Sekolah</th>
+                        <th width="2%">No</th>
+                        <th align="center",width="28%">Alternatif</th>
+                        <th width="58%">Deskripsi</th>
                         <th width="12%">Action</th>
                     </tr>
                 </thead>
@@ -59,19 +55,15 @@
                     {$no = 1}
                     {foreach $rs_id as $result}
                     <tr>
-                        <td align="center">{$result.nis}</td>
-                        <td>{$result.nama|upper}</td>
-                        <td>{$result.jenis_kelamin|upper}</td>
-                        <td>{$result.tempat_lahir}, {$dtm->get_full_date($result.tgl_lahir)}</td>
-                        <td align="center">{$result.minat1}</td>
-                        <td align="center">{$result.minat2}</td>
-                        <td align="center">{$result.asal_sekolah}</td>
+                        <td align="center">{$result.id}</td>
+                        <td>{$result.alternatif|upper}</td>
+                        <td>{$result.Deskripsi|upper}</td>
                         <td align="center">
-                            <a class="btn bg-olive btn-flat btn-sm" href="{$config->site_url('master/siswa/edit/'|cat:$result.nis|default:'')}" class="button-edit">Edit</a>
+                            <a class="btn bg-olive btn-flat btn-sm" href="{$config->site_url('master/alternatif/edit/'|cat:$result.id|default:'')}" class="button-edit">Edit</a>
                             <a
                             class="btn btn-danger btn-flat btn-sm btn-delete"
                             href="#"
-                            class="button-hapus" data-href="{$config->site_url('master/siswa/delete/'|cat:$result.nis|default:'')}"
+                            class="button-hapus" data-href="{$config->site_url('master/alternatif/delete/'|cat:$result.id|default:'')}"
                             data-toggle="modal" data-target="#confirm-delete">Hapus</a>
                         </td>
                     </tr>

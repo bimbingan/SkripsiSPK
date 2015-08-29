@@ -5,12 +5,12 @@ if (!defined('BASEPATH'))
 // load base class if needed
 require_once( APPPATH . 'controllers/base/OperatorBase.php' );
 
-class siswa extends ApplicationBase {
+class alternatif extends ApplicationBase {
 
     function __construct() {
         parent::__construct();
         // load model
-        $this->load->model('master/m_siswa');
+        $this->load->model('master/m_alternatif');
         // load library
         $this->load->library('tnotification');
         // load library
@@ -22,11 +22,11 @@ class siswa extends ApplicationBase {
         $this->_set_page_rule("R");
 
         // set template content
-        $this->smarty->assign("template_content", "master/siswa/list.html");
+        $this->smarty->assign("template_content", "master/alternatif/list.html");
 
         // load data
-        $data_siswa = $this->m_siswa->get_all_siswa();
-        $this->smarty->assign("rs_id", $data_siswa);
+        $data_alternatif = $this->m_alternatif->get_all_alternatif();
+        $this->smarty->assign("rs_id", $data_alternatif);
 
         // notification
         $this->tnotification->display_notification();
@@ -62,7 +62,7 @@ class siswa extends ApplicationBase {
       $this->_set_page_rule("C");
 
       // set template content
-      $this->smarty->assign("template_content", "master/siswa/add.html");
+      $this->smarty->assign("template_content", "master/alternatif/add.html");
       // load js
       $this->smarty->load_javascript('resource/js/datetimepicker/moment.js');
       $this->smarty->load_javascript('resource/js/datetimepicker/bootstrap-datetimepicker.js');
@@ -80,28 +80,21 @@ class siswa extends ApplicationBase {
       // set page rules
       $this->_set_page_rule("C");
 
-      $this->tnotification->set_rules('nis', 'NIS', 'trim|required|number');
-      $this->tnotification->set_rules('nama', 'Nama', 'trim|required|max_length[45]');
-      $this->tnotification->set_rules('jenis_kelamin', 'Jenis Kelamin', 'trim');
-      $this->tnotification->set_rules('tempat_lahir, tgl_lahir', 'TTL', 'trim');
-      $this->tnotification->set_rules('minat1', 'Minat 1', 'trim');
-      $this->tnotification->set_rules('minat2', 'Minat 2', 'trim');
-      $this->tnotification->set_rules('asal_sekolah', 'Asal Sekolah', 'trim');
+      $this->tnotification->set_rules('id', 'No', 'trim|required|number');
+      $this->tnotification->set_rules('alternatif', 'Alternatif', 'trim|required|max_length[45]');
+      $this->tnotification->set_rules('deskripsi', 'Deskripsi', 'trim');
+
       if($this->tnotification->run()){
           // kalau validasi benar
 
           $params = array(
-            'nis' => $this->input->post('nis'),
-            'nama' => $this->input->post('nama'),
-            'jenis_kelamin' => $this->input->post('jenis_kelamin'),
-            'tempat_lahir' => $this->input->post('tempat_lahir'),
-            'tgl_lahir' => $this->input->post('tgl_lahir'),
-            'minat1' => $this->input->post('minat1'),
-            'minat2' => $this->input->post('minat2'),
-            'asal_sekolah' => $this->input->post('asal_sekolah'),
+            'id' => $this->input->post('id'),
+            'alternatif' => $this->input->post('alternatif'),
+            'deskripsi' => $this->input->post('deskripsi'),
           );
 
-          if($this->m_siswa->insert_siswa($params)){
+
+          if($this->m_alternatif->insert_alternatif($params)){
             $this->tnotification->delete_last_field();
             $this->tnotification->sent_notification("success", "Data berhasil disimpan");
           }else{
@@ -114,13 +107,13 @@ class siswa extends ApplicationBase {
 
       }
 
-      redirect('master/siswa/add');
+      redirect('master/alternatif/add');
     }
 
     function delete($params){
         $this->_set_page_rule("D");
 
-        if($this->m_siswa->delete_siswa($params)){
+        if($this->m_alternatif->delete_alternatif($params)){
               // success
                 $this->tnotification->delete_last_field();
                 $this->tnotification->sent_notification("success", "Data berhasil dihapus");
@@ -128,21 +121,15 @@ class siswa extends ApplicationBase {
             $this->tnotification->sent_notification("error", "Data gagal dihapus");
 
         }
-        redirect("master/siswa");
+        redirect("master/alternatif");
     }
 
     function edit($params){
          $this->_set_page_rule("U");
-         $this->smarty->assign("template_content", "master/siswa/edit.html");
+         $this->smarty->assign("template_content", "master/alternatif/edit.html");
 
-         // load js
-         $this->smarty->load_javascript('resource/js/datetimepicker/moment.js');
-         $this->smarty->load_javascript('resource/js/datetimepicker/bootstrap-datetimepicker.js');
-         // load css
-         $this->smarty->load_style('datetimepicker/bootstrap-datetimepicker.css');
-
-         $siswa = $this->m_siswa->get_one_siswa($params);
-         $this->smarty->assign("result", $siswa);
+         $alternatif = $this->m_alternatif->get_one_alternatif($params);
+         $this->smarty->assign("result", $alternatif);
          // notification
          $this->tnotification->display_notification();
          $this->tnotification->display_last_field();
@@ -152,29 +139,20 @@ class siswa extends ApplicationBase {
 
     function process_edit(){
         $this->_set_page_rule("U");
-        $this->tnotification->set_rules('nis', 'NIS', 'trim|required|number');
-        $this->tnotification->set_rules('nama', 'Nama', 'trim|required|max_length[45]');
-        $this->tnotification->set_rules('jenis_kelamin', 'Jenis Kelamin', 'trim');
-        $this->tnotification->set_rules('tempat_lahir, tgl_lahir', 'TTL', 'trim');
-        $this->tnotification->set_rules('minat1', 'Minat 1', 'trim');
-        $this->tnotification->set_rules('minat2', 'Minat 2', 'trim');
-        $this->tnotification->set_rules('asal_sekolah', 'Asal Sekolah', 'trim');
+        $this->tnotification->set_rules('id', 'No', 'trim|required|number');
+        $this->tnotification->set_rules('alternatif', 'Alternatif', 'trim|required|max_length[45]');
+        $this->tnotification->set_rules('deskripsi', 'Deskripsi', 'trim');
         if($this->tnotification->run() !== FALSE){
             $params = array(
 
-              'nama' => $this->input->post('nama'),
-              'jenis_kelamin' => $this->input->post('jenis_kelamin'),
-              'tempat_lahir' => $this->input->post('tempat_lahir'),
-              'tgl_lahir' => $this->input->post('tgl_lahir'),
-              'minat1' => $this->input->post('minat1'),
-              'minat2' => $this->input->post('minat2'),
-              'asal_sekolah' => $this->input->post('asal_sekolah'),
+              'alternatif' => $this->input->post('alternatif'),
+              'deskripsi' => $this->input->post('deskripsi'),
             );
             $where = array(
-                'nis' => $this->input->post('nis'),
-            );
+                'id' => $this->input->post('id'),
+              );
 
-            if($this->m_siswa->update_siswa($params, $where)){
+            if($this->m_alternatif->update_alternatif($params, $where)){
 
                  // success
                 $this->tnotification->delete_last_field();
@@ -187,7 +165,7 @@ class siswa extends ApplicationBase {
             // default error
             $this->tnotification->sent_notification("error", "Data gagal disimpan");
         }
-        redirect("master/siswa/edit/". $this->input->post('nis'));
+        redirect("master/alternatif/edit/". $this->input->post('id'));
     }
 
 }

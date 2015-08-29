@@ -1,7 +1,10 @@
 <script type="text/javascript">
 $(document).ready(function() {
     // date picker
-    /* KURANG DATEPICKER */
+    $("#tgl_lahir").datetimepicker({
+      'format' : 'YYYY-MM-DD',
+      'ignoreReadonly' : true
+    });
 });
 </script>
 
@@ -43,6 +46,48 @@ $(document).ready(function() {
                                 <label class="col-sm-4 control-label">Nama Siswa</label>
                                 <div class="col-sm-8">
                                     <input class="form-control" name="nama" type="text" />
+                                    <small>* Wajib diisi</small>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label">Jenis Kelamin</label>
+                                <div class="col-sm-8">
+                                    <input class="form-control" name="jenis_kelamin" type="text" />
+                                    <small>* Wajib diisi</small>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label">Tempat Lahir</label>
+                                <div class="col-sm-8">
+                                    <input class="form-control" name="tempat_lahir" type="text" />
+                                    <small>* Wajib diisi</small>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label">Tanggal Lahir</label>
+                                <div class="col-sm-8">
+                                    <input class="form-control" readonly name="tgl_lahir" id="tgl_lahir" type="text" />
+                                    <small>* Wajib diisi</small>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label">Minat 1</label>
+                                <div class="col-sm-8">
+                                    <input class="form-control" name="minat1" type="text" />
+                                    <small>* Wajib diisi</small>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label">Minat 2</label>
+                                <div class="col-sm-8">
+                                    <input class="form-control" name="minat2" type="text" />
+                                    <small>* Wajib diisi</small>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label">Asal Sekolah</label>
+                                <div class="col-sm-8">
+                                    <input class="form-control" name="asal_sekolah" type="text" />
                                     <small>* Wajib diisi</small>
                                 </div>
                             </div>

@@ -1,0 +1,74 @@
+<script type="text/javascript">
+$(document).ready(function() {
+    // date picker
+    $("#tgl_lahir").datetimepicker({
+      'format' : 'YYYY-MM-DD',
+      'ignoreReadonly' : true
+    });
+});
+</script>
+
+<section class="content-header">
+    <h1>Tambah Kriteria</h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-gear"></i> Data Master</a></li>
+        <li><a href="{$config->site_url('pengaturan/operator')}">Kriteria</a></li>
+        <li><a href="#">Tambah Data</a></li>
+    </ol>
+</section>
+
+<section class="content">
+  <!-- notification template -->
+  {include file="base/templates/notification.html"}
+  <!-- end of notification template-->
+    <div class="box">
+      <div class="box-header with-border">
+          <h5 class="box-title">Kriteria<small></small></h5>
+          <div class="box-tools">
+              <a href="{$config->site_url('master/kriteria/')}" class="btn btn-success btn-sm"><i class="fa fa-arrow-left"></i>&nbsp; Kembali</a>
+          </div>
+      </div>
+        <!-- form start -->
+        <form action="{$config->site_url('master/kriteria/process_add')}" method="post">
+            <div class="box-body">
+                <div class="form-horizontal">
+                    <input name="user_id" type="hidden"  value="{$result.user_id|default:''}" />
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label">No</label>
+                                <div class="col-sm-8">
+                                    <input class="form-control" name="id" type="text" />
+                                    <small>* Wajib diisi</small>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label">Kriteria</label>
+                                <div class="col-sm-8">
+                                    <input class="form-control" name="kriteria" type="text" />
+                                    <small>* Wajib diisi</small>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label">Deskripsi</label>
+                                <div class="col-sm-8">
+                                    <input class="form-control" name="deskripsi" type="text" />
+                                    <small>* Wajib diisi</small>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div><!-- /.box-body -->
+            <div class="box-footer">
+                <div class="col-lg-12">
+                    <div class="pull-right">
+                        <input type="reset" name="save" value="Reset" class="btn btn-default" />
+                        <input type="submit" name="save" value="Simpan" class="btn btn-success" />
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>
