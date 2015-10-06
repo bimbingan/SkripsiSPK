@@ -1,8 +1,8 @@
 <section class="content-header">
-    <h1>Kriteria</h1>
+    <h1>Perhitungan</h1>
     <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-gear"></i> Data Master</a></li>
-        <li><a href="#">kriteria</a></li>
+        <li><a href="#"><i class="fa fa-gear"></i>Perhitungan</a></li>
+        <li><a href="#">Range Nilai</a></li>
     </ol>
 </section>
 <section class="content">
@@ -36,34 +36,35 @@
     <!-- end of notification template-->
     <div class="box">
         <div class="box-header with-border">
-            <h5 class="box-title">Kriteria<small></small></h5>
+            <h5 class="box-title">Range<small></small></h5>
             <div class="box-tools">
-                <a href="{$config->site_url('master/kriteria/add')}" class="btn btn-success btn-sm"><i class="fa fa-plus"></i>&nbsp; Tambah</a>
+                <a href="{$config->site_url('perhitungan/range_nilai/add')}" class="btn btn-success btn-sm"><i class="fa fa-plus"></i>&nbsp; Tambah</a>
             </div>
         </div>
         <div class="box-body">
             <table id="example2" class="table table-bordered table-hover">
                 <thead>
                     <tr>
-                        <th width="2%">No</th>
-                        <th align="center",width="28%">Kriteria</th>
-                        <th width="58%">Deskripsi</th>
-                        <th width="12%">Action</th>
+
+                        <th align="center",width="25%">Batas Atas Range Nilai</th>
+                        <th align="center",width="25%">Batas Bawah Range Nilai</th>
+                        <th width="20%">Action</th>
                     </tr>
                 </thead>
                 <tbody>
                     {$no = 1}
                     {foreach $rs_id as $result}
                     <tr>
-                        <td align="center">{$result.id}</td>
-                        <td>{$result.kriteria|upper}</td>
-                        <td>{$result.deskripsi|upper}</td>
+
+                        <td>{$result.batas_atas|upper}</td>
+                        <td>{$result.batas_bawah|upper}</td>
+
                         <td align="center">
-                            <a class="btn bg-olive btn-flat btn-sm" href="{$config->site_url('master/kriteria/edit/'|cat:$result.id|default:'')}" class="button-edit">Edit</a>
+                            <a class="btn bg-olive btn-flat btn-sm" href="{$config->site_url('perhitungan/range_nilai/edit/'|cat:$result.id_range|default:'')}" class="button-edit">Edit</a>
                             <a
                             class="btn btn-danger btn-flat btn-sm btn-delete"
                             href="#"
-                            class="button-hapus" data-href="{$config->site_url('master/kriteria/delete/'|cat:$result.id|default:'')}"
+                            class="button-hapus" data-href="{$config->site_url('perhitungan/range_nilai/delete/'|cat:$result.id_range|default:'')}"
                             data-toggle="modal" data-target="#confirm-delete">Hapus</a>
                         </td>
                     </tr>

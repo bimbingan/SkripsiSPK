@@ -1,14 +1,14 @@
 <?php
 
-class m_alternatif extends CI_Model {
+class m_rating extends CI_Model {
 
     function __construct() {
         parent::__construct();
     }
 
 
-    function get_all_alternatif() {
-        $sql = "SELECT * FROM alternatif ORDER BY id ASC";
+    function get_all_rating() {
+        $sql = "SELECT * FROM rating ORDER BY id_rating ASC";
         $query = $this->db->query($sql);
         if ($query->num_rows() > 0) {
             $result = $query->result_array();
@@ -19,8 +19,8 @@ class m_alternatif extends CI_Model {
         }
     }
 
-    function get_one_alternatif( $id ){
-		$sql = "SELECT * FROM alternatif WHERE id = ?"; 	// perintah sql berbentuk string
+    function get_one_rating( $id ){
+		$sql = "SELECT * FROM rating WHERE id_rating = ?"; 	// perintah sql berbentuk string
 		$query = $this->db->query( $sql , $id); 	// perintah sql dieksekusi kemudian disimpan di dalam var query
 		if($query->num_rows() > 0){			// query dicek apakah ada isinya atau tidak
 			$result = $query->row_array();	// hasil dari query dipindahkan ke var result dengan menggunakan fungsi result_array (mempunyai baris banyak)
@@ -31,16 +31,16 @@ class m_alternatif extends CI_Model {
 		}
 	}
 
-    function insert_alternatif($params){
-      return $this->db->insert('alternatif', $params);
+    function insert_rating($params){
+      return $this->db->insert('rating', $params);
     }
 
-    function delete_alternatif ($params){
-      $sql= "DELETE FROM alternatif WHERE id = ?";
+    function delete_rating ($params){
+      $sql= "DELETE FROM rating WHERE id_rating = ?";
       return $this->db->query($sql, $params);
     }
 
-    function update_alternatif( $params, $where ){
-      return $this->db->update('alternatif', $params, $where);
+    function update_rating( $params, $where ){
+      return $this->db->update('rating', $params, $where);
 		}
 }

@@ -1,0 +1,78 @@
+<script type="text/javascript">
+$(document).ready(function() {
+
+});
+</script>
+
+<section class="content-header">
+    <h1>Edit Rating Range</h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-gear"></i> Data Rating Range</a></li>
+        <li><a href="{$config->site_url('pengaturan/operator')}">Perhitungan</a></li>
+        <li><a href="#">Edit Data Rating Range</a></li>
+    </ol>
+</section>
+
+<section class="content">
+  <!-- notification template -->
+  {include file="base/templates/notification.html"}
+  <!-- end of notification template-->
+    <div class="box">
+      <div class="box-header with-border">
+          <h5 class="box-title">Rating Range<small></small></h5>
+          <div class="box-tools">
+              <a href="{$config->site_url('perhitungan/rating_range/')}" class="btn btn-success btn-sm"><i class="fa fa-arrow-left"></i>&nbsp; Kembali</a>
+          </div>
+      </div>
+        <!-- form start -->
+        <form action="{$config->site_url('perhitungan/rating_range/process_add')}" method="post">
+            <div class="box-body">
+                <div class="form-horizontal">
+                    <input name="user_id" type="hidden"  value="{$result.id|default:''}" />
+                    <div class="row">
+                      <div class="col-lg-12">
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Nama Rating</label>
+                            <div class="col-sm-4">
+                              <select class="form-control" name="id_rating">
+                                {foreach $rs_rating as $rating}
+                                  <option {if $result.id_rating eq $rating.id_rating}selected{/if} value="{$rating.id_rating}">{$rating.group_rating} - {$rating.nama_rating|upper}</option>
+                                {/foreach}
+                              </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Batas Atas Range Nilai </label>
+                            <div class="col-sm-4">
+                              <select class="form-control" name="id_range">
+                                {foreach $rs_range_nilai as $range_nilai}
+                                  <option {if $result.id_range eq $range_nilai.id_range}selected{/if} value="{$range_nilai.id_range}">{$range_nilai.batas_bawah|upper} - {$range_nilai.batas_atas|upper}</option>
+                                {/foreach}
+                              </select>
+                          </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Nilai Range </label>
+                            <div class="col-sm-4">
+                            <input class="form-control" name="nilai_range" type="text" />
+                          </div>
+                        </div>
+
+                      </div>
+                    </div>
+                </div>
+            </div><!-- /.box-body -->
+            <div class="box-footer">
+                <div class="col-lg-12">
+                    <div class="pull-right">
+                        <input type="reset" name="save" value="Reset" class="btn btn-default" />
+                        <input type="submit" name="save" value="Simpan" class="btn btn-success" />
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>

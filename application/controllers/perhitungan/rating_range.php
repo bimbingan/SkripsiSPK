@@ -5,12 +5,12 @@ if (!defined('BASEPATH'))
 // load base class if needed
 require_once( APPPATH . 'controllers/base/OperatorBase.php' );
 
-class kriteria extends ApplicationBase {
+class rating_range extends ApplicationBase {
 
     function __construct() {
         parent::__construct();
         // load model
-        $this->load->model('master/m_kriteria');
+        $this->load->model('perhitungan/m_rating_range');
         // load library
         $this->load->library('tnotification');
         // load library
@@ -22,11 +22,11 @@ class kriteria extends ApplicationBase {
         $this->_set_page_rule("R");
 
         // set template content
-        $this->smarty->assign("template_content", "master/kriteria/list.html");
+        $this->smarty->assign("template_content", "perhitungan/rating_range/list.html");
 
         // load data
-        $data_kriteria = $this->m_kriteria->get_all_kriteria();
-        $this->smarty->assign("rs_id", $data_kriteria);
+        $data_rating_range = $this->m_rating_range->get_all_rating_range();
+        $this->smarty->assign("rs_id", $data_rating_range);
 
         // notification
         $this->tnotification->display_notification();
@@ -62,12 +62,16 @@ class kriteria extends ApplicationBase {
       $this->_set_page_rule("C");
 
       // set template content
-      $this->smarty->assign("template_content", "master/kriteria/add.html");
+      $this->smarty->assign("template_content", "perhitungan/rating_range/add.html");
       // load js
       $this->smarty->load_javascript('resource/js/datetimepicker/moment.js');
       $this->smarty->load_javascript('resource/js/datetimepicker/bootstrap-datetimepicker.js');
       // load css
       $this->smarty->load_style('datetimepicker/bootstrap-datetimepicker.css');
+
+      // data
+      $this->smarty->assign("rs_rating", $this->m_rating_range->get_all_rating());
+      $this->smarty->assign("rs_range_nilai", $this->m_rating_range->get_all_range_nilai());
 
       // notification
       $this->tnotification->display_notification();
@@ -80,21 +84,21 @@ class kriteria extends ApplicationBase {
       // set page rules
       $this->_set_page_rule("C");
 
-      $this->tnotification->set_rules('id', 'No', 'trim|required|number');
-      $this->tnotification->set_rules('kriteria', 'Kriteria', 'trim|required|max_length[45]');
-      $this->tnotification->set_rules('Deskripsi', 'Deskripsi', 'trim');
+      $this->tnotification->set_rules('id_rating', 'Nama Rating', 'trim|required|max_length[45]');
+      $this->tnotification->set_rules('id_range', 'Batas Range Nilai', 'trim');
+      $this->tnotification->set_rules('nilai_range', 'Nilai Range', 'trim');
 
-      if($this->tnotification->run()){
+        if($this->tnotification->run()){
           // kalau validasi benar
 
           $params = array(
-            'id' => $this->input->post('id'),
-            'kriteria' => $this->input->post('kriteria'),
-            'deskripsi' => $this->input->post('deskripsi'),
+            'id_rating' => $this->input->post('id_rating'),
+            'id_range' => $this->input->post('id_range'),
+            'nilai_range' => $this->input->post('nilai_range'),
 
           );
 
-          if($this->m_kriteria->insert_kriteria($params)){
+          if($this->m_rating_range->insert_rating_range($params)){
             $this->tnotification->delete_last_field();
             $this->tnotification->sent_notification("success", "Data berhasil disimpan");
           }else{
@@ -107,13 +111,13 @@ class kriteria extends ApplicationBase {
 
       }
 
-      redirect('master/kriteria/add');
+      redirect('perhitungan/rating_range/add');
     }
 
     function delete($params){
         $this->_set_page_rule("D");
 
-        if($this->m_kriteria->delete_kriteria($params)){
+        if($this->m_rating_range->delete_rating_range($params)){
               // success
                 $this->tnotification->delete_last_field();
                 $this->tnotification->sent_notification("success", "Data berhasil dihapus");
@@ -121,15 +125,25 @@ class kriteria extends ApplicationBase {
             $this->tnotification->sent_notification("error", "Data gagal dihapus");
 
         }
-        redirect("master/kriteria");
+        redirect("perhitungan/rating_range");
     }
 
     function edit($params){
          $this->_set_page_rule("U");
-         $this->smarty->assign("template_content", "master/kriteria/edit.html");
+         $this->smarty->assign("template_content", "perhitungan/rating_range/edit.html");
 
-         $kriteria = $this->m_kriteria->get_one_kriteria($params);
-         $this->smarty->assign("result", $kriteria);
+         // load js
+         $this->smarty->load_javascript('resource/js/datetimepicker/moment.js');
+         $this->smarty->load_javascript('resource/js/datetimepicker/bootstrap-datetimepicker.js');
+         // load css
+         $this->smarty->load_style('datetimepicker/bootstrap-datetimepicker.css');
+
+         $rating_range = $this->m_rating_range->get_one_rating_range($params);
+         
+         $this->smarty->assign("result", $rating_range);
+         $this->smarty->assign("rs_rating", $this->m_rating_range->get_all_rating());
+         $this->smarty->assign("rs_range_nilai", $this->m_rating_range->get_all_range_nilai());
+
          // notification
          $this->tnotification->display_notification();
          $this->tnotification->display_last_field();
@@ -139,20 +153,24 @@ class kriteria extends ApplicationBase {
 
     function process_edit(){
         $this->_set_page_rule("U");
-        $this->tnotification->set_rules('id', 'No', 'trim|required|number');
-        $this->tnotification->set_rules('kriteria', 'Kriteria', 'trim|required|max_length[45]');
-        $this->tnotification->set_rules('deskripsi', 'Deskripsi', 'trim');
+
+        $this->tnotification->set_rules('id_rating', 'Nama Rating', 'trim|required|max_length[45]');
+        $this->tnotification->set_rules('id_range', 'Batas Range Nilai', 'trim');
+        $this->tnotification->set_rules('nilai_range', 'Nilai Range', 'trim');
+
         if($this->tnotification->run() !== FALSE){
             $params = array(
 
-              'kriteria' => $this->input->post('kriteria'),
-              'deskripsi' => $this->input->post('deskripsi'),
+                'id_rating' => $this->input->post('id_rating'),
+                'id_range' => $this->input->post('id_range'),
+                'nilai_range' => $this->input->post('nilai_range'),
+
             );
             $where = array(
-                'id' => $this->input->post('id'),
-              );
+                'id_range' => $this->input->post('id_range'),
+            );
 
-            if($this->m_kriteria->update_kriteria($params, $where)){
+            if($this->m_rating_range->update_rating_range($params, $where)){
 
                  // success
                 $this->tnotification->delete_last_field();
@@ -165,7 +183,7 @@ class kriteria extends ApplicationBase {
             // default error
             $this->tnotification->sent_notification("error", "Data gagal disimpan");
         }
-        redirect("master/kriteria/edit/". $this->input->post('id'));
+        redirect("perhitungan/rating_range/edit/". $this->input->post('id_range'));
     }
 
 }

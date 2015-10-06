@@ -1,0 +1,117 @@
+<script type="text/javascript">
+    jQuery(document).ready(function($) {
+      // setting defaults for the editable
+      $.fn.editable.defaults.mode = 'inline';
+      $.fn.editable.defaults.showbuttons = false;
+      $.fn.editable.defaults.url = '{$config->site_url("master/nilai/add_nilai")}';
+      $.fn.editable.defaults.type = 'text';
+
+      // make all items having class 'edit' editable
+      $('.edit').editable({
+          emptytext : '',
+      });
+
+      // this is to automatically make the next item in the table editable
+      $('.edit').on('save', function(e, params){
+          var that = this;
+          // persist the old value in the element to be restored when clicking reset
+          var oldItemValue = $(that)[0].innerHTML;
+          if (!$(that).attr('oldValue')) {
+              console.log('persisting original value: ' + oldItemValue)
+              $(that).attr('oldValue', oldItemValue);
+          }
+          setTimeout(function() {
+              // first search the row
+              var index = $(that).index();
+              console.log(index);
+              var item = $(that).next('.edit:eq('+(index-3)+')');
+              item.editable('show');
+          }, 200);
+      });
+
+
+    });
+</script>
+<section class="content-header">
+    <h1> Nilai </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-gear"></i> Data Master</a></li>
+        <li><a href="#">Nilai</a></li>
+    </ol>
+</section>
+<section class="content">
+    <!-- notification template -->
+    {include file="base/templates/notification.html"}
+    <!-- end of notification template-->
+    <div class="box">
+        <div class="box-header with-border">
+            <h5 class="box-title">Nilai<small></small></h5>
+            <div class="box-tools">
+                <a href="{$config->site_url('master/nilai/add')}" class="btn btn-success btn-sm"><i class="fa fa-plus"></i>&nbsp; Tambah</a>
+            </div>
+        </div>
+        <div class="box-body">
+            <table id="example2" class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th width="2%" rowspan="2">Nis</th>
+                        <th width="28%" rowspan="2">Nama</th>
+                        <th width="20%" colspan="4">Ujian Nasional</th>
+                        <th width="20%" colspan="4">Tes Ujian</th>
+                        <th width="18%" rowspan="2">Minat</th>
+                        <th width="12%" rowspan="2">Rekomendasi Peminatan</th>
+                    </tr>
+
+                    <tr>
+                        <td>MTK</td>
+                        <td>IPA</td>
+                        <td>B.Indo</td>
+                        <td>B.Ing</td>
+                        <td>MTK</td>
+                        <td>IPA</td>
+                        <td>B.Ing</td>
+                    </tr>
+
+                </thead>
+                <tbody>
+                    {$no = 1}
+                    {foreach $rs_id as $result}
+                    <tr>
+                        <td align="center">{$result.nis}</td>
+                        <td >{$result.nama|upper}</td>
+                        <td class="edit" data-pk="{$result.nis}" data-name="mtk_un">{$result.mtk_un|upper}</td>
+                        <td class="edit" data-pk="{$result.nis}" data-name="ipa_un">{$result.ipa_un|upper}</td>
+                        <td class="edit" data-pk="{$result.nis}" data-name="bindo_un">{$result.bindo_un|upper}</td>
+                        <td class="edit" data-pk="{$result.nis}" data-name="bing_un">{$result.bing_un|upper}</td>
+                        <td class="edit" data-pk="{$result.nis}" data-name="mtk_tes">{$result.mtk_tes|upper}</td>
+                        <td class="edit" data-pk="{$result.nis}" data-name="ipa_tes">{$result.ipa_tes|upper}</td>
+                        <td class="edit" data-pk="{$result.nis}" data-name="bing_tes">{$result.bing_tes|upper}</td>
+                        <td >
+                          <select class="form-control" name="minat">
+                            <option value="">-- Pilih Minat --</option>
+                            <option value="0">IPA</option>
+                            <option value="1">IPS</option>
+                          </select>
+                        </td>
+                        <td class="rekomendasi">
+
+                        </td>
+                    </tr>
+                    {foreachelse}
+                    <tr>
+                        <td colspan="15">Data tidak ditemukan</td>
+                    </tr>
+                    {/foreach}
+                </tbody>
+            </table>
+        </div>
+        <!-- <div class="box-footer clearfix">
+            <div class="col-sm-6">
+                Menampilkan <b>{$pagination.start|default:0}</b> sampai <b>{$pagination.end|default:0}</b> dari <b>{$pagination.total|default:0}</b></strong> Data Operator
+            </div>
+            <ul class="pagination pagination-sm no-margin pull-right">
+                {$pagination.data|default:''}
+            </ul>
+        </div> -->
+    </div>
+</section>

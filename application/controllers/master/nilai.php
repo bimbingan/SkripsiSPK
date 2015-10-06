@@ -5,7 +5,7 @@ if (!defined('BASEPATH'))
 // load base class if needed
 require_once( APPPATH . 'controllers/base/OperatorBase.php' );
 
-class alternatif extends ApplicationBase {
+class nilai extends ApplicationBase {
 
     function __construct() {
         parent::__construct();
@@ -23,16 +23,34 @@ class alternatif extends ApplicationBase {
 
         // set template content
         $this->smarty->assign("template_content", "master/nilai/list.html");
-
+        // load css
+        $this->smarty->load_style('editable/bootstrap-editable.css');
+        // load javascript
+        $this->smarty->load_javascript('resource/js/editable/bootstrap-editable.js');
         // load data
-        $data_alternatif = $this->m_alternatif->get_all_nilai();
-        $this->smarty->assign("rs_id", $data_alternatif);
+        $data_nilai = $this->m_nilai->get_all_nilai();
+        $this->smarty->assign("rs_id", $data_nilai);
 
         // notification
         $this->tnotification->display_notification();
         $this->tnotification->display_last_field();
         // output
         parent::display();
+    }
+
+    function add_nilai($params){
+      // set page rules
+      $this->_set_page_rule('U');
+
+      $name = $this->input->post('name');
+      $value = $this->input->post('value');
+      $pk = $this->input->post('pk');
+
+      $params = array($name => $value );
+      $where = array('nis' => $pk);
+
+      $this->m_nilai->update_nilai($params, $where);
+
     }
 
     // // pencarian
@@ -82,19 +100,27 @@ class alternatif extends ApplicationBase {
 
       $this->tnotification->set_rules('nis', 'No', 'trim|required|number');
       $this->tnotification->set_rules('nama', 'Nama', 'trim|required|max_length[45]');
-      $this->tnotification->set_rules('deskripsi', 'Deskripsi', 'trim');
+      $this->tnotification->set_rules('mtk_un', 'MTK', 'trim');
+      $this->tnotification->set_rules('ipa_un', 'IPA', 'trim');
+      $this->tnotification->set_rules('bindo_un', 'B.Indo', 'trim');
+      $this->tnotification->set_rules('bing_un', 'B.Ing', 'trim');
+      $this->tnotification->set_rules('mtk_tes', 'MTK', 'trim');
+      $this->tnotification->set_rules('ipa_tes', 'IPA', 'trim');
+      $this->tnotification->set_rules('bing_tes', 'B.Ing', 'trim');
+      $this->tnotification->set_rules('minat', 'Minat', 'trim');
+
 
       if($this->tnotification->run()){
           // kalau validasi benar
 
           $params = array(
-            'id' => $this->input->post('id'),
-            'alternatif' => $this->input->post('alternatif'),
-            'deskripsi' => $this->input->post('deskripsi'),
+            'nis' => $this->input->post('nis'),
+            'nama' => $this->input->post('nama'),
+            'mapel' => $this->input->post('mapel'),
           );
 
 
-          if($this->m_alternatif->insert_alternatif($params)){
+          if($this->m_nilai->insert_nilai($params)){
             $this->tnotification->delete_last_field();
             $this->tnotification->sent_notification("success", "Data berhasil disimpan");
           }else{
@@ -107,13 +133,13 @@ class alternatif extends ApplicationBase {
 
       }
 
-      redirect('master/alternatif/add');
+      redirect('master/nilai/add');
     }
 
     function delete($params){
         $this->_set_page_rule("D");
 
-        if($this->m_alternatif->delete_alternatif($params)){
+        if($this->m_nilai->delete_nilai($params)){
               // success
                 $this->tnotification->delete_last_field();
                 $this->tnotification->sent_notification("success", "Data berhasil dihapus");
@@ -121,7 +147,7 @@ class alternatif extends ApplicationBase {
             $this->tnotification->sent_notification("error", "Data gagal dihapus");
 
         }
-        redirect("master/alternatif");
+        redirect("master/nilai");
     }
 
 }

@@ -1,19 +1,15 @@
 <script type="text/javascript">
 $(document).ready(function() {
-    // date picker
-    $("#tgl_lahir").datetimepicker({
-      'format' : 'YYYY-MM-DD',
-      'ignoreReadonly' : true
-    });
+
 });
 </script>
 
 <section class="content-header">
-    <h1>Tambah Kriteria</h1>
+    <h1>Tambah Rating</h1>
     <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-gear"></i> Data Master</a></li>
-        <li><a href="{$config->site_url('pengaturan/operator')}">Kriteria</a></li>
-        <li><a href="#">Tambah Data</a></li>
+        <li><a href="#"><i class="fa fa-gear"></i> Perhitungan</a></li>
+        <li><a href="{$config->site_url('pengaturan/operator')}">Rating</a></li>
+        <li><a href="#">Tambah Data Rating</a></li>
     </ol>
 </section>
 
@@ -23,36 +19,42 @@ $(document).ready(function() {
   <!-- end of notification template-->
     <div class="box">
       <div class="box-header with-border">
-          <h5 class="box-title">Kriteria<small></small></h5>
+          <h5 class="box-title">Rating<small></small></h5>
           <div class="box-tools">
-              <a href="{$config->site_url('master/kriteria/')}" class="btn btn-success btn-sm"><i class="fa fa-arrow-left"></i>&nbsp; Kembali</a>
+              <a href="{$config->site_url('perhitungan/rating/')}" class="btn btn-success btn-sm"><i class="fa fa-arrow-left"></i>&nbsp; Kembali</a>
           </div>
       </div>
         <!-- form start -->
-        <form action="{$config->site_url('master/kriteria/process_add')}" method="post">
+        <form action="{$config->site_url('perhitungan/rating/process_add')}" method="post">
             <div class="box-body">
                 <div class="form-horizontal">
                     <input name="user_id" type="hidden"  value="{$result.user_id|default:''}" />
                     <div class="row">
                         <div class="col-lg-12">
+                            
                             <div class="form-group">
-                                <label class="col-sm-2 control-label">No</label>
-                                <div class="col-sm-2">
-                                    <input class="form-control" name="id" type="text" />
-                                    <small>* Wajib diisi</small>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">Kriteria</label>
+                                <label class="col-sm-2 control-label">Nama Rating</label>
                                 <div class="col-sm-4">
-                                    <input class="form-control" name="kriteria" type="text" />
-                                    <small>* Wajib diisi</small>
+                                    <input class="form-control" name="nama_rating" type="text" />
+
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-2 control-label">Deskripsi</label>
-                                <div class="col-sm-6">
-                                <textarea class="form-control" name="deskripsi" rows="2" type="text"></textarea>
+                                <label class="col-sm-2 control-label">Group Rating</label>
+                                <div class="col-sm-4">
+
+                                    <select class="form-control" name="group_rating">
+                                  <option value="un">UN</option>
+                                  <option value="tes">Tes</option>
+                                  <option value="peminatan">Peminatan</option>
+
+                                    </select>
+                              </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Nilai Rating </label>
+                                <div class="col-sm-4">
+                                <input class="form-control" name="nilai_rating" type="text" />
                               </div>
                             </div>
 

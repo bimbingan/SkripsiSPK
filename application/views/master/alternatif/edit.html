@@ -30,27 +30,26 @@ $(document).ready(function() {
                 <div class="form-horizontal">
                     <input name="user_id" type="hidden"  value="{$result.id|default:''}" />
                     <div class="row">
-                        <div class="col-lg-6">
+                        <div class="col-lg-12">
                             <div class="form-group">
-                                <label class="col-sm-4 control-label">No</label>
-                                <div class="col-sm-8">
-                                    <input class="form-control" name="id" type="text" value="{$result.id}"/>
+                                <label class="col-sm-2 control-label">No</label>
+                                <div class="col-sm-4">
+                                    <input class="form-control" name="id" type="text" value="{$result.id}" readonly=""/>
                                     <small>* Wajib diisi</small>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-4 control-label">Alternatif</label>
-                                <div class="col-sm-8">
+                                <label class="col-sm-2 control-label">Alternatif</label>
+                                <div class="col-sm-4">
                                     <input class="form-control" name="alternatif" type="text" value="{$result.alternatif}"/>
                                     <small>* Wajib diisi</small>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-4 control-label">Deskripsi</label>
-                                <div class="col-sm-8">
-                                    <input class="form-control" name="deskripsi" type="text" value="{$result.Deskripsi}"/>
-
-                                </div>
+                                <label class="col-sm-2 control-label">Deskripsi</label>
+                                <div class="col-sm-6">
+                                <textarea class="form-control" name="deskripsi" rows="2" type="text" >{$result.deskripsi}</textarea>
+                              </div>
                             </div>
 
                         </div>
