@@ -7,9 +7,9 @@ class m_rating extends CI_Model {
     }
 
 
-    function get_all_rating() {
-        $sql = "SELECT * FROM rating ORDER BY id_rating ASC";
-        $query = $this->db->query($sql);
+    function get_all_rating($params) {
+        $sql = "SELECT * FROM rating r INNER JOIN periode p ON r.`periode` = p.`id` WHERE nama_rating LIKE ? AND periode LIKE ? ORDER BY id_rating ASC";
+        $query = $this->db->query($sql, $params);
         if ($query->num_rows() > 0) {
             $result = $query->result_array();
             $query->free_result();

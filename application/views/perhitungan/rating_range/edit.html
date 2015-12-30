@@ -25,10 +25,10 @@ $(document).ready(function() {
           </div>
       </div>
         <!-- form start -->
-        <form action="{$config->site_url('perhitungan/rating_range/process_add')}" method="post">
+        <form action="{$config->site_url('perhitungan/rating_range/process_edit')}" method="post">
             <div class="box-body">
                 <div class="form-horizontal">
-                    <input name="user_id" type="hidden"  value="{$result.id|default:''}" />
+                    <input name="id" type="hidden"  value="{$result.id|default:''}" />
                     <div class="row">
                       <div class="col-lg-12">
 
@@ -57,7 +57,7 @@ $(document).ready(function() {
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Nilai Range </label>
                             <div class="col-sm-4">
-                            <input class="form-control" name="nilai_range" type="text" />
+                            <input class="form-control" name="nilai_range" type="text" value="{$result.nilai_range}" />
                           </div>
                         </div>
 

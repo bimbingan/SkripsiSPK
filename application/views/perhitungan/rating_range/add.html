@@ -37,7 +37,7 @@ $(document).ready(function() {
                                 <div class="col-sm-4">
                                   <select class="form-control" name="id_rating">
                                     {foreach $rs_rating as $rating}
-                                      <option value="{$rating.id_rating}">{$rating.group_rating} - {$rating.nama_rating|upper}</option>
+                                      <option value="{$rating.id_rating}">{$rating.group_rating} - {$rating.nama_rating|upper} - {$rating.tahun}</option>
                                     {/foreach}
                                   </select>
                                 </div>

@@ -50,6 +50,7 @@
                         <th align="center",width="25%">Batas Atas Range Nilai</th>
                         <th align="center",width="25%">Batas Bawah Range Nilai</th>
                         <th align="center",width="25%">Nilai Range</th>
+                        <th align="center",width="25%">Periode</th>
                         <th width="20%">Action</th>
                     </tr>
                 </thead>
@@ -62,6 +63,7 @@
                         <td>{$result.batas_atas|upper}</td>
                         <td>{$result.batas_bawah|upper}</td>
                         <td>{$result.nilai_range|upper}</td>
+                        <td>{$result.tahun|upper}</td>
 
                         <td align="center">
                             <a class="btn bg-olive btn-flat btn-sm" href="{$config->site_url('perhitungan/rating_range/edit/'|cat:$result.id|default:'')}" class="button-edit">Edit</a>

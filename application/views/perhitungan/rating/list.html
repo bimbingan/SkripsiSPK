@@ -6,34 +6,42 @@
     </ol>
 </section>
 <section class="content">
-    <!-- <div class="box box-primary">
-        <div class="box-header with-border">
-            <h3 class="box-title">Data Siswa</h3>
-        </div>-->
-        <!-- /.box-header -->
-        <!-- form start -->
-        <!-- <div class="box-body">
-            <form class="form-horizontal" action="{$config->site_url('pengaturan/operator/proses_cari')}" method="post">
-                <div class="row">
-                    <div class="col-lg-6">
-                        <div class="form-group">
-                            <label for="nama" class="col-sm-2 control-label">Nama</label>
-                            <div class="col-sm-10">
-                                <input type="text" class="col-sm-10 form-control" id="nama" name="operator_name" value="{$search.operator_name}" placeholder="-- semua --">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-2 pull-right action-right">
-                        <input class="btn btn-primary " name="save" type="submit" value="Cari">
-                        <input class="btn btn-danger" name="save" type="submit" value="Reset">
-                    </div>
-                </div>
-            </form>
-        </div> /.box-body
-    </div> -->
+    <div class="box">
+
     <!-- notification template -->
     {include file="base/templates/notification.html"}
     <!-- end of notification template-->
+
+    <div class="box-body">
+        <h5 class="box-title">Pencarian<small></small></h5>
+        <form class="form-horizontal" action="{$config->site_url('perhitungan/rating/search_process')}" method="post">
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="form-group">
+                        <div class="col-sm-6">
+                            <input type="text" class="col-sm-10 form-control" id="nama" name="nama_rating" value="{$search.nama_rating}" placeholder="-- semua --">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-6">
+                            <select class="form-control" name="periode">
+                                <option value="">-- Tahun Ajaran --</option>
+                                {foreach $rs_import as $periode}
+                                <option {if $search.periode eq $periode.id}selected{/if} value="{$periode.id}">{$periode.tahun|upper}</option>
+                                {/foreach}
+                            </select>
+                        </div>
+                        <div class="col-sm-4 pull-right action-right">
+                            <input class="btn btn-primary " name="save" type="submit" value="Cari">
+                            <input class="btn btn-danger" name="save" type="submit" value="Reset">
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
     <div class="box">
         <div class="box-header with-border">
             <h5 class="box-title">Rating Nilai<small></small></h5>
@@ -49,6 +57,7 @@
                         <th align="center",width="25%">Nama Rating</th>
                         <th align="center",width="25%">Group Rating</th>
                         <th align="center",width="25%">Nilai Rating</th>
+                        <th align="center",width="25%">Periode</th>
 
                         <th width="20%">Action</th>
                     </tr>
@@ -61,6 +70,7 @@
                         <td>{$result.nama_rating|upper}</td>
                         <td>{$result.group_rating|upper}</td>
                         <td>{$result.nilai_rating|upper}</td>
+                        <td>{$result.tahun|upper}</td>
 
                         <td align="center">
                             <a class="btn bg-olive btn-flat btn-sm" href="{$config->site_url('perhitungan/rating/edit/'|cat:$result.id_rating|default:'')}" class="button-edit">Edit</a>

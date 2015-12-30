@@ -1,0 +1,74 @@
+<section class="content-header">
+    <h1>Tambah Data Periode</h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-gear"></i> Data Master</a></li>
+        <li><a href="{$config->site_url('pengaturan/operator')}"> Periode</a></li>
+        <li><a href="#">Tambah Data</a></li>
+    </ol>
+</section>
+
+<section class="content">
+  <!-- notification template -->
+  {include file="base/templates/notification.html"}
+  <!-- end of notification template-->
+    <div class="box">
+      <div class="box-header with-border">
+          <h5 class="box-title">Data Periode<small></small></h5>
+          <div class="box-tools">
+              <a href="{$config->site_url('master/periode/')}" class="btn btn-success btn-sm"><i class="fa fa-arrow-left"></i>&nbsp; Kembali</a>
+          </div>
+      </div>
+        <!-- form start -->
+        <form action="{$config->site_url('master/periode/process_add')}" method="post">
+            <div class="box-body">
+                <div class="form-horizontal">
+                    <input name="user_id" type="hidden"  value="{$result.user_id|default:''}" />
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label">ID</label>
+                                <div class="col-sm-8">
+                                    <input class="form-control" name="id" type="text" />
+                                    <small>* Wajib diisi</small>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label">Tahun</label>
+                                <div class="col-sm-8">
+                                    <input class="form-control" name="tahun" type="text" />
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label">Status</label>
+                                <div class="col-sm-8">
+                                    <label class="radio-inline">
+                                        <input {if $result.status eq '1'}checked{/if} type="radio" name="status" value="1"> Aktif
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input {if $result.status eq '0'}checked{/if} type="radio" name="status" value="0"> Non-Aktif
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-4 control-label">Kuota IPA</label>
+                                <div class="col-sm-8">
+                                    <input class="form-control" name="kuota_ipa" type="text" />
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div><!-- /.box-body -->
+            <div class="box-footer">
+                <div class="col-lg-12">
+                    <div class="pull-right">
+                        <input type="reset" name="save" value="Reset" class="btn btn-default" />
+                        <input type="submit" name="save" value="Simpan" class="btn btn-success" />
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>

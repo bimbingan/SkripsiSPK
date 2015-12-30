@@ -1,0 +1,131 @@
+<script type="text/javascript">
+jQuery(document).ready(function($) {
+
+    var hitung = function(pk){
+
+    }
+
+    $('.minat').change(function(event) {
+        var pk_val = $(this).data('pk');
+        $.post('{$config->site_url("master/nilai/add_nilai")}', {literal}{name:'minat', value:$(this).val(), pk:pk_val}{/literal}, function(data, textStatus, xhr) {
+            hitung(pk_val);
+        });
+    });
+
+    // setting defaults for the editable
+    $.fn.editable.defaults.mode = 'inline';
+    $.fn.editable.defaults.showbuttons = false;
+    $.fn.editable.defaults.url = '{$config->site_url("master/nilai/add_nilai")}';
+    $.fn.editable.defaults.type = 'text';
+
+    // make all items having class 'edit' editable
+    $('.edit').editable({
+        emptytext : '',
+        ajaxOptions: {
+            dataType: 'json' //assuming json response
+        },
+        success: function(response, newValue) {
+            hitung(response.nis);
+        }
+    });
+
+    // this is to automatically make the next item in the table editable
+    $('.edit').on('save', function(e, params){
+        var that = this;
+        // persist the old value in the element to be restored when clicking reset
+        var oldItemValue = $(that)[0].innerHTML;
+        if (!$(that).attr('oldValue')) {
+            $(that).attr('oldValue', oldItemValue);
+        }
+        setTimeout(function() {
+            // first search the row
+            var index = $(that).index();
+            var item = $(that).next('.edit:eq('+(index-3)+')');
+            item.editable('show');
+        }, 200);
+
+    });
+
+
+});
+</script>
+<section class="content-header">
+    <h1> Nilai </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-gear"></i> Data Master</a></li>
+        <li><a href="#">Nilai</a></li>
+    </ol>
+</section>
+<section class="content">
+    <!-- notification template -->
+    {include file="base/templates/notification.html"}
+    <!-- end of notification template-->
+
+    <div class="box">
+        <div class="box-body">
+            <form class="form-horizontal" action="{$config->site_url('master/nilai/download')}" method="POST">
+            <div class="row">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Tahun Ajaran</label>
+                    <div class="col-sm-4">
+                        <select class="form-control" name="periode_id">
+                            {foreach $rs_import as $periode}
+                            <option value="{$periode.id}">{$periode.tahun|upper}</option>
+                            {/foreach}
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="box-body">
+
+                <div class="form-group">
+                    <div class="col-lg-12">
+                        <button type="submit" value="upload" class="btn btn-primary col-lg-6"> <i class="fa fa-arrow-down"></i> Unduh Format</button>
+
+                        <button data-toggle="modal" data-target="#myModal" class="btn btn-success col-lg-6" type="button"> <i class="fa fa-arrow-up"></i> Unggah Data</button>
+
+                    </div>
+
+                </div>
+
+
+
+
+        </div>
+
+</form>
+        <!-- <div class="box-footer clearfix">
+        <div class="col-sm-6">
+        Menampilkan <b>{$pagination.start|default:0}</b> sampai <b>{$pagination.end|default:0}</b> dari <b>{$pagination.total|default:0}</b></strong> Data Operator
+    </div>
+    <ul class="pagination pagination-sm no-margin pull-right">
+    {$pagination.data|default:''}
+</ul>
+</div> -->
+</div>
+</section>
+
+<div class="modal fade" id="myModal">
+    <div class="modal-dialog">
+        <form action="{$config->site_url('master/nilai/import_process')}" method="POST" enctype="multipart/form-data">
+            <div class="modal-content">
+                <button type="button" class="close" data-dismiss="modal" aria-label="close">
+                    <span aria-hidden="true">&times;'</span>
+                </button>
+                <h4 class="modal-title">Unggah Data</h4>
+
+            <div class="modal-body">
+                <div class="form-group">
+                    <input type="file" name="file_siswa">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Unggah</button>
+            </div>
+        </div>
+    </form>
+    </div>
+</div>

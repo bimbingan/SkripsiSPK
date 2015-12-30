@@ -8,7 +8,7 @@ class m_preference extends CI_Model {
 
     function get_list_preference_by_group($params) {
         $sql = "SELECT * from com_preferences WHERE pref_group = ?
-		ORDER BY pref_nm ASC 
+		ORDER BY pref_nm ASC
 		LIMIT ?, ?";
 
         $query = $this->db->query($sql, $params);
@@ -23,7 +23,7 @@ class m_preference extends CI_Model {
 
     function get_list_preference_by_group_with_search($params) {
         $sql = "SELECT * from com_preferences WHERE pref_group = ? AND pref_nm LIKE ? AND pref_value LIKE ?
-		ORDER BY pref_nm ASC 
+		ORDER BY pref_nm ASC
 		LIMIT ?, ?";
         $query = $this->db->query($sql, $params);
         if ($query->num_rows() > 0) {
@@ -110,8 +110,20 @@ class m_preference extends CI_Model {
         }
     }
 
+    function get_kuota_ipa(){
+        $sql = "SELECT pref_value FROM com_preferences WHERE pref_group = 'kuota' AND pref_nm = 'ipa'";
+        $query = $this->db->query($sql);
+        if ($query->num_rows() > 0) {
+            $result = $query->row_array();
+            $query->free_result();
+            return $result['pref_value'];
+        } else {
+            return 0;
+        }
+    }
+
     function insert_preference($params) {
-        $sql = "INSERT INTO com_preferences (pref_group, pref_nm, pref_value, mdb, mdd) 
+        $sql = "INSERT INTO com_preferences (pref_group, pref_nm, pref_value, mdb, mdd)
 		VALUES (?,?,?,?,NOW())";
         return $this->db->query($sql, $params);
     }

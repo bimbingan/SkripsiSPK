@@ -71,6 +71,7 @@ class rating_range extends ApplicationBase {
 
       // data
       $this->smarty->assign("rs_rating", $this->m_rating_range->get_all_rating());
+      
       $this->smarty->assign("rs_range_nilai", $this->m_rating_range->get_all_range_nilai());
 
       // notification
@@ -139,7 +140,7 @@ class rating_range extends ApplicationBase {
          $this->smarty->load_style('datetimepicker/bootstrap-datetimepicker.css');
 
          $rating_range = $this->m_rating_range->get_one_rating_range($params);
-         
+
          $this->smarty->assign("result", $rating_range);
          $this->smarty->assign("rs_rating", $this->m_rating_range->get_all_rating());
          $this->smarty->assign("rs_range_nilai", $this->m_rating_range->get_all_range_nilai());

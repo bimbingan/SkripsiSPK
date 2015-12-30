@@ -1,36 +1,61 @@
 <script type="text/javascript">
-    jQuery(document).ready(function($) {
-      // setting defaults for the editable
-      $.fn.editable.defaults.mode = 'inline';
-      $.fn.editable.defaults.showbuttons = false;
-      $.fn.editable.defaults.url = '{$config->site_url("master/nilai/add_nilai")}';
-      $.fn.editable.defaults.type = 'text';
+jQuery(document).ready(function($) {
 
-      // make all items having class 'edit' editable
-      $('.edit').editable({
-          emptytext : '',
-      });
+    var hitung = function(pk){
 
-      // this is to automatically make the next item in the table editable
-      $('.edit').on('save', function(e, params){
-          var that = this;
-          // persist the old value in the element to be restored when clicking reset
-          var oldItemValue = $(that)[0].innerHTML;
-          if (!$(that).attr('oldValue')) {
-              console.log('persisting original value: ' + oldItemValue)
-              $(that).attr('oldValue', oldItemValue);
-          }
-          setTimeout(function() {
-              // first search the row
-              var index = $(that).index();
-              console.log(index);
-              var item = $(that).next('.edit:eq('+(index-3)+')');
-              item.editable('show');
-          }, 200);
-      });
+    }
 
+    $('.minat').change(function(event) {
+        var pk_val = $(this).data('pk');
+        $.post('{$config->site_url("master/nilai/add_nilai")}', {literal}{name:'minat', value:$(this).val(), pk:pk_val}{/literal}, function(data, textStatus, xhr) {
+            hitung(pk_val);
+        });
+    });
+
+    // setting defaults for the editable
+    $.fn.editable.defaults.mode = 'inline';
+    $.fn.editable.defaults.showbuttons = false;
+    $.fn.editable.defaults.url = '{$config->site_url("master/nilai/add_nilai")}';
+    $.fn.editable.defaults.type = 'text';
+
+    // make all items having class 'edit' editable
+    $('.edit').editable({
+        emptytext : '',
+        ajaxOptions: {
+            dataType: 'json' //assuming json response
+        },
+        success: function(response, newValue) {
+            hitung(response.nis);
+        },
+        validate : function(value){
+            if ($.trim(value) > 10) {
+                return "Nilai maksimal 10";
+            }
+            if ($.trim(value) < 0) {
+                return "Nilai minimal 0";
+            }
+        }
+    });
+
+    // this is to automatically make the next item in the table editable
+    $('.edit').on('save', function(e, params){
+        var that = this;
+        // persist the old value in the element to be restored when clicking reset
+        var oldItemValue = $(that)[0].innerHTML;
+        if (!$(that).attr('oldValue')) {
+            $(that).attr('oldValue', oldItemValue);
+        }
+        setTimeout(function() {
+            // first search the row
+            var index = $(that).index();
+            var item = $(that).next('.edit:eq('+(index-3)+')');
+            item.editable('show');
+        }, 200);
 
     });
+
+
+});
 </script>
 <section class="content-header">
     <h1> Nilai </h1>
@@ -44,20 +69,57 @@
     {include file="base/templates/notification.html"}
     <!-- end of notification template-->
     <div class="box">
-        <div class="box-header with-border">
-            <h5 class="box-title">Nilai<small></small></h5>
-            <div class="box-tools">
-                <a href="{$config->site_url('master/nilai/add')}" class="btn btn-success btn-sm"><i class="fa fa-plus"></i>&nbsp; Tambah</a>
+        <div class="box-body">
+            <h5 class="box-title">Pencarian<small></small></h5>
+            <form class="form-horizontal" action="{$config->site_url('master/nilai/search_process')}" method="post">
+
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="form-group">
+                            <div class="col-sm-6">
+                                <input type="text" class="col-sm-10 form-control" id="nama" name="siswa_nama" value="{$search.siswa_nama}" placeholder="-- semua --">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-6">
+                                <select class="form-control" name="periode">
+                                    {foreach $rs_import as $periode}
+                                    <option {if $search.periode eq $periode.id}selected{/if} value="{$periode.id}">{$periode.tahun|upper}</option>
+                                    {/foreach}
+                                </select>
+                            </div>
+                            <div class="col-sm-4 pull-right action-right">
+                                <input class="btn btn-primary " name="save" type="submit" value="Cari">
+                                <input class="btn btn-danger" name="save" type="submit" value="Reset">
+                            </div>
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
+    </div>
+
+    <div class="box">
+
+        <div class="box-header with-border">
+            <h5 class="box-title">Nilai<small></small></h5>
+            <div class="col-sm-6 pull-right action-right">
+                <a class="btn btn-success" href="{$config->site_url('master/nilai/hitung')}"><i class="fa fa-refresh"></i>&nbsp; Hitung</a>
+                <a class="btn btn-danger" href="{$config->site_url('master/nilai/import')}"><i class="fa fa-download"></i>&nbsp; Import Data</a>
+                <a class="btn btn-primary" href="{$config->site_url('master/nilai/eksport_nilai')}"><i class="fa fa-share"></i>&nbsp; Eksport Data</a>
+            </div>
+        </div>
+
         <div class="box-body">
             <table id="example2" class="table table-bordered table-hover">
                 <thead>
                     <tr>
+                        <th width="2%" rowspan="2">No.</th>
                         <th width="2%" rowspan="2">Nis</th>
                         <th width="28%" rowspan="2">Nama</th>
                         <th width="20%" colspan="4">Ujian Nasional</th>
                         <th width="20%" colspan="4">Tes Ujian</th>
+                        <th width="10%" rowspan="2">Nilai Akhir</th>
                         <th width="18%" rowspan="2">Minat</th>
                         <th width="12%" rowspan="2">Rekomendasi Peminatan</th>
                     </tr>
@@ -69,6 +131,7 @@
                         <td>B.Ing</td>
                         <td>MTK</td>
                         <td>IPA</td>
+                        <td>IPS</td>
                         <td>B.Ing</td>
                     </tr>
 
@@ -77,24 +140,37 @@
                     {$no = 1}
                     {foreach $rs_id as $result}
                     <tr>
+                        <td align="center">{$no++}.</td>
                         <td align="center">{$result.nis}</td>
                         <td >{$result.nama|upper}</td>
-                        <td class="edit" data-pk="{$result.nis}" data-name="mtk_un">{$result.mtk_un|upper}</td>
-                        <td class="edit" data-pk="{$result.nis}" data-name="ipa_un">{$result.ipa_un|upper}</td>
-                        <td class="edit" data-pk="{$result.nis}" data-name="bindo_un">{$result.bindo_un|upper}</td>
-                        <td class="edit" data-pk="{$result.nis}" data-name="bing_un">{$result.bing_un|upper}</td>
-                        <td class="edit" data-pk="{$result.nis}" data-name="mtk_tes">{$result.mtk_tes|upper}</td>
-                        <td class="edit" data-pk="{$result.nis}" data-name="ipa_tes">{$result.ipa_tes|upper}</td>
-                        <td class="edit" data-pk="{$result.nis}" data-name="bing_tes">{$result.bing_tes|upper}</td>
+                        <td align="center" class="edit" data-pk="{$result.nis}" data-max="10" data-name="mtk_un">{$result.mtk_un|upper}</td>
+                        <td align="center" class="edit" data-pk="{$result.nis}" data-name="ipa_un">{$result.ipa_un|upper}</td>
+                        <td align="center" class="edit" data-pk="{$result.nis}" data-name="bindo_un">{$result.bindo_un|upper}</td>
+                        <td align="center" class="edit" data-pk="{$result.nis}" data-name="bing_un">{$result.bing_un|upper}</td>
+                        <td align="center" class="edit" data-pk="{$result.nis}" data-name="mtk_tes">{$result.mtk_tes|upper}</td>
+                        <td align="center" class="edit" data-pk="{$result.nis}" data-name="ipa_tes">{$result.ipa_tes|upper}</td>
+                        <td align="center" class="edit" data-pk="{$result.nis}" data-name="ips_tes">{$result.ips_tes|upper}</td>
+                        <td align="center" class="edit" data-pk="{$result.nis}" data-name="bing_tes">{$result.bing_tes|upper}</td>
+                        <td align="center">{$result.nilai_akhir}</td>
                         <td >
-                          <select class="form-control" name="minat">
-                            <option value="">-- Pilih Minat --</option>
-                            <option value="0">IPA</option>
-                            <option value="1">IPS</option>
-                          </select>
+                            <select class="form-control minat" data-pk="{$result.nis}" name="minat">
+                                <option value="">-- Pilih Minat --</option>
+                                <option {if $result.minat eq 1}selected{/if} value="1">IPA</option>
+                                <option {if $result.minat eq 2}selected{/if} value="2">IPS</option>
+                            </select>
                         </td>
-                        <td class="rekomendasi">
-
+                        <td align="center" class="rekomendasi">
+                            {$result.hasil}
+                            {foreach $rs_ips as $ips}
+                            {if $result.nis eq $ips.nis}
+                            IPS
+                            {/if}
+                            {/foreach}
+                            {foreach $rs_ipa as $ipa}
+                            {if $result.nis eq $ipa.nis}
+                            IPA
+                            {/if}
+                            {/foreach}
                         </td>
                     </tr>
                     {foreachelse}
@@ -105,13 +181,5 @@
                 </tbody>
             </table>
         </div>
-        <!-- <div class="box-footer clearfix">
-            <div class="col-sm-6">
-                Menampilkan <b>{$pagination.start|default:0}</b> sampai <b>{$pagination.end|default:0}</b> dari <b>{$pagination.total|default:0}</b></strong> Data Operator
-            </div>
-            <ul class="pagination pagination-sm no-margin pull-right">
-                {$pagination.data|default:''}
-            </ul>
-        </div> -->
     </div>
 </section>
