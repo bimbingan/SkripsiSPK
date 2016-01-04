@@ -45,7 +45,10 @@ class nilai extends ApplicationBase {
         $data_nilai = $this->m_nilai->get_list_nilai($params);
 
         usort($data_nilai, function($a, $b) {
-            return ($b['nilai_akhir'] > $a['nilai_akhir']);
+            if($b['nilai_akhir'] == $a['nilai_akhir']){
+                return intval($b['nis']) < intval($a['nis']);
+            }
+            return $b['nilai_akhir'] > $a['nilai_akhir'];
         });
 
         $this->smarty->assign("rs_id", $data_nilai);
@@ -89,7 +92,6 @@ class nilai extends ApplicationBase {
 
         parent::display();
     }
-
 
     function hitung(){
         // set page rules
@@ -156,8 +158,13 @@ class nilai extends ApplicationBase {
             $this->m_nilai->update_nilai($params, $where);
         }
 
+        foreach ($rating_result as $key => $result) {
 
+        }
         usort($rating_result, function($a, $b) {
+            if($b['jumlah'] == $a['jumlah']){
+                return intval($b['nis']) < intval($a['nis']);
+            }
             return $b['jumlah'] > $a['jumlah'];
         });
 
