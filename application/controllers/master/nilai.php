@@ -146,7 +146,7 @@ class nilai extends ApplicationBase {
             foreach ($rs_rating as $key_rating => $rating) {
                 // echo  "(".$mat[$rating['nama_rating']] ."/". $max[$rating['nama_rating']].")"."*". $rating['nilai_rating']."<br>" ;
                 $rating_result[$key][$rating['nama_rating']] = ($mat[$rating['nama_rating']] / $max[$rating['nama_rating']]) * $rating['nilai_rating'] ;
-                $rating_result[$key]['jumlah'] += $rating_result[$key][$rating['nama_rating']];
+                $rating_result[$key]['jumlah'] += round($rating_result[$key][$rating['nama_rating']], 1);
                 $rating_result[$key]['nis'] = $key;
                 $rating_result[$key]['nama'] = $this->m_siswa->get_nama_by_nis($key);
             }
